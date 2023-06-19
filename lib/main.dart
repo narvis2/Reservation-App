@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
-void main() {
+import 'di/dependency_inection_graph.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await initializeDependencies();
+
   runApp(const MyApp());
 }
 
