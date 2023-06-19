@@ -6,7 +6,7 @@ import 'package:reservation_app/di/prefs/shared_pref_module.dart';
 class AuthInterceptor extends Interceptor {
   final SharedPreferenceModule pref;
 
-  AuthInterceptor({required this.pref});
+  AuthInterceptor(this.pref);
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {

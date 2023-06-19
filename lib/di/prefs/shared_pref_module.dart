@@ -5,7 +5,7 @@ class SharedPreferenceModule {
   static const String _JWT_TOKEN = "JWT_TOKEN";
   static const String _REFRESH_TOKEN = "REFRESH_TOKEN";
 
-  SharedPreferenceModule({required this.pref});
+  SharedPreferenceModule(this.pref);
 
   void saveJWTToken(String jwtToken) => pref.setString(_JWT_TOKEN, jwtToken);
 

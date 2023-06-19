@@ -5,30 +5,24 @@ import 'package:reservation_app/di/network/network_module.dart';
 import 'package:reservation_app/di/prefs/shared_pref_module.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'local/local_module.dart';
+
 final locator = GetIt.instance;
 
 Future<void> initializeDependencies() async {
   // 📌 SharedPreferences Single Token 등록
   locator.registerSingletonAsync<SharedPreferences>(
-      () => SharedPreferences.getInstance());
+      () => LocalModule.provideSharedPreferences());
 
-  /**
-   * 📌 SharedPreferenceModule DI 적용
-   * SharedPreferences 을 Singleton 으로 생성자에 주입받고,
-   * SharedPreferences 의 생명주기에 따라감
-   */
-  locator.registerSingletonWithDependencies<SharedPreferenceModule>(
-      () => SharedPreferenceModule(pref: locator<SharedPreferences>()),
-      dependsOn: [SharedPreferences]);
+  // 📌 SharedPreferenceModule Singleton DI 적용
+  locator.registerSingleton<SharedPreferenceModule>(
+      SharedPreferenceModule(await locator.getAsync<SharedPreferences>())
+  );
 
-  /**
-   * 📌 AuthInterceptor DI 적용
-   * SharedPreferenceModule 을 Singleton 으로 생성자에 주입받고,
-   * SharedPreferenceModule 의 생명주기에 따라감
-   */
-  locator.registerSingletonWithDependencies<AuthInterceptor>(
-      () => AuthInterceptor(pref: locator<SharedPreferenceModule>()),
-      dependsOn: [SharedPreferenceModule]);
+  // 📌 AuthInterceptor DI Singleton 적용
+  locator.registerSingleton<AuthInterceptor>(
+      AuthInterceptor(locator<SharedPreferenceModule>())
+  );
 
   /**
    * 📌 NetworkModule DI 적용
