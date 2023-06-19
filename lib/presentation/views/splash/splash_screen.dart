@@ -1,6 +1,6 @@
-
 import 'dart:async';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:reservation_app/di/dependency_inection_graph.dart';
@@ -10,7 +10,7 @@ import '../../../di/prefs/shared_pref_module.dart';
 
 @RoutePage()
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({ Key? key }) : super(key: key);
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   State createState() => _SplashScreenState();
@@ -21,17 +21,21 @@ class _SplashScreenState extends State<SplashScreen> {
   final SharedPreferenceModule pref = locator.get();
 
   startSplash() async {
-    return Timer(const Duration(seconds: 2), (){
-      /**
-       * 📌 지금은 Token 이 있든 없든 무조건 Main 2초뒤에 으로 가도록 설정
-       */
-      if (pref.getJWTToken().isNotEmpty){
-        AutoRouter.of(context).replace(const MainRoute());
-      } else {
-        // TODO:: Token 이 없는 경우 대응
-        AutoRouter.of(context).replace(const MainRoute());
-      }
-    });
+    var duration = const Duration(seconds: 5);
+    return Timer(duration, navigate);
+  }
+
+  navigate() async {
+    String? accessToken = await pref.accessToken;
+
+    if (!mounted) return;
+    print("token 👉 $accessToken");
+
+    if (accessToken != null) {
+      AutoRouter.of(context).replace(const MainRoute());
+    } else {
+      AutoRouter.of(context).replace(const MainRoute());
+    }
   }
 
   @override
@@ -42,10 +46,56 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(child: Center(
-        child: Text("Splash screen"),
-      ))
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
+    // 화면 가운데에서 -50으로 좌표 계산
+    final double topPosition = screenHeight / 2 + 70;
+
+    return Scaffold(
+      body: Container(
+        color: Colors.white,
+        height: screenHeight,
+        width: screenWidth,
+        child: Stack(
+          children: [
+            Center(
+              child: TextLiquidFill(
+                text: '우회담',
+                boxBackgroundColor: Colors.white,
+                waveColor: const Color(0xFF9B111E),
+                textStyle: const TextStyle(
+                  fontSize: 80.0,
+                  fontWeight: FontWeight.bold,
+                ),
+                boxHeight: 300.0,
+                loadDuration: const Duration(seconds: 5),
+              ),
+            ),
+            Positioned(
+              top: topPosition,
+              child: SizedBox(
+                width: screenWidth,
+                child: Align(
+                    alignment: Alignment.center,
+                    child: AnimatedTextKit(
+                      animatedTexts: [
+                        TyperAnimatedText('한우를 메인으로 유리를 선보이며 대화를 나누는 공간',
+                            textStyle: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xCC9B111E)
+                            ),
+                          speed: const Duration(milliseconds: 100)
+                        ),
+                      ],
+                      isRepeatingAnimation: false,
+                    )),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
