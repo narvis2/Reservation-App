@@ -9,17 +9,15 @@ class SharedPreferenceModule {
 
   void saveJWTToken(String jwtToken) => pref.setString(_JWT_TOKEN, jwtToken);
 
-  String getJWTToken() {
-    String token = pref.getString(_JWT_TOKEN) ?? "";
-    return token;
+  Future<String?> get accessToken async {
+    return pref.getString(_JWT_TOKEN);
   }
 
   void saveRefreshToken(String refreshToken) =>
       pref.setString(_REFRESH_TOKEN, refreshToken);
 
-  String getRefreshToken() {
-    String refreshToken = pref.getString(_REFRESH_TOKEN) ?? "";
-    return refreshToken;
+  Future<String?> get refreshToken async {
+    return pref.getString(_REFRESH_TOKEN);
   }
 
   void clear() => pref.clear();
