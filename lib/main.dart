@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_app/presentation/config/router/app_router.dart';
 import 'package:reservation_app/presentation/config/themes/app_theme.dart';
+import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
 
 import 'di/dependency_inection_graph.dart';
 
@@ -18,12 +20,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerDelegate: appRouter.delegate(),
-      routeInformationParser: appRouter.defaultRouteParser(),
-      title: "우회담 예약 어플",
-      theme: AppTheme.light,
-    );
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider<MainBloc>(
+              create: (context) =>
+                  locator<MainBloc>()..add(MainEventBannerImages())),
+        ],
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          routerDelegate: appRouter.delegate(),
+          routeInformationParser: appRouter.defaultRouteParser(),
+          title: "우회담 예약 어플",
+          theme: AppTheme.light,
+        ));
   }
 }

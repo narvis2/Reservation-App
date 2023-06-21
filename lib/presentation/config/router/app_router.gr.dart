@@ -1,7 +1,17 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// **************************************************************************
+// AutoRouterGenerator
+// **************************************************************************
+
+// ignore_for_file: type=lint
+// coverage:ignore-file
+
 part of 'app_router.dart';
 
-class $AppRouter extends RootStackRouter {
-  $AppRouter({super.navigatorKey});
+abstract class _$AppRouter extends RootStackRouter {
+  // ignore: unused_element
+  _$AppRouter({super.navigatorKey});
 
   @override
   final Map<String, PageFactory> pagesMap = {
@@ -11,33 +21,39 @@ class $AppRouter extends RootStackRouter {
         child: const SplashScreen(),
       );
     },
-    
     MainRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const MainScreen(),
       );
-    }
+    },
   };
-
-  @override
-  // TODO: implement routes
-  List<AutoRoute> get routes => [
-    AutoRoute(page: SplashRoute.page, path: '/', initial: true),
-    AutoRoute(page: MainRoute.page)
-  ];
 }
 
+/// generated route for
+/// [SplashScreen]
 class SplashRoute extends PageRouteInfo<void> {
-  const SplashRoute({List<PageRouteInfo>? children}) : super(SplashRoute.name, initialChildren: children);
+  const SplashRoute({List<PageRouteInfo>? children})
+      : super(
+          SplashRoute.name,
+          initialChildren: children,
+        );
 
-  static const String name = "SplashRoute";
+  static const String name = 'SplashRoute';
+
   static const PageInfo<void> page = PageInfo<void>(name);
 }
 
+/// generated route for
+/// [MainScreen]
 class MainRoute extends PageRouteInfo<void> {
-  const MainRoute({List<PageRouteInfo>? children}) : super(MainRoute.name, initialChildren: children);
+  const MainRoute({List<PageRouteInfo>? children})
+      : super(
+          MainRoute.name,
+          initialChildren: children,
+        );
 
-  static const String name = "MainRoute";
+  static const String name = 'MainRoute';
+
   static const PageInfo<void> page = PageInfo<void>(name);
 }
