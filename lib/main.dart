@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider<MainBloc>(
               create: (context) =>
-                  locator<MainBloc>()..add(MainEventBannerImages())),
+                  locator<MainBloc>()),
         ],
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,

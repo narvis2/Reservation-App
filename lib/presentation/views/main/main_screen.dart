@@ -1,8 +1,11 @@
 import 'package:auto_route/annotations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
+import 'package:reservation_app/presentation/views/main/components/bottom_tab_bar_component.dart';
+import 'package:reservation_app/presentation/views/main/tabs/home/home_tab_screen.dart';
+import 'package:reservation_app/presentation/views/main/tabs/profile/profile_tab_screen.dart';
+import 'package:reservation_app/presentation/views/main/tabs/setting/setting_tab_screen.dart';
 
 @RoutePage()
 class MainScreen extends StatefulWidget {
@@ -12,30 +15,40 @@ class MainScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
+  late final TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(
+      initialIndex: 1,
+      length: 3,
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final mainBlock = BlocProvider.of<MainBloc>(context);
 
-    return Scaffold(body: BlocBuilder<MainBloc, MainState>(
-      builder: (_, state) {
-        switch (state.runtimeType) {
-          case MainStateLoading:
-            return const Center(child: CupertinoActivityIndicator());
-          case MainStateBannerImagesFailed:
-            return const Center(child: Icon(Icons.refresh));
-          case MainStateBannerImages:
-            return const Scaffold(
-                body: SafeArea(
-                    child: Center(
-                        child: Text("Welcome Home"),
-                    )
-                )
-            );
-          default:
-            return const SizedBox();
-        }
-      },
-    ));
+    return Scaffold(
+        body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
+          controller: _tabController,
+          children: <Widget>[
+            HomeTabScreen(),
+            ProfileTabScreen(),
+            SettingTabScreen()
+          ],
+        ),
+      bottomNavigationBar: BottomTabBarComponent(tabController: _tabController),
+    );
   }
 }

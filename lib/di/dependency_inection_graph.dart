@@ -6,6 +6,7 @@ import 'package:reservation_app/di/network/network_module.dart';
 import 'package:reservation_app/di/prefs/shared_pref_module.dart';
 import 'package:reservation_app/domain/usecase/banner/get_all_banner_image_use_case.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
+import 'package:reservation_app/presentation/views/main/tabs/home/block/home_tab_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../domain/repository/banner/banner_repository.dart';
@@ -49,5 +50,6 @@ Future<void> initializeDependencies() async {
   );
 
   // 📌 Block
-  locator.registerFactory(() => MainBloc(locator<GetAllBannerImageUseCase>()));
+  locator.registerFactory(() => MainBloc());
+  locator.registerFactory(() => HomeTabBloc(locator<GetAllBannerImageUseCase>()));
 }
