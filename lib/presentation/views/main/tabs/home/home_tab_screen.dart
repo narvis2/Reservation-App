@@ -16,21 +16,6 @@ class HomeTabScreen extends StatefulWidget {
 }
 
 class _HomeTabScreenState extends State<HomeTabScreen> {
-  late final HomeTabBloc homeTabBloc;
-
-  @override
-  void initState() {
-    super.initState();
-    // homeTabBloc = locator.get<HomeTabBloc>()..add(HomeTabEventBannerImage());
-    homeTabBloc = locator.get<HomeTabBloc>();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    homeTabBloc.close();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
