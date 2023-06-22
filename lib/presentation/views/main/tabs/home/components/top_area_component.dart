@@ -39,8 +39,6 @@ class _TopAreaComponentState extends State<TopAreaComponent> {
           CarouselSlider(
             options: CarouselOptions(
               autoPlay: true,
-              // enlargeCenterPage: true,
-              //scrollDirection: Axis.vertical,
               onPageChanged: (index, reason) {
                 setState(
                       () {
