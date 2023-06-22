@@ -1,6 +1,10 @@
-import 'package:reservation_app/data/common/utils/serializable.dart';
+import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-class BaseResponse<T extends Serializable> {
+part 'response_base.g.dart';
+
+@JsonSerializable(genericArgumentFactories: true)
+class BaseResponse<T extends Equatable> {
   bool success;
   String? resultMsg;
   int code;
@@ -13,51 +17,9 @@ class BaseResponse<T extends Serializable> {
       required this.code});
 
   factory BaseResponse.fromJson(
-      Map<String, dynamic> json, Function(Map<String, dynamic>) create) {
-    return BaseResponse<T>(
-        success: json["success"],
-        resultMsg: json["resultMsg"],
-        code: json["code"],
-        data: create(json["data"]));
-  }
+          Map<String, dynamic> json, T Function(Object?) fromJsonT) =>
+      _$BaseResponseFromJson(json, fromJsonT);
 
-  Map<String, dynamic> toJson() {
-    return {
-      "success": this.success,
-      "resultMsg": this.resultMsg,
-      "code": this.code,
-      "data": this.data?.toJson()
-    };
-  }
-}
-
-class BaseListResponse<T extends Serializable> {
-  bool success;
-  String? resultMsg;
-  int code;
-  List<T>? data;
-
-  BaseListResponse(
-      {required this.success,
-      required this.resultMsg,
-      required this.code,
-      this.data});
-
-  factory BaseListResponse.fromJson(
-      Map<String, dynamic> json, Function(List<dynamic>) create) {
-    return BaseListResponse(
-        success: json["success"],
-        resultMsg: json["resultMsg"],
-        code: json["code"],
-        data: create(json["data"]));
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      "success": this.success,
-      "resultMsg": this.resultMsg,
-      "code": this.code,
-      "data": this.data,
-    };
-  }
+  Map<String, dynamic> toJson(Object? Function(T value) toJsonT) =>
+      _$BaseResponseToJson(this, toJsonT);
 }

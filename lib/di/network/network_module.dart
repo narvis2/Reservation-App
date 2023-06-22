@@ -1,27 +1,38 @@
-
 import 'package:dio/dio.dart';
-import 'package:reservation_app/di/interceptor/auth_interceptor.dart';
+import 'package:reservation_app/data/utils/Endpoints.dart';
+import 'package:reservation_app/di/prefs/shared_pref_module.dart';
 
-class NetworkModule {
-  final Dio _dio = Dio();
-  final String _baseUrl = "http://10.0.2.2:8080/api/v1";
-  final AuthInterceptor authInterceptor;
+abstract class NetworkModule {
+  static Dio provideDio(SharedPreferenceModule pref) {
+    final dio = Dio();
 
-  NetworkModule({required this.authInterceptor});
+    dio
+      ..options.baseUrl = Endpoints.baseUrl
+      ..options.connectTimeout =
+          const Duration(milliseconds: Endpoints.connectionTimeout)
+      ..options.receiveTimeout =
+          const Duration(milliseconds: Endpoints.receiveTimeout)
+      ..options.headers = {'Content-Type': 'application/json; charset=utf-8'}
+      ..interceptors.add(LogInterceptor(
+        request: true,
+        responseBody: true,
+        requestBody: true,
+        requestHeader: true,
+      ))
+      ..interceptors.add(InterceptorsWrapper(onRequest:
+          (RequestOptions options, RequestInterceptorHandler handler) async {
+        var accessToken = await pref.accessToken;
 
-  BaseOptions _dioOptions(){
-    BaseOptions opts = BaseOptions();
-    opts.baseUrl = _baseUrl;
-    opts.contentType = "application/json";
-    opts.connectTimeout = const Duration(milliseconds: 60000);
-    opts.receiveTimeout = const Duration(milliseconds: 60000);
-    opts.sendTimeout = const Duration(milliseconds: 60000);
-    return opts;
-  }
+        if (accessToken != null) {
+          options.headers
+              .putIfAbsent('Authorization', () => "Bearer $accessToken");
+        } else {
+          print("🙀 Access Token is Null 🙀");
+        }
 
-  Dio provideDio(){
-    _dio.options = _dioOptions();
-    _dio.interceptors.add(authInterceptor);
-    return _dio;
+        return handler.next(options);
+      }));
+
+    return dio;
   }
 }
