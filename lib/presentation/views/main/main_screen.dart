@@ -22,7 +22,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = TabController(
-      initialIndex: 1,
+      initialIndex: 0,
       length: 3,
       vsync: this,
     );
