@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:reservation_app/di/dependency_inection_graph.dart';
-import 'package:reservation_app/presentation/views/main/tabs/home/block/home_tab_bloc.dart';
 
 import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 
@@ -52,29 +49,3 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
     );
   }
 }
-
-// @override
-// Widget build(BuildContext context) {
-//   return BlocBuilder<HomeTabBloc, HomeTabState>(
-//     bloc: homeTabBloc,
-//     builder: (_, state) {
-//       switch (state.runtimeType) {
-//         case HomeTabStateLoading:
-//           return const Center(child: CupertinoActivityIndicator());
-//         case HomeTabStateBannerImagesFailed:
-//           return const Center(child: Icon(Icons.refresh));
-//         case HomeTabStateBannerImages:
-//           return const Scaffold(
-//               body: SafeArea(
-//                   child: Center(
-//                     child: Text("Welcome Home"),
-//                   )
-//               )
-//           );
-//
-//         default:
-//           return const SizedBox();
-//       }
-//     },
-//   );
-// )
