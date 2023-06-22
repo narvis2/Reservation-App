@@ -20,6 +20,7 @@ class TopAreaComponent extends StatefulWidget {
 
 class _TopAreaComponentState extends State<TopAreaComponent> {
   late double backgroundHeight;
+  int currentIndex = 0;
 
   @override
   void initState() {
@@ -29,74 +30,72 @@ class _TopAreaComponentState extends State<TopAreaComponent> {
 
   @override
   Widget build(BuildContext context) {
-    int currentIndex = 0;
 
     return Container(
       height: backgroundHeight,
       color: ColorsConstants.background,
-      child: Center(
-        child: Column(
-          children: [
-            CarouselSlider(
-              options: CarouselOptions(
-                autoPlay: true,
-                // enlargeCenterPage: true,
-                //scrollDirection: Axis.vertical,
-                onPageChanged: (index, reason) {
-                  setState(
-                        () {
-                      currentIndex = index;
-                    },
-                  );
-                },
-              ),
-              items: imagesList
-                  .map(
-                    (item) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    margin: EdgeInsets.only(
-                      top: 10.0,
-                      bottom: 10.0,
-                    ),
-                    elevation: 6.0,
-                    shadowColor: ColorsConstants.divider,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20.0),
-                      ),
-                      child: Image.network(
-                        item,
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                      ),
-                    ),
-                  ),
-                ),
-              ).toList(),
+      child: Column(
+        children: [
+          CarouselSlider(
+            options: CarouselOptions(
+              autoPlay: true,
+              // enlargeCenterPage: true,
+              //scrollDirection: Axis.vertical,
+              onPageChanged: (index, reason) {
+                setState(
+                      () {
+                    currentIndex = index;
+                  },
+                );
+              },
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                imagesList.length,
-                    (index) => Container(
-                  width: 10.0,
-                  height: 10.0,
-                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: currentIndex == index
-                        ? Color.fromRGBO(0, 0, 0, 0.8)
-                        : Color.fromRGBO(0, 0, 0, 0.3),
+            items: imagesList
+                .map(
+                  (item) => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  margin: EdgeInsets.only(
+                    top: 10.0,
+                    bottom: 10.0,
+                  ),
+                  elevation: 6.0,
+                  shadowColor: ColorsConstants.divider,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30.0),
+                    ),
+                    child: Image.network(
+                      item,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                    ),
                   ),
                 ),
               ),
             )
-          ],
-        ),
+                .toList(),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: imagesList.map((urlOfItem) {
+              int index = imagesList.indexOf(urlOfItem);
+              return Container(
+                width: 10.0,
+                height: 10.0,
+                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: currentIndex == index
+                      ? Color.fromRGBO(0, 0, 0, 0.8)
+                      : Color.fromRGBO(0, 0, 0, 0.3),
+                ),
+              );
+            }).toList(),
+          )
+        ],
       ),
     );
   }

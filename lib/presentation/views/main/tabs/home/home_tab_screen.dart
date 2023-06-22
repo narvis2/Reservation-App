@@ -59,7 +59,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                   child: Text('Content'),
                 ),
               ),
-              persistentContentHeight: constraints.maxHeight * 0.6,
+              persistentContentHeight: constraints.maxHeight * 0.55,
             );
           },
         ),
