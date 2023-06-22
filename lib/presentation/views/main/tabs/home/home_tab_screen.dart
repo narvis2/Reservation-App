@@ -16,6 +16,33 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        centerTitle: false,
+        leading: Padding(
+          padding: EdgeInsets.only(left: 10.0), // 왼쪽에만 8의 padding을 적용
+          child: Image.asset(
+            "assets/images/logo_white.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 10.0),
+            child: IconButton(
+              icon: Image.asset(
+                "assets/images/btn_notice.png",
+                width: 24.0,
+                height: 24.0,
+                color: ColorsConstants.splashText,
+              ),
+              onPressed: () {
+                // 클릭 이벤트 처리
+              },
+            ),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -41,7 +68,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                   child: Text('Content'),
                 ),
               ),
-              persistentContentHeight: constraints.maxHeight * 0.55,
+              persistentContentHeight: constraints.maxHeight * 0.6,
             );
           },
         ),

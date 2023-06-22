@@ -7,6 +7,9 @@ class ColorsConstants {
   static const Color primaryDark = Color(0xff511958);
   static const Color background = Color(0xFFFFFFFF);
 
+  // Splash
+  static const Color splashText = Color(0xFF9B111E);
+
   // App Bar
   static const Color appBarBackground = Color(0xFFed5463);
   static const Color appBarText = Color(0xffFFFFFF);

@@ -39,7 +39,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     final mainBlock = BlocProvider.of<MainBloc>(context);
 
     return Scaffold(
-        body: TabBarView(
+          body: TabBarView(
           physics: NeverScrollableScrollPhysics(),
           controller: _tabController,
           children: <Widget>[

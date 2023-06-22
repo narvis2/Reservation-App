@@ -27,7 +27,7 @@ class _TopAreaComponentState extends State<TopAreaComponent> {
   void initState() {
     super.initState();
     homeTabBloc = locator.get<HomeTabBloc>()..add(HomeTabEventBannerImage());
-    backgroundHeight = widget.maxHeight * 0.45;
+    backgroundHeight = widget.maxHeight * 0.4;
   }
 
   @override
