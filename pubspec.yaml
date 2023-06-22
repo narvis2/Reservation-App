@@ -57,6 +57,9 @@ dependencies:
 
   motion_tab_bar_v2: ^0.2.6
 
+  expandable_bottom_sheet: ^1.1.1+1
+  carousel_slider: ^4.2.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

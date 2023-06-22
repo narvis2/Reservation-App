@@ -34,6 +34,7 @@ class BottomTabBarComponent extends StatelessWidget {
       onTabItemSelected: (int value) {
         tabController.index = value;
       },
+      useSafeArea: true,
     );
   }
 }
