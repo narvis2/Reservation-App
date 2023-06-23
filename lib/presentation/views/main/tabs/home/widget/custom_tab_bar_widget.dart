@@ -2,6 +2,8 @@ import 'package:cupertino_tabbar/cupertino_tabbar.dart' as ctb;
 import 'package:flutter/material.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
 
+import '../tabs/home/content_home_tab_screen.dart';
+
 class CustomTabBarWidget extends StatefulWidget {
   const CustomTabBarWidget({Key? key}) : super(key: key);
 
@@ -111,10 +113,10 @@ class _CustomTabBarWidgetState extends State<CustomTabBarWidget>
         _tabBar,
         Expanded(
           child: TabBarView(
-            physics: ClampingScrollPhysics(),
+            physics: NeverScrollableScrollPhysics(),
             controller: _tabController,
             children: [
-              Container(padding: EdgeInsets.all(10), child: Center(child: Text("오늘의 예약"))),
+              ContentHomeTabScreen(),
               Center(child: Text("예약")),
               Center(child: Text("공지사항")),
               Center(child: Text("알림")),
