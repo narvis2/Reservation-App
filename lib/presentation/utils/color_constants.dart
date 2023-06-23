@@ -17,6 +17,7 @@ class ColorsConstants {
 
   // Tab Bar
   static const Color tabBarBackground = Color(0xffFFFFFF);
+  static const Color tabBarSubBackground = Color(0xFF9B111E);
   static const Color tabBarSelectedText = Color(0xFFed5463);
   static const Color tabBarUnselectedText = Color(0xFFed5463);
   static const Color tabBarSelectedIcon = Color(0xFFed5463);

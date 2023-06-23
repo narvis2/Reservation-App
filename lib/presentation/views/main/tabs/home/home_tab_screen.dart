@@ -6,6 +6,7 @@ import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 import 'package:reservation_app/presentation/config/router/app_router.dart';
 
 import '../../../../utils/color_constants.dart';
+import 'components/content_area_component.dart';
 import 'components/top_area_component.dart';
 
 class HomeTabScreen extends StatefulWidget {
@@ -68,26 +69,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
           builder: (context, constraints) {
             return ExpandableBottomSheet(
               background: TopAreaComponent(maxHeight: constraints.maxHeight),
-              expandableContent: Container(
-                height: constraints.maxHeight * 0.85,
-                decoration: BoxDecoration(
-                  color: ColorsConstants.background,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: ColorsConstants.divider,
-                      blurRadius: 10,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Text('Content'),
-                ),
-              ),
+              expandableContent: ContentAreaComponent(maxHeight: constraints.maxHeight),
               persistentContentHeight: constraints.maxHeight * 0.6,
             );
           },
