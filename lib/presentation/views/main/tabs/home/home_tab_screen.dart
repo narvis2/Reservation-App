@@ -69,7 +69,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
           builder: (context, constraints) {
             return ExpandableBottomSheet(
               background: TopAreaComponent(maxHeight: constraints.maxHeight),
-              expandableContent: ContentAreaComponent(maxHeight: constraints.maxHeight),
+              expandableContent: ContentAㅗreaComponent(maxHeight: constraints.maxHeight),
               persistentContentHeight: constraints.maxHeight * 0.6,
             );
           },
