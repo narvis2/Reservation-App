@@ -1,6 +1,9 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
+import 'package:reservation_app/presentation/config/router/app_router.dart';
 
 import '../../../../utils/color_constants.dart';
 import 'components/top_area_component.dart';
@@ -18,7 +21,23 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        centerTitle: false,
+        title: Center(child: AnimatedTextKit(
+          repeatForever: true,
+          isRepeatingAnimation: true,
+          animatedTexts: [
+            WavyAnimatedText(
+              "공지사항 들어갈거임",
+              textStyle: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: ColorsConstants.splashText
+              ),
+            ),
+          ],
+          onTap: () {
+            print("Tap Event");
+          },
+        )),
         leading: Padding(
           padding: EdgeInsets.only(left: 10.0), // 왼쪽에만 8의 padding을 적용
           child: Image.asset(
@@ -38,6 +57,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
               ),
               onPressed: () {
                 // 클릭 이벤트 처리
+                AutoRouter.of(context).push(const NoticeRoute());
               },
             ),
           ),
