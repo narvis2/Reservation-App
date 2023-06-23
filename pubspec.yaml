@@ -60,6 +60,7 @@ dependencies:
   expandable_bottom_sheet: ^1.1.1+1
   carousel_slider: ^4.2.1
   cupertino_tabbar: ^2.0.0
+  lottie: ^2.4.0
 
 dev_dependencies:
   flutter_test:
