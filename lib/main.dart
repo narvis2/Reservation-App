@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/foundation.dart' as foundation;
 import 'package:reservation_app/presentation/config/router/app_router.dart';
 import 'package:reservation_app/presentation/config/themes/app_theme.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
 
 import 'di/dependency_inection_graph.dart';
+
+bool get isIOS => foundation.defaultTargetPlatform == TargetPlatform.iOS;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

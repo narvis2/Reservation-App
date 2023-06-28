@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
 import 'package:reservation_app/presentation/views/main/components/bottom_tab_bar_component.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/home_tab_screen.dart';
-import 'package:reservation_app/presentation/views/main/tabs/profile/profile_tab_screen.dart';
+import 'package:reservation_app/presentation/views/main/tabs/profile/search_tab_screen.dart';
 import 'package:reservation_app/presentation/views/main/tabs/setting/setting_tab_screen.dart';
 
 @RoutePage()
@@ -39,15 +39,15 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     final mainBlock = BlocProvider.of<MainBloc>(context);
 
     return Scaffold(
-        body: TabBarView(
-          physics: NeverScrollableScrollPhysics(),
-          controller: _tabController,
-          children: <Widget>[
-            HomeTabScreen(),
-            ProfileTabScreen(),
-            SettingTabScreen()
-          ],
-        ),
+      body: TabBarView(
+        physics: NeverScrollableScrollPhysics(),
+        controller: _tabController,
+        children: <Widget>[
+          HomeTabScreen(),
+          SearchTabScreen(),
+          SettingTabScreen()
+        ],
+      ),
       bottomNavigationBar: BottomTabBarComponent(tabController: _tabController),
     );
   }

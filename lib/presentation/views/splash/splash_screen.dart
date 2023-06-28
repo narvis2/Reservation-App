@@ -80,7 +80,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     alignment: Alignment.center,
                     child: AnimatedTextKit(
                       animatedTexts: [
-                        TyperAnimatedText('한우를 메인으로 유리를 선보이며 대화를 나누는 공간',
+                        TyperAnimatedText('한우를 메인으로 요리를 선보이며 대화를 나누는 공간',
                             textStyle: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,

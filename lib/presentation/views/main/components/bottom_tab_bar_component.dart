@@ -22,18 +22,19 @@ class BottomTabBarComponent extends StatelessWidget {
       tabBarHeight: 55,
       textStyle: const TextStyle(
         fontSize: 12,
-        color: ColorsConstants.primary,
+        color: ColorsConstants.tabBarSubBackground,
         fontWeight: FontWeight.w500,
       ),
-      tabIconColor: ColorsConstants.primary,
+      tabIconColor: ColorsConstants.tabBarSubBackground,
       tabIconSize: 28.0,
       tabIconSelectedSize: 26.0,
-      tabSelectedColor: ColorsConstants.primary,
+      tabSelectedColor: ColorsConstants.tabBarSubBackground,
       tabIconSelectedColor: ColorsConstants.tabBarBackground,
       tabBarColor: ColorsConstants.tabBarBackground,
       onTabItemSelected: (int value) {
         tabController.index = value;
       },
+      useSafeArea: true,
     );
   }
 }
