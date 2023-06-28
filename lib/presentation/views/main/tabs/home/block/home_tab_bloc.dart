@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../domain/model/banner/banner_image_model.dart';
@@ -28,14 +29,14 @@ class HomeTabBloc extends Bloc<HomeTabEvent, HomeTabState> {
     if (response is DataSuccess) {
       emit(HomeTabStateBannerImages(bannerImages: response.data ?? []));
     } else if (response is DataError) {
-      print("🌹 MainBlock DataError message 👉 ${response.error?.message}");
-      emit(HomeTabStateBannerImagesFailed(message: '알 수 없는 오류가 발생하였습니다. 잠시 후 다시 시도해주세요.'));
+      debugPrint("🌹 HomeTabBloc DataError message 👉 ${response.error?.message}");
+      emit(HomeTabStateBannerImagesFailed(message: '알 수 없는 오류가 발생하였습니다. \n 잠시 후 다시 시도해주세요.'));
     } else if (response is DataNetworkError) {
-      print("🌹 MainBlock DataNetworkError message 👉 ${response.message}");
-      emit(HomeTabStateBannerImagesFailed(message: '네트워크가 원활하지 않습니다. 잠시 후 다시 시도해주세요.'));
+      debugPrint("🌹 HomeTabBloc DataNetworkError message 👉 ${response.message}");
+      emit(HomeTabStateBannerImagesFailed(message: '네트워크가 원활하지 않습니다. \n 잠시 후 다시 시도해주세요.'));
     } else {
-      print("🌹 MainBlock DataError message 👉 ${response.error?.message}");
-      emit(HomeTabStateBannerImagesFailed(message: '알 수 없는 오류가 발생하였습니다. 잠시 후 다시 시도해주세요.'));
+      debugPrint("🌹 HomeTabBloc DataError message 👉 ${response.error?.message}");
+      emit(HomeTabStateBannerImagesFailed(message: '알 수 없는 오류가 발생하였습니다. \n 잠시 후 다시 시도해주세요.'));
     }
   }
 }

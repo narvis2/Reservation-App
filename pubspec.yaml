@@ -61,6 +61,10 @@ dependencies:
   carousel_slider: ^4.2.1
   cupertino_tabbar: ^2.0.0
   lottie: ^2.4.0
+  grouped_list: ^5.1.2
+
+  # TimeFormat
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
