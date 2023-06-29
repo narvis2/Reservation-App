@@ -34,12 +34,9 @@ class _ContentLocationTabScreenState extends State<ContentLocationTabScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.all(20),
       child: ListView(
         children: [
-          Container(
-            constraints: const BoxConstraints.expand(height: 10.0),
-          ),
           Text(
             "우회담(한우 오마카세)",
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
