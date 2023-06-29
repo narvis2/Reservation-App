@@ -1,15 +1,20 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:reservation_app/data/datasources/remote/banner/banner_api_service.dart';
+import 'package:reservation_app/data/datasources/remote/reservation/reservation_api_service.dart';
 import 'package:reservation_app/data/repository/banner/banner_repository_impl.dart';
+import 'package:reservation_app/data/repository/reservation/reservation_repository_impl.dart';
 import 'package:reservation_app/di/network/network_module.dart';
 import 'package:reservation_app/di/prefs/shared_pref_module.dart';
+import 'package:reservation_app/domain/repository/banner/banner_repository.dart';
+import 'package:reservation_app/domain/repository/reservation/reservation_repository.dart';
 import 'package:reservation_app/domain/usecase/banner/get_all_banner_image_use_case.dart';
+import 'package:reservation_app/domain/usecase/reservation/get_tartget_date_reservation_use_case.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/block/home_tab_bloc.dart';
+import 'package:reservation_app/presentation/views/main/tabs/home/tabs/home/bloc/content_home_tab_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../domain/repository/banner/banner_repository.dart';
 import 'local/local_module.dart';
 
 final locator = GetIt.instance;
@@ -17,12 +22,12 @@ final locator = GetIt.instance;
 Future<void> initializeDependencies() async {
   // 📌 SharedPreferences Single Token 등록
   locator.registerSingletonAsync<SharedPreferences>(
-      () => LocalModule.provideSharedPreferences()
+    () => LocalModule.provideSharedPreferences(),
   );
 
   // 📌 SharedPreferenceModule Singleton DI 적용
   locator.registerSingleton<SharedPreferenceModule>(
-      SharedPreferenceModule(await locator.getAsync<SharedPreferences>())
+    SharedPreferenceModule(await locator.getAsync<SharedPreferences>()),
   );
 
   /**
@@ -31,25 +36,39 @@ Future<void> initializeDependencies() async {
    * Singleton 의 생명주기를 가지지만 인스턴스가 사용되기 전까지는 초기화를 하지 않고 처음으로 사용될 때 인스턴스 초기화 진행
    */
   locator.registerLazySingleton<Dio>(
-      () => NetworkModule.provideDio(locator<SharedPreferenceModule>())
+    () => NetworkModule.provideDio(locator<SharedPreferenceModule>()),
   );
 
   // 📌 datasource
   locator.registerLazySingleton<BannerApiService>(
-      () => BannerApiService(locator<Dio>())
+    () => BannerApiService(locator<Dio>()),
+  );
+  locator.registerLazySingleton<ReservationApiService>(
+    () => ReservationApiService(locator<Dio>()),
   );
 
   // 📌 Repository
   locator.registerLazySingleton<BannerRepository>(
-      () => BannerRepositoryImpl(locator<BannerApiService>())
+    () => BannerRepositoryImpl(locator<BannerApiService>()),
+  );
+  locator.registerLazySingleton<ReservationRepository>(
+    () => ReservationRepositoryImpl(locator<ReservationApiService>()),
   );
 
   // 📌 UseCase
   locator.registerLazySingleton<GetAllBannerImageUseCase>(
-      () => GetAllBannerImageUseCase(locator<BannerRepository>())
+    () => GetAllBannerImageUseCase(locator<BannerRepository>()),
+  );
+  locator.registerLazySingleton<GetTargetDateReservationUseCase>(
+    () => GetTargetDateReservationUseCase(locator<ReservationRepository>()),
   );
 
   // 📌 Block
   locator.registerFactory(() => MainBloc());
-  locator.registerFactory(() => HomeTabBloc(locator<GetAllBannerImageUseCase>()));
+  locator.registerFactory(
+    () => HomeTabBloc(locator<GetAllBannerImageUseCase>()),
+  );
+  locator.registerFactory(
+    () => ContentHomeTabBloc(locator<GetTargetDateReservationUseCase>()),
+  );
 }

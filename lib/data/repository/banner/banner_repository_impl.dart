@@ -1,5 +1,6 @@
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:reservation_app/data/datasources/remote/banner/banner_api_service.dart';
 import 'package:reservation_app/domain/model/banner/banner_image_model.dart';
 import 'package:reservation_app/domain/model/base/data_state.dart';
@@ -21,7 +22,7 @@ class BannerRepositoryImpl implements BannerRepository {
 
       return DataNetworkError(response.resultMsg);
     } on DioException catch (error) {
-      print("🌹 DioException 👉 ${error.message}");
+      debugPrint("🌹 DioException 👉 ${error.message}");
       return DataError(error);
     }
   }

@@ -1,6 +1,6 @@
+import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/foundation.dart' as foundation;
 import 'package:reservation_app/presentation/config/router/app_router.dart';
 import 'package:reservation_app/presentation/config/themes/app_theme.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
@@ -24,10 +24,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
+        // 여기에 등록하면 앱 전역에서 사용가능 SharedViewModel 이라고 생각하면 될듯
         providers: [
           BlocProvider<MainBloc>(
-              create: (context) =>
-                  locator<MainBloc>()),
+            create: (context) => locator<MainBloc>(),
+          ),
         ],
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
