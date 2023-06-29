@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:reservation_app/presentation/config/router/app_router.dart';
 import 'package:reservation_app/presentation/config/themes/app_theme.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
@@ -13,6 +14,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await initializeDependencies();
+
+  await NaverMapSdk.instance.initialize(clientId: 'sz1yl84rs6', onAuthFailed: (error) {
+    debugPrint('💛 Naver ClientId Auth failed 👉 $error');
+  });
 
   runApp(const MyApp());
 }
