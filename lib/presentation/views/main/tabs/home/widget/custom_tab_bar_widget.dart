@@ -1,9 +1,17 @@
 import 'package:cupertino_tabbar/cupertino_tabbar.dart' as ctb;
 import 'package:flutter/material.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
+import 'package:reservation_app/presentation/views/main/tabs/home/tabs/location/content_location_tab_screen.dart';
 
 import '../tabs/home/content_home_tab_screen.dart';
 
+/*
+  📌 @author choi young jun
+  - cupertino_tabbar 라이브러리를 사용하여 ContentAreaComponent 에서 사용하였으나
+    좌/우 스와이프가 위의 TabLayout 과 연동되지 않아 별도의 HomePagerScreen 을 만들어서 사용
+
+  - 지금은 HomePagerScreen 으로 대체되어 사용하지 않으나 혹시 몰라서 남겨둠
+ */
 class CustomTabBarWidget extends StatefulWidget {
   const CustomTabBarWidget({Key? key}) : super(key: key);
 
@@ -120,7 +128,7 @@ class _CustomTabBarWidgetState extends State<CustomTabBarWidget>
               Center(child: Text("예약")),
               Center(child: Text("공지사항")),
               Center(child: Text("알림")),
-              Center(child: Text("오시는길")),
+              ContentLocationTabScreen(),
             ],
           ),
         ),

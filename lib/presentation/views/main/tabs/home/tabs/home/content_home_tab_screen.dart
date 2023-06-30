@@ -40,7 +40,7 @@ class _ContentHomeTabScreenState extends State<ContentHomeTabScreen>
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(20),
+      margin: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 20),
       color: ColorsConstants.background,
       child: BlocBuilder<ContentHomeTabBloc, ContentHomeTabState>(
         bloc: contentHomeTabBloc,
@@ -97,7 +97,7 @@ class _ContentHomeTabScreenState extends State<ContentHomeTabScreen>
                           child: GroupedListView<ReservationTargetDateModel,
                               String>(
                             elements: todayReservationList,
-                            padding: EdgeInsets.only(left: 10),
+                            padding: EdgeInsets.only(left: 15),
                             groupBy: (reservation) => reservation.partTime,
                             groupSeparatorBuilder: (groupByValue) => Padding(
                               padding: const EdgeInsets.only(top: 10.0),
