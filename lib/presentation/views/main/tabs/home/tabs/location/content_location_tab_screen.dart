@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:reservation_app/di/dependency_inection_graph.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:reservation_app/presentation/utils/snack_bar_utils.dart';
+import 'package:reservation_app/presentation/views/main/tabs/home/tabs/location/bloc/content_location_tab_bloc.dart';
 
 class ContentLocationTabScreen extends StatefulWidget {
   const ContentLocationTabScreen({Key? key}) : super(key: key);
@@ -13,22 +15,18 @@ class ContentLocationTabScreen extends StatefulWidget {
 }
 
 class _ContentLocationTabScreenState extends State<ContentLocationTabScreen> {
-  void _launchWebView(Uri uri) async {
-    if (!await launchUrl(
-      uri,
-      mode: LaunchMode.externalApplication,
-    )) {
-      throw Exception('Could not launch $uri');
-    }
+  late final ContentLocationTabBloc _contentLocationTabBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _contentLocationTabBloc = locator.get<ContentLocationTabBloc>();
   }
 
-  Future<void> _makePhoneCall(String phoneNumber) async {
-    final Uri launchUri = Uri(
-      scheme: 'tel',
-      path: phoneNumber,
-    );
-
-    await launchUrl(launchUri);
+  @override
+  void dispose() {
+    _contentLocationTabBloc.close();
+    super.dispose();
   }
 
   @override
@@ -45,6 +43,7 @@ class _ContentLocationTabScreenState extends State<ContentLocationTabScreen> {
           TextButton.icon(
             onPressed: () {
               Clipboard.setData(ClipboardData(text: '대구 북구 동천로 126 3층, 우회담'));
+              SnackBarUtils.showCustomSnackBar(context, '클립보드에 저장되었습니다.');
             },
             icon: Icon(Icons.copy, size: 18),
             label: Text(
@@ -73,7 +72,7 @@ class _ContentLocationTabScreenState extends State<ContentLocationTabScreen> {
                   (NMarker marker) {
                     final url = Uri.parse(
                         'https://map.naver.com/v5/entry/place/1568734621?lng=128.5610333&lat=35.9426627&placePath=%2Fhome%3Fentry=pll&c=15,0,0,0,dh');
-                    _launchWebView(url);
+                    _contentLocationTabBloc.add(ShowWebViewEvent(url: url));
                   },
                 );
 
@@ -85,11 +84,10 @@ class _ContentLocationTabScreenState extends State<ContentLocationTabScreen> {
                 );
                 onMarkerInfoWindow.setOnTapListener(
                   (overlay) => {
-                    _launchWebView(
-                      Uri.parse(
-                        'https://map.naver.com/v5/entry/place/1568734621?lng=128.5610333&lat=35.9426627&placePath=%2Fhome%3Fentry=pll&c=15,0,0,0,dh',
-                      ),
-                    )
+                    _contentLocationTabBloc.add(ShowWebViewEvent(
+                        url: Uri.parse(
+                      'https://map.naver.com/v5/entry/place/1568734621?lng=128.5610333&lat=35.9426627&placePath=%2Fhome%3Fentry=pll&c=15,0,0,0,dh',
+                    )))
                   },
                 );
 
@@ -136,7 +134,9 @@ class _ContentLocationTabScreenState extends State<ContentLocationTabScreen> {
                     DataColumn(
                       label: TextButton.icon(
                         onPressed: () {
-                          _makePhoneCall('01037931394');
+                          _contentLocationTabBloc.add(
+                            ShowTelPhoneEvent(phoneNumber: '01037931394'),
+                          );
                         },
                         icon: Icon(Icons.call, size: 18),
                         label: Text(
@@ -165,11 +165,10 @@ class _ContentLocationTabScreenState extends State<ContentLocationTabScreen> {
                       DataCell(
                         TextButton.icon(
                           onPressed: () {
-                            // Clipboard.setData(
-                            //   ClipboardData(text: 'uhoedam.offical'),
-                            // );
                             final url = Uri.parse('https://www.instagram.com');
-                            _launchWebView(url);
+                            _contentLocationTabBloc
+                                .add(ShowWebViewEvent(url: url));
+                            // _launchWebView(url);
                           },
                           icon: Icon(Icons.link, size: 18),
                           label: Text(
