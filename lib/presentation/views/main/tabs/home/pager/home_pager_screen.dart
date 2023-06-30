@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
+import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/home/content_home_tab_screen.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/location/content_location_tab_screen.dart';
 
@@ -96,6 +98,13 @@ class _HomePagerScreenState extends State<HomePagerScreen>
 
   @override
   Widget build(BuildContext context) {
+    final mainBlock = BlocProvider.of<MainBloc>(context)
+      ..add(
+        HomeTabLayoutCurrentPositionEvent(
+          _currentIndex,
+        ),
+      );
+
     return Container(
       decoration: BoxDecoration(
         color: ColorsConstants.background,

@@ -2,9 +2,12 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:reservation_app/presentation/config/router/app_router.dart';
 
 import '../../../../utils/color_constants.dart';
+import '../../block/main_bloc.dart';
 import 'components/content_area_component.dart';
 import 'components/top_area_component.dart';
 
@@ -18,6 +21,8 @@ class HomeTabScreen extends StatefulWidget {
 class _HomeTabScreenState extends State<HomeTabScreen> {
   @override
   Widget build(BuildContext context) {
+    final mainBlock = BlocProvider.of<MainBloc>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -36,12 +41,12 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
               ),
             ],
             onTap: () {
-              print("Tap Event");
+              debugPrint("Tap Event");
             },
           ),
         ),
         leading: Padding(
-          padding: EdgeInsets.only(left: 10.0), // 왼쪽에만 8의 padding을 적용
+          padding: EdgeInsets.only(left: 10.0),
           child: Image.asset(
             "assets/images/logo_white.png",
             fit: BoxFit.cover,
@@ -77,6 +82,62 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
           },
         ),
       ),
+      floatingActionButton: BlocBuilder<MainBloc, MainState>(
+        bloc: mainBlock,
+        builder: (context, state) {
+          if (state is HomeTabCurrentPositionState) {
+            if (state.currentPosition == 0 || state.currentPosition == 1) {
+              return floatingButtons() ?? Container();
+            } else {
+              return Container();
+            }
+          }
+
+          return Container();
+        },
+      ),
+    );
+  }
+
+  // Custom Floating Action Button
+  Widget? floatingButtons() {
+    return SpeedDial(
+      animatedIcon: AnimatedIcons.menu_close,
+      visible: true,
+      curve: Curves.bounceIn,
+      backgroundColor: ColorsConstants.splashText,
+      children: [
+        SpeedDialChild(
+          child: const Icon(
+            Icons.app_registration,
+            color: Colors.white,
+          ),
+          label: "예약",
+          labelStyle: const TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+            fontSize: 13.0,
+          ),
+          backgroundColor: ColorsConstants.splashText,
+          labelBackgroundColor: ColorsConstants.splashText,
+          onTap: () {},
+        ),
+        SpeedDialChild(
+          child: const Icon(
+            Icons.add_chart_rounded,
+            color: Colors.white,
+          ),
+          label: "예약정보 확인",
+          labelStyle: const TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+            fontSize: 13.0,
+          ),
+          backgroundColor: ColorsConstants.splashText,
+          labelBackgroundColor: ColorsConstants.splashText,
+          onTap: () {},
+        ),
+      ],
     );
   }
 }
