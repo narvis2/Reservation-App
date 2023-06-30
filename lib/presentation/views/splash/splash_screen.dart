@@ -20,16 +20,16 @@ class _SplashScreenState extends State<SplashScreen> {
   // di 를 이용해서 가져오기
   final SharedPreferenceModule pref = locator.get();
 
-  startSplash() async {
+  Future<Timer> startSplash() async {
     var duration = const Duration(seconds: 5);
     return Timer(duration, navigate);
   }
 
-  navigate() async {
+  void navigate() async {
     String? accessToken = await pref.accessToken;
 
     if (!mounted) return;
-    print("token 👉 $accessToken");
+    debugPrint("token 👉 $accessToken");
 
     if (accessToken != null) {
       AutoRouter.of(context).replace(const MainRoute());
@@ -77,20 +77,22 @@ class _SplashScreenState extends State<SplashScreen> {
               child: SizedBox(
                 width: screenWidth,
                 child: Align(
-                    alignment: Alignment.center,
-                    child: AnimatedTextKit(
-                      animatedTexts: [
-                        TyperAnimatedText('한우를 메인으로 요리를 선보이며 대화를 나누는 공간',
-                            textStyle: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                                color: Color(0xCC9B111E)
-                            ),
-                          speed: const Duration(milliseconds: 100)
+                  alignment: Alignment.center,
+                  child: AnimatedTextKit(
+                    animatedTexts: [
+                      TyperAnimatedText(
+                        '한우를 메인으로 요리를 선보이며 대화를 나누는 공간',
+                        textStyle: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xCC9B111E),
                         ),
-                      ],
-                      isRepeatingAnimation: false,
-                    )),
+                        speed: const Duration(milliseconds: 100),
+                      ),
+                    ],
+                    isRepeatingAnimation: false,
+                  ),
+                ),
               ),
             ),
           ],
