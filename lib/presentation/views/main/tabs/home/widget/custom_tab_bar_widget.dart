@@ -5,6 +5,13 @@ import 'package:reservation_app/presentation/views/main/tabs/home/tabs/location/
 
 import '../tabs/home/content_home_tab_screen.dart';
 
+/*
+  📌 @author choi young jun
+  - cupertino_tabbar 라이브러리를 사용하여 ContentAreaComponent 에서 사용하였으나
+    좌/우 스와이프가 위의 TabLayout 과 연동되지 않아 별도의 HomePagerScreen 을 만들어서 사용
+
+  - 지금은 HomePagerScreen 으로 대체되어 사용하지 않으나 혹시 몰라서 남겨둠
+ */
 class CustomTabBarWidget extends StatefulWidget {
   const CustomTabBarWidget({Key? key}) : super(key: key);
 
