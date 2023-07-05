@@ -5,6 +5,7 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:reservation_app/presentation/config/router/app_router.dart';
 import 'package:reservation_app/presentation/config/themes/app_theme.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
+import 'package:reservation_app/presentation/views/main/tabs/home/tabs/notice/bloc/bloc/content_notice_tab_bloc.dart';
 
 import 'di/dependency_inection_graph.dart';
 
@@ -15,9 +16,11 @@ void main() async {
 
   await initializeDependencies();
 
-  await NaverMapSdk.instance.initialize(clientId: 'sz1yl84rs6', onAuthFailed: (error) {
-    debugPrint('💛 Naver ClientId Auth failed 👉 $error');
-  });
+  await NaverMapSdk.instance.initialize(
+      clientId: 'sz1yl84rs6',
+      onAuthFailed: (error) {
+        debugPrint('💛 Naver ClientId Auth failed 👉 $error');
+      });
 
   runApp(const MyApp());
 }
@@ -34,6 +37,9 @@ class MyApp extends StatelessWidget {
           BlocProvider<MainBloc>(
             create: (context) => locator<MainBloc>(),
           ),
+          BlocProvider<ContentNoticeTabBloc>(
+            create: (context) => locator<ContentNoticeTabBloc>(),
+          )
         ],
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,

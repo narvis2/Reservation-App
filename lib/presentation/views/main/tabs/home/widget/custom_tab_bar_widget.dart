@@ -2,6 +2,7 @@ import 'package:cupertino_tabbar/cupertino_tabbar.dart' as ctb;
 import 'package:flutter/material.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/location/content_location_tab_screen.dart';
+import 'package:reservation_app/presentation/views/main/tabs/home/tabs/notice/bloc/content_notice_tab_screen.dart';
 
 import '../tabs/home/content_home_tab_screen.dart';
 
@@ -126,7 +127,7 @@ class _CustomTabBarWidgetState extends State<CustomTabBarWidget>
             children: [
               ContentHomeTabScreen(),
               Center(child: Text("예약")),
-              Center(child: Text("공지사항")),
+              ContentNoticeTabScreen(),
               Center(child: Text("알림")),
               ContentLocationTabScreen(),
             ],
