@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:reservation_app/presentation/config/router/app_router.dart';
 import 'package:reservation_app/presentation/config/themes/app_theme.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
+
 import 'di/dependency_inection_graph.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'presentation/views/main/tabs/home/tabs/notice/bloc/content_notice_tab_bloc.dart';
 
 bool get isIOS => foundation.defaultTargetPlatform == TargetPlatform.iOS;
 
@@ -15,9 +17,11 @@ void main() async {
 
   await initializeDependencies();
 
-  await NaverMapSdk.instance.initialize(clientId: 'sz1yl84rs6', onAuthFailed: (error) {
-    debugPrint('💛 Naver ClientId Auth failed 👉 $error');
-  });
+  await NaverMapSdk.instance.initialize(
+      clientId: 'sz1yl84rs6',
+      onAuthFailed: (error) {
+        debugPrint('💛 Naver ClientId Auth failed 👉 $error');
+      });
 
   runApp(const MyApp());
 }
@@ -34,15 +38,20 @@ class MyApp extends StatelessWidget {
           BlocProvider<MainBloc>(
             create: (context) => locator<MainBloc>(),
           ),
+          BlocProvider<ContentNoticeTabBloc>(
+            create: (create) => locator<ContentNoticeTabBloc>(),
+          ),
         ],
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
-          localizationsDelegates: [ // 다국어 설정
+          localizationsDelegates: [
+            // 다국어 설정
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          locale: Locale('ko', 'KR'), // 대한민국 언어 설정
+          locale: Locale('ko', 'KR'),
+          // 대한민국 언어 설정
           supportedLocales: [
             const Locale('en', 'US'), // English
             const Locale('ko', 'KR'), // 대한민국 언어 설정

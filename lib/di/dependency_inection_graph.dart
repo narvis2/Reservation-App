@@ -1,19 +1,24 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:reservation_app/data/datasources/remote/banner/banner_api_service.dart';
+import 'package:reservation_app/data/datasources/remote/notice/notice_api_service.dart';
 import 'package:reservation_app/data/datasources/remote/reservation/reservation_api_service.dart';
 import 'package:reservation_app/data/repository/banner/banner_repository_impl.dart';
+import 'package:reservation_app/data/repository/notice/notice_repository_impl.dart';
 import 'package:reservation_app/data/repository/reservation/reservation_repository_impl.dart';
 import 'package:reservation_app/di/network/network_module.dart';
 import 'package:reservation_app/di/prefs/shared_pref_module.dart';
 import 'package:reservation_app/domain/repository/banner/banner_repository.dart';
+import 'package:reservation_app/domain/repository/notice/notice_repository.dart';
 import 'package:reservation_app/domain/repository/reservation/reservation_repository.dart';
 import 'package:reservation_app/domain/usecase/banner/get_all_banner_image_use_case.dart';
+import 'package:reservation_app/domain/usecase/notice/get_all_notice_list_use_case.dart';
 import 'package:reservation_app/domain/usecase/reservation/get_tartget_date_reservation_use_case.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/block/home_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/home/bloc/content_home_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/location/bloc/content_location_tab_bloc.dart';
+import 'package:reservation_app/presentation/views/main/tabs/home/tabs/notice/bloc/content_notice_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/reservation_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -48,6 +53,9 @@ Future<void> initializeDependencies() async {
   locator.registerLazySingleton<ReservationApiService>(
     () => ReservationApiService(locator<Dio>()),
   );
+  locator.registerLazySingleton<NoticeApiService>(
+    () => NoticeApiService(locator<Dio>()),
+  );
 
   // 📌 Repository
   locator.registerLazySingleton<BannerRepository>(
@@ -56,6 +64,9 @@ Future<void> initializeDependencies() async {
   locator.registerLazySingleton<ReservationRepository>(
     () => ReservationRepositoryImpl(locator<ReservationApiService>()),
   );
+  locator.registerLazySingleton<NoticeRepository>(
+    () => NoticeRepositoryImpl(locator<NoticeApiService>()),
+  );
 
   // 📌 UseCase
   locator.registerLazySingleton<GetAllBannerImageUseCase>(
@@ -63,6 +74,9 @@ Future<void> initializeDependencies() async {
   );
   locator.registerLazySingleton<GetTargetDateReservationUseCase>(
     () => GetTargetDateReservationUseCase(locator<ReservationRepository>()),
+  );
+  locator.registerLazySingleton<GetAllNoticeListUseCase>(
+    () => GetAllNoticeListUseCase(locator<NoticeRepository>()),
   );
 
   // 📌 Block
@@ -78,5 +92,8 @@ Future<void> initializeDependencies() async {
   );
   locator.registerFactory(
     () => ReservationBloc(),
+  );
+  locator.registerFactory(
+    () => ContentNoticeTabBloc(locator<GetAllNoticeListUseCase>()),
   );
 }
