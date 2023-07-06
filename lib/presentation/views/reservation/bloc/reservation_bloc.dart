@@ -6,32 +6,69 @@ part 'reservation_event.dart';
 part 'reservation_state.dart';
 
 class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
-  ReservationBloc() : super(ReservationInitial()) {
-    on<ReservationCountPlusEvent>((event, emit) => _increment(event, emit));
-    on<ReservationCountMinusEvent>((event, emit) => _decrement(event, emit));
+  ReservationBloc() : super(ReservationProcessState.initial()) {
+    on<ReservationProcessEvent>(
+      (event, emit) => _setProcessCurrentPosition(event, emit),
+    );
+    on<ReservationDatePickerEvent>(
+      (event, emit) => _setSelectedDate(event, emit),
+    );
+    on<ReservationRadioTimeSelectEvent>(
+      (event, emit) => _setSelectedTime(event, emit),
+    );
+    on<ReservationSelectedCountEvent>(
+      (event, emit) => _setSelectedCount(event, emit),
+    );
   }
 
-  void _increment(
-    ReservationCountPlusEvent event,
+  void _setProcessCurrentPosition(
+    ReservationProcessEvent event,
     Emitter<ReservationState> emit,
   ) {
-    final countState = ReservationCountState();
-    if (countState.count >= 10) {
-      return;
-    }
 
-    emit(countState.copyWith(count: countState.count + 1));
+    if (state is ReservationProcessState) {
+      emit(
+        (state as ReservationProcessState).copyWith(currentPosition: event.processIndex),
+      );
+    }
   }
 
-  void _decrement(
-    ReservationCountMinusEvent event,
+  void _setSelectedDate(
+    ReservationDatePickerEvent event,
     Emitter<ReservationState> emit,
   ) {
-    final countState = ReservationCountState();
-    if (countState.count >= 0) {
-      return;
+    if (state is ReservationProcessState) {
+      emit(
+        (state as ReservationProcessState).copyWith(
+          dateTime: event.selectedDateTime,
+        ),
+      );
     }
+  }
 
-    emit(countState.copyWith(count: countState.count - 1));
+  void _setSelectedTime(
+    ReservationRadioTimeSelectEvent event,
+    Emitter<ReservationState> emit,
+  ) {
+    if (state is ReservationProcessState) {
+      emit(
+        (state as ReservationProcessState).copyWith(
+          selectedTime: event.selectedTime,
+        ),
+      );
+    }
+  }
+
+  void _setSelectedCount(
+    ReservationSelectedCountEvent event,
+    Emitter<ReservationState> emit,
+  ) {
+    if (state is ReservationProcessState) {
+      emit(
+        (state as ReservationProcessState).copyWith(
+          selectedCount: event.reservationCount,
+        ),
+      );
+    }
   }
 }

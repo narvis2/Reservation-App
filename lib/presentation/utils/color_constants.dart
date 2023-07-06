@@ -45,4 +45,8 @@ class ColorsConstants {
   static const Color inProgressColor = Color(0xFF4682B4);
   static const Color completeColor = Color(0xFF87CEEB);
   static const Color todoColor = Color(0xffd1d2d7);
+
+  static const Color calendarPickerColor = Color(0xFF6A92B4);
+  static const Color calendarSideColor = Color(0xFF7C9BB4);
+  static const Color calendarCurrentColor = Color(0xFFE8CCB4);
 }

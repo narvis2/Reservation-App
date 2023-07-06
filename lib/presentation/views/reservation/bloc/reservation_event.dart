@@ -4,21 +4,49 @@ abstract class ReservationEvent extends Equatable {
   const ReservationEvent();
 }
 
-class ReservationCountPlusEvent extends ReservationEvent {
-  const ReservationCountPlusEvent();
+// 📌 예약 Process 진행 Event
+class ReservationProcessEvent extends ReservationEvent {
+  final int processIndex;
+  const ReservationProcessEvent({required this.processIndex});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [processIndex];
 
   @override
   bool? get stringify => false;
 }
 
-class ReservationCountMinusEvent extends ReservationEvent {
-  const ReservationCountMinusEvent();
+// 📌 예약날짜 선택 Event
+class ReservationDatePickerEvent extends ReservationEvent {
+  final DateTime? selectedDateTime;
+  const ReservationDatePickerEvent({this.selectedDateTime});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [selectedDateTime];
+
+  @override
+  bool? get stringify => false;
+}
+
+// 📌 예약시간 선택 Event
+class ReservationRadioTimeSelectEvent extends ReservationEvent {
+  final int selectedTime;
+  const ReservationRadioTimeSelectEvent({required this.selectedTime});
+
+  @override
+  List<Object?> get props => [selectedTime];
+
+  @override
+  bool? get stringify => false;
+}
+
+// 📌 예약인원 선택 Event
+class ReservationSelectedCountEvent extends ReservationEvent {
+  final int reservationCount;
+  const ReservationSelectedCountEvent({required this.reservationCount});
+
+  @override
+  List<Object?> get props => [reservationCount];
 
   @override
   bool? get stringify => false;
