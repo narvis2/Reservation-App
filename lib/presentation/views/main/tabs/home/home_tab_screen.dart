@@ -120,7 +120,9 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
           ),
           backgroundColor: ColorsConstants.splashText,
           labelBackgroundColor: ColorsConstants.splashText,
-          onTap: () {},
+          onTap: () {
+            AutoRouter.of(context).push(const ReservationRoute());
+          },
         ),
         SpeedDialChild(
           child: const Icon(

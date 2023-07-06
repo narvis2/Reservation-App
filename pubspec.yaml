@@ -66,11 +66,15 @@ dependencies:
   timelines: ^0.1.0
   flutter_speed_dial: ^7.0.0
 
+  flutter_localizations:
+    sdk: flutter
+  flutter_rounded_date_picker: ^3.0.4
+
   # Web View 띄우기
   url_launcher: ^6.1.11
 
   # TimeFormat
-  intl: ^0.18.1
+  intl: 0.18.0
 
   # Font
   google_fonts: ^5.1.0

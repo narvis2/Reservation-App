@@ -5,8 +5,8 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:reservation_app/presentation/config/router/app_router.dart';
 import 'package:reservation_app/presentation/config/themes/app_theme.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
-
 import 'di/dependency_inection_graph.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 bool get isIOS => foundation.defaultTargetPlatform == TargetPlatform.iOS;
 
@@ -37,6 +37,16 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
+          localizationsDelegates: [ // 다국어 설정
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          locale: Locale('ko', 'KR'), // 대한민국 언어 설정
+          supportedLocales: [
+            const Locale('en', 'US'), // English
+            const Locale('ko', 'KR'), // 대한민국 언어 설정
+          ],
           routerDelegate: appRouter.delegate(),
           routeInformationParser: appRouter.defaultRouteParser(),
           title: "우회담 예약 어플",

@@ -14,6 +14,7 @@ import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/block/home_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/home/bloc/content_home_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/location/bloc/content_location_tab_bloc.dart';
+import 'package:reservation_app/presentation/views/reservation/bloc/reservation_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'local/local_module.dart';
@@ -74,5 +75,8 @@ Future<void> initializeDependencies() async {
   );
   locator.registerFactory(
     () => ContentLocationTabBloc(),
+  );
+  locator.registerFactory(
+    () => ReservationBloc(),
   );
 }
