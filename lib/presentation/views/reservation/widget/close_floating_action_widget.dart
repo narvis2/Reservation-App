@@ -70,7 +70,7 @@ class _CloseFloatingActionWidgetState extends State<CloseFloatingActionWidget>
         if (previous is ReservationProcessState &&
             current is ReservationProcessState) {
           // 첫 번째 Process 이고 선택된 예약날짜가 null 이 아니면 listener 시작
-          return current.currentPosition == 0 && current.dateTime != null;
+          return _animateIcon.value == 0 && current.currentPosition == 0 && (current.dateTime != null || previous.dateTime != null);
         }
 
         return current.currentPosition > previous.currentPosition;
