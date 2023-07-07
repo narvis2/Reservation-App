@@ -4,6 +4,7 @@ import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/home/content_home_tab_screen.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/location/content_location_tab_screen.dart';
+import 'package:reservation_app/presentation/views/main/tabs/home/tabs/notice/content_notice_tab_screen.dart';
 
 class HomePagerScreen extends StatefulWidget {
   const HomePagerScreen({Key? key}) : super(key: key);
@@ -172,7 +173,7 @@ class _HomePagerScreenState extends State<HomePagerScreen>
               children: <Widget>[
                 ContentHomeTabScreen(), // 홈
                 Center(child: Text("예약")),
-                Center(child: Text("공지사항")),
+                ContentNoticeTabScreen(), // 공지사항
                 Center(child: Text("알림")),
                 ContentLocationTabScreen(), // 오시는 길
               ],

@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:reservation_app/data/model/reservation/reservation_target_date_response.dart';
-import 'package:reservation_app/domain/model/reservation/reservation_target_date_model.dart';
 import 'package:retrofit/http.dart';
 
 import '../../../common/response/response_list_base.dart';
