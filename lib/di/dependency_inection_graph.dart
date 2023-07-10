@@ -13,6 +13,7 @@ import 'package:reservation_app/domain/repository/notice/notice_repository.dart'
 import 'package:reservation_app/domain/repository/reservation/reservation_repository.dart';
 import 'package:reservation_app/domain/usecase/banner/get_all_banner_image_use_case.dart';
 import 'package:reservation_app/domain/usecase/notice/get_all_notice_list_use_case.dart';
+import 'package:reservation_app/domain/usecase/reservation/get_reservation_target_part_time_use_case.dart';
 import 'package:reservation_app/domain/usecase/reservation/get_tartget_date_reservation_use_case.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/block/home_tab_bloc.dart';
@@ -77,6 +78,9 @@ Future<void> initializeDependencies() async {
   );
   locator.registerLazySingleton<GetAllNoticeListUseCase>(
     () => GetAllNoticeListUseCase(locator<NoticeRepository>()),
+  );
+  locator.registerLazySingleton<GetReservationTargetPartTimeUseCase>(
+    () => GetReservationTargetPartTimeUseCase(locator<ReservationRepository>()),
   );
 
   // 📌 Block

@@ -20,11 +20,7 @@ class _ReservationSelectTimeWidgetState
 
     return BlocSelector<ReservationBloc, ReservationState, int>(
       selector: (state) {
-        if (state is ReservationProcessState) {
-          return state.selectedTime;
-        } else {
-          return 0;
-        }
+        return state.selectedTime;
       },
       builder: (context, state) {
         return SizedBox(

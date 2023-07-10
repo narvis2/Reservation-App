@@ -6,7 +6,7 @@ part of 'response_list_base.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BaseListResponse<T> _$BaseListResponseFromJson<T extends Equatable>(
+BaseListResponse<T> _$BaseListResponseFromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
 ) =>
@@ -17,7 +17,7 @@ BaseListResponse<T> _$BaseListResponseFromJson<T extends Equatable>(
       data: (json['data'] as List<dynamic>?)?.map(fromJsonT).toList(),
     );
 
-Map<String, dynamic> _$BaseListResponseToJson<T extends Equatable>(
+Map<String, dynamic> _$BaseListResponseToJson<T>(
   BaseListResponse<T> instance,
   Object? Function(T value) toJsonT,
 ) =>

@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:reservation_app/data/model/reservation/reservation_target_date_response.dart';
+import 'package:reservation_app/domain/model/reservation/enum/part_time.dart';
+import 'package:reservation_app/domain/model/seat/enum/seat_type.dart';
 import 'package:retrofit/http.dart';
 
 import '../../../common/response/response_list_base.dart';
@@ -11,8 +13,17 @@ abstract class ReservationApiService {
   factory ReservationApiService(Dio dio, {String? baseUrl}) =
       _ReservationApiService;
 
+  // PartTime 에 신경쓰지 않고 특정 날짜의 모든 좌석 List 를 가져옴
   @GET("/reservation/seats/date")
-  Future<BaseListResponse<ReservationTargetDateResponse>> getTargetDateReservation(
+  Future<BaseListResponse<ReservationTargetDateResponse>>
+      getTargetDateReservation(
     @Query("findDate") String date,
+  );
+
+  // 특정 날짜의 원하는 PartTime 에 남아있는 좌석 List 를 가져옴
+  @GET("/reservation/seats")
+  Future<BaseListResponse<SeatType>> getTargetPartTimeDateReservation(
+    @Query("timeType") PartTime partTime,
+    @Query("reservationDateTime") String date,
   );
 }

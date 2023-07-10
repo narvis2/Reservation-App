@@ -4,8 +4,10 @@ import 'package:intl/intl.dart';
 import 'package:reservation_app/data/datasources/remote/reservation/reservation_api_service.dart';
 import 'package:reservation_app/data/model/reservation/reservation_target_date_response.dart';
 import 'package:reservation_app/domain/model/base/data_state.dart';
+import 'package:reservation_app/domain/model/reservation/enum/part_time.dart';
 import 'package:reservation_app/domain/model/reservation/part_time_seat_list.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_target_date_model.dart';
+import 'package:reservation_app/domain/model/reservation/reservation_target_part_time_seat_model.dart';
 import 'package:reservation_app/domain/model/seat/enum/seat_type.dart';
 
 import '../../../domain/repository/reservation/reservation_repository.dart';
@@ -19,12 +21,8 @@ class ReservationRepositoryImpl implements ReservationRepository {
   Future<DataState<List<ReservationTargetDateModel>>> getTargetDateReservation(
       DateTime date) async {
     try {
-      DateFormat formatter = DateFormat('yyyy-MM-dd\'T\'HH:mm:ss');
-      String formattedDate = formatter.format(date);
-      debugPrint("🌹 현재 시간 formattedDate 👉 $formattedDate}");
-
-      final response =
-          await _reservationApiService.getTargetDateReservation(formattedDate);
+      final response = await _reservationApiService
+          .getTargetDateReservation(_dateTimeToString(date));
       final List<ReservationTargetDateResponse>? responseData = response.data;
 
       if (response.success && responseData != null) {
@@ -69,9 +67,65 @@ class ReservationRepositoryImpl implements ReservationRepository {
     }
   }
 
+  @override
+  Future<DataState<List<ReservationTargetPartTimeSeatModel>>>
+      getTargetPartTimeReservation(
+    PartTime partTime,
+    DateTime date,
+    int count,
+  ) async {
+    try {
+      final response = await _reservationApiService
+          .getTargetPartTimeDateReservation(partTime, _dateTimeToString(date));
+      final List<SeatType>? responseData =
+          response.data;
+
+      if (response.success && responseData != null) {
+        if (responseData.isNotEmpty) {
+          String prefix = count <= 3 ? 'a' : count >= 4 && count < 6 ? 'b' : 'c';
+          final seatList = _parseByPartTime(responseData, prefix,);
+
+          final mappingList = seatList
+              .map(
+                (item) => ReservationTargetPartTimeSeatModel(
+                  remainSeatList: item,
+                ),
+              )
+              .toList();
+
+          debugPrint("mappingList 👇 \n ${mappingList.toString()}");
+          return DataSuccess(mappingList);
+        }
+
+        return DataSuccess([]);
+      }
+
+      return DataNetworkError(response.resultMsg);
+    } on DioException catch (error) {
+      debugPrint("🌹 DioException 👉 ${error.message}");
+      return DataError(error);
+    }
+  }
+
   List<SeatType> _parseByPartTime(List<SeatType> seatList, String prefix) {
     return seatList.where((seatType) {
       return seatType.name.startsWith(prefix);
     }).toList();
+  }
+
+  List<ReservationTargetPartTimeSeatModel> _parseByCount(
+    List<ReservationTargetPartTimeSeatModel> seatList,
+    int count,
+  ) {
+    String prefix = count <= 3 ? 'a' : count >= 4 && count < 6 ? 'b' : 'c';
+
+    return seatList.where((seatType) {
+      return seatType.remainSeatList.name.startsWith(prefix);
+    }).toList();
+  }
+
+  String _dateTimeToString(DateTime date) {
+    DateFormat formatter = DateFormat('yyyy-MM-dd\'T\'HH:mm:ss');
+    return formatter.format(date);
   }
 }

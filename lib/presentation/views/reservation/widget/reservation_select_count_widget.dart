@@ -20,11 +20,7 @@ class _ReservationSelectCountWidgetState
 
     return BlocSelector<ReservationBloc, ReservationState, int>(
       selector: (state) {
-        if (state is ReservationProcessState) {
-          return state.selectedCount;
-        } else {
-          return 0;
-        }
+        return state.selectedCount;
       },
       builder: (context, state) {
         return SizedBox(

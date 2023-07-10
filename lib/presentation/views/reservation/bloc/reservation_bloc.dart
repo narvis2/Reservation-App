@@ -1,12 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reservation_app/domain/model/seat/enum/seat_type.dart';
 
 part 'reservation_event.dart';
 
 part 'reservation_state.dart';
 
 class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
-  ReservationBloc() : super(ReservationProcessState.initial()) {
+  ReservationBloc() : super(ReservationState.initial()) {
     on<ReservationProcessEvent>(
       (event, emit) => _setProcessCurrentPosition(event, emit),
     );
@@ -25,50 +26,27 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
     ReservationProcessEvent event,
     Emitter<ReservationState> emit,
   ) {
-
-    if (state is ReservationProcessState) {
-      emit(
-        (state as ReservationProcessState).copyWith(currentPosition: event.processIndex),
-      );
-    }
+    emit(state.copyWith(currentPosition: event.processIndex));
   }
 
   void _setSelectedDate(
     ReservationDatePickerEvent event,
     Emitter<ReservationState> emit,
   ) {
-    if (state is ReservationProcessState) {
-      emit(
-        (state as ReservationProcessState).copyWith(
-          dateTime: event.selectedDateTime,
-        ),
-      );
-    }
+    emit(state.copyWith(dateTime: event.selectedDateTime));
   }
 
   void _setSelectedTime(
     ReservationRadioTimeSelectEvent event,
     Emitter<ReservationState> emit,
   ) {
-    if (state is ReservationProcessState) {
-      emit(
-        (state as ReservationProcessState).copyWith(
-          selectedTime: event.selectedTime,
-        ),
-      );
-    }
+    emit(state.copyWith(selectedTime: event.selectedTime));
   }
 
   void _setSelectedCount(
     ReservationSelectedCountEvent event,
     Emitter<ReservationState> emit,
   ) {
-    if (state is ReservationProcessState) {
-      emit(
-        (state as ReservationProcessState).copyWith(
-          selectedCount: event.reservationCount,
-        ),
-      );
-    }
+    emit(state.copyWith(selectedCount: event.reservationCount));
   }
 }
