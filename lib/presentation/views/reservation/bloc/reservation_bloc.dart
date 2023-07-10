@@ -6,6 +6,7 @@ part 'reservation_event.dart';
 
 part 'reservation_state.dart';
 
+// 📌 예약정보에 관한 State 를 관리하는 Bloc
 class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
   ReservationBloc() : super(ReservationState.initial()) {
     on<ReservationProcessEvent>(

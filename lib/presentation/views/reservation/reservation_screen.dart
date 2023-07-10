@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_app/di/dependency_inection_graph.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/reservation_bloc.dart';
+import 'package:reservation_app/presentation/views/reservation/bloc/second/reservation_second_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/view/reservation_process_view.dart';
 import 'package:reservation_app/presentation/views/reservation/widget/reservation_app_bar_widget.dart';
 
@@ -30,8 +31,15 @@ class _ReservationScreenState extends State<ReservationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => locator.get<ReservationBloc>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ReservationBloc>(
+          create: (context) => locator.get<ReservationBloc>(),
+        ),
+        BlocProvider<ReservationSecondBloc>(
+          create: (context) => locator.get<ReservationSecondBloc>(),
+        ),
+      ],
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: ReservationAppBarWidget(),
