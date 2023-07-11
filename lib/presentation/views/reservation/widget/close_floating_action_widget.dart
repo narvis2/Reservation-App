@@ -67,14 +67,40 @@ class _CloseFloatingActionWidgetState extends State<CloseFloatingActionWidget>
     return BlocConsumer<ReservationBloc, ReservationState>(
       // 이전값과 현재값을 비교하여 true 일 경우에만 listener 실행됨
       listenWhen: (previous, current) {
-          // 첫 번째 Process 이고 선택된 예약날짜가 null 이 아니면 listener 시작
-          return _animateIcon.value == 0 &&
-              current.currentPosition == 0 &&
-              (current.dateTime != null || previous.dateTime != null);
+        return true;
       },
       listener: (context, state) {
-        // X 버튼을 다음 버튼으로 바꿔줌
-        animate();
+        // ❌ 버튼을 ▶️ 버튼으로 바꿔줌
+        switch (state.currentPosition) {
+          case 0:
+            {
+              if (_animateIcon.value == 0 && state.dateTime != null) {
+                animate();
+              }
+
+              break;
+            }
+
+          case 1:
+            {
+              break;
+            }
+
+          case 2:
+            {
+              break;
+            }
+
+          case 3:
+            {
+              break;
+            }
+
+          case 4:
+            {
+              break;
+            }
+        }
       }, // 이전값과 연재값을 비교하여 true 일 경우에만 builder 실행됨
       buildWhen: (previous, current) {
         // FloatingActionButton 은 항상 보여야 하므로 true
@@ -84,22 +110,51 @@ class _CloseFloatingActionWidgetState extends State<CloseFloatingActionWidget>
         return FloatingActionButton(
           backgroundColor: _animateColor.value,
           onPressed: () {
-              if (_animateIcon.value == 0) {
-                DialogUtils.showBasicDialog(
-                  context: context,
-                  title: "알림",
-                  message: "예약날짜를 선택해 주세요.",
+            switch (state.currentPosition) {
+              case 0:
+                {
+                  if (_animateIcon.value == 0 && state.dateTime == null) {
+                    DialogUtils.showBasicDialog(
+                      context: context,
+                      title: "알림",
+                      message: "예약날짜를 선택해 주세요.",
+                    );
+
+                    return;
+                  }
+
+                  break;
+                }
+
+              case 1:
+                {
+                  return;
+                }
+
+              case 2:
+                {
+                  return;
+                }
+
+              case 3:
+                {
+                  return;
+                }
+
+              case 4:
+                {
+                  return;
+                }
+            }
+
+            context.read<ReservationBloc>().add(
+                  ReservationProcessEvent(
+                    processIndex: (state.currentPosition + 1) %
+                        Constants.reservationProcessList.length,
+                  ),
                 );
 
-                return;
-              }
-
-              context.read<ReservationBloc>().add(
-                    ReservationProcessEvent(
-                      processIndex: (state.currentPosition + 1) %
-                          Constants.reservationProcessList.length,
-                    ),
-                  );
+            animate();
           },
           child: AnimatedIcon(
             icon: _animateIcon.value == 0
