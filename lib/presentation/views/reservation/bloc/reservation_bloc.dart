@@ -21,6 +21,9 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
     on<ReservationSelectedCountEvent>(
       (event, emit) => _setSelectedCount(event, emit),
     );
+    on<ReservationSelectedSeatsEvent>(
+      (event, emit) => _setSelectedSeatList(event, emit),
+    );
   }
 
   void _setProcessCurrentPosition(
@@ -49,5 +52,12 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
     Emitter<ReservationState> emit,
   ) {
     emit(state.copyWith(selectedCount: event.reservationCount));
+  }
+
+  void _setSelectedSeatList(
+    ReservationSelectedSeatsEvent event,
+    Emitter<ReservationState> emit,
+  ) {
+    emit(state.copyWith(selectedSeats: event.selectedSeatList));
   }
 }

@@ -37,11 +37,13 @@ class ColorsConstants {
   // Others Widgets
   static const Color card = Color(0x20FFFFFF);
   static const Color divider = Color(0xFF333333);
+  static const Color boldColor = Color(0xFF000000);
   static const Color error = Color(0xfffe0012);
   static const Color success = Color(0xFF04FD7F);
   static const Color delete = Color(0xfffe0012);
 
   // Reservation Process Timelines
+  static const Color strokeColor = Color(0xFF152348);
   static const Color inProgressColor = Color(0xFF4682B4);
   static const Color completeColor = Color(0xFF87CEEB);
   static const Color todoColor = Color(0xffd1d2d7);

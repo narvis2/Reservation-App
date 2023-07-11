@@ -21,4 +21,9 @@ class DateTimeUtils {
   static String dateTimeToString({required String pattern, required DateTime date}) {
     return DateFormat(pattern).format(date);
   }
+
+  // 현재 날짜에 맞는 "요일" 가져오기
+  static String dateTimeToWeekDay({required DateTime date}) {
+    return DateFormat('EEEE', 'ko_KR').format(date);
+  }
 }

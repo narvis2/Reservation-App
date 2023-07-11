@@ -83,6 +83,10 @@ class _CloseFloatingActionWidgetState extends State<CloseFloatingActionWidget>
 
           case 1:
             {
+              if (_animateIcon.value == 0 && state.selectedSeats.isNotEmpty) {
+                animate();
+              }
+
               break;
             }
 
@@ -128,7 +132,17 @@ class _CloseFloatingActionWidgetState extends State<CloseFloatingActionWidget>
 
               case 1:
                 {
-                  return;
+                  if (_animateIcon.value == 0 && state.selectedSeats.isEmpty) {
+                    DialogUtils.showBasicDialog(
+                      context: context,
+                      title: "알림",
+                      message: "예약 정보에 문제가 없다면\n'해당 날짜로 예약' 버튼을 눌러주세요!",
+                    );
+
+                    return;
+                  }
+
+                  break;
                 }
 
               case 2:
@@ -153,7 +167,6 @@ class _CloseFloatingActionWidgetState extends State<CloseFloatingActionWidget>
                         Constants.reservationProcessList.length,
                   ),
                 );
-
             animate();
           },
           child: AnimatedIcon(

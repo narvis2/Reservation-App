@@ -51,3 +51,15 @@ class ReservationSelectedCountEvent extends ReservationEvent {
   @override
   bool? get stringify => false;
 }
+
+// 📌 좌석 선택 Event
+class ReservationSelectedSeatsEvent extends ReservationEvent {
+  final List<SeatType> selectedSeatList;
+  const ReservationSelectedSeatsEvent({required this.selectedSeatList});
+
+  @override
+  List<Object?> get props => [selectedSeatList];
+
+  @override
+  bool? get stringify => false;
+}

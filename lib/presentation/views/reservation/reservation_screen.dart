@@ -43,7 +43,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: ReservationAppBarWidget(),
-        body: ReservationProcessView(),
+        body: SafeArea(child: ReservationProcessView(),),
         floatingActionButton: CloseFloatingActionWidget(),
       ),
     );
