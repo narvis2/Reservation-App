@@ -83,7 +83,7 @@ class _ReservationSelectTimeWidgetState
                 value: 2,
                 groupValue: state,
                 title: Text(
-                  "PM 5:50",
+                  "PM 8:00",
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
