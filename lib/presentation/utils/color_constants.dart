@@ -41,6 +41,8 @@ class ColorsConstants {
   static const Color error = Color(0xfffe0012);
   static const Color success = Color(0xFF04FD7F);
   static const Color delete = Color(0xfffe0012);
+  static const Color guideBackground = Color(0xFFF5F5F5);
+  static const Color guideText = Color(0xFF777777);
 
   // Reservation Process Timelines
   static const Color strokeColor = Color(0xFF152348);

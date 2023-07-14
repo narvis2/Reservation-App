@@ -95,7 +95,7 @@ class _ReservationSecondProcessViewState
                                   ),
                                   Text(
                                     "${DateTimeUtils.dateTimeToString(
-                                      pattern: "yyyy-MM-dd",
+                                      pattern: "yyyy년 MM월 dd일",
                                       date: reservationBloc.state.dateTime!,
                                     )} ${DateTimeUtils.dateTimeToWeekDay(
                                       date: reservationBloc.state.dateTime!,
@@ -210,11 +210,14 @@ class _ReservationSecondProcessViewState
                                     children: [
                                       ElevatedButton(
                                         onPressed: () {
-                                          if (reservationBloc.state.selectedCount > 0) {
+                                          if (reservationBloc
+                                                  .state.selectedCount >
+                                              0) {
                                             reservationBloc.add(
                                               ReservationSelectedSeatsEvent(
-                                                selectedSeatList: ReservationUtils
-                                                    .modelToSeatTypeList(
+                                                selectedSeatList:
+                                                    ReservationUtils
+                                                        .modelToSeatTypeList(
                                                   selectedSeatList: seatList,
                                                 ),
                                               ),
@@ -288,6 +291,244 @@ class _ReservationSecondProcessViewState
                                   )
                                 ],
                               ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 20),
+                            padding: EdgeInsets.only(
+                              top: 20,
+                              left: 20,
+                              bottom: 20,
+                              right: 10,
+                            ),
+                            decoration: BoxDecoration(
+                              color: ColorsConstants.guideBackground,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Column(
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(right: 7, top: 7),
+                                      width: 2,
+                                      height: 2,
+                                      color: ColorsConstants.guideText,
+                                    ),
+                                    Flexible(
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: '입력하신 예약 정보가 맞다면',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color:
+                                                    ColorsConstants.guideText,
+                                                letterSpacing: -0.02,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: ' 해당 날짜로 예약 ',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color:
+                                                    ColorsConstants.guideText,
+                                                letterSpacing: -0.02,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: '버튼을 눌러주세요.',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color:
+                                                    ColorsConstants.guideText,
+                                                letterSpacing: -0.02,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  constraints:
+                                      const BoxConstraints.expand(height: 5),
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(right: 7),
+                                      width: 2,
+                                      height: 2,
+                                      color: ColorsConstants.guideText,
+                                    ),
+                                    Flexible(
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: '예약 정보를 변경 하시려면',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color:
+                                                    ColorsConstants.guideText,
+                                                letterSpacing: -0.02,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: ' 예약 정보 변경 ',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color:
+                                                    ColorsConstants.guideText,
+                                                letterSpacing: -0.02,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: '버튼을 눌러주세요.',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color:
+                                                    ColorsConstants.guideText,
+                                                letterSpacing: -0.02,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  constraints:
+                                      const BoxConstraints.expand(height: 5),
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(right: 7),
+                                      width: 2,
+                                      height: 2,
+                                      color: ColorsConstants.guideText,
+                                    ),
+                                    Flexible(
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: '1인석 ',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color:
+                                                    ColorsConstants.guideText,
+                                                letterSpacing: -0.02,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: '자리를 선택하신 경우',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color:
+                                                    ColorsConstants.guideText,
+                                                letterSpacing: -0.02,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: ' 죄석 선택',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color:
+                                                    ColorsConstants.guideText,
+                                                letterSpacing: -0.02,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: '이 가능합니다.',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color:
+                                                    ColorsConstants.guideText,
+                                                letterSpacing: -0.02,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  constraints:
+                                      const BoxConstraints.expand(height: 5),
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(right: 7, top: 7),
+                                      width: 2,
+                                      height: 2,
+                                      color: ColorsConstants.guideText,
+                                    ),
+                                    Flexible(
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: '4인석, 6인석 ',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color:
+                                                    ColorsConstants.guideText,
+                                                letterSpacing: -0.02,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: '자리를 선택하신 경우',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color:
+                                                    ColorsConstants.guideText,
+                                                letterSpacing: -0.02,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: ' 별도의 룸',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color:
+                                                    ColorsConstants.guideText,
+                                                letterSpacing: -0.02,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text:
+                                                  '으로 되어있어 좌석 선택을 하실 필요가 없습니다.',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color:
+                                                    ColorsConstants.guideText,
+                                                letterSpacing: -0.02,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ],
