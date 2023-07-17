@@ -100,6 +100,7 @@ class DialogUtils {
     required String message,
     bool enableCancelBtn = false,
     bool enableAutoCancel = true,
+    void Function()? onConfirmClick
   }) {
     showDialog(
       context: context,
@@ -187,6 +188,10 @@ class DialogUtils {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
+                            if (onConfirmClick != null) {
+                              onConfirmClick();
+                            }
+
                             Navigator.of(context).pop();
                           },
                           style: ButtonStyle(

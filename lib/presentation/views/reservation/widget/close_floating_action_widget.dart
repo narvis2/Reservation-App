@@ -4,6 +4,7 @@ import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/constants.dart';
 import 'package:reservation_app/presentation/utils/dialog_utils.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/reservation_bloc.dart';
+import 'package:reservation_app/presentation/views/reservation/bloc/second/reservation_second_bloc.dart';
 
 class CloseFloatingActionWidget extends StatefulWidget {
   const CloseFloatingActionWidget({Key? key}) : super(key: key);
@@ -64,6 +65,9 @@ class _CloseFloatingActionWidgetState extends State<CloseFloatingActionWidget>
 
   @override
   Widget build(BuildContext context) {
+    final reservationBloc = context.read<ReservationBloc>();
+    final reservationSecondBloc = context.read<ReservationSecondBloc>();
+
     return BlocConsumer<ReservationBloc, ReservationState>(
       // 이전값과 현재값을 비교하여 true 일 경우에만 listener 실행됨
       listenWhen: (previous, current) {
@@ -135,6 +139,31 @@ class _CloseFloatingActionWidgetState extends State<CloseFloatingActionWidget>
 
               case 1:
                 {
+                  final secondState = reservationSecondBloc.state;
+                  if (secondState is ReservationSecondStateSeatList) {
+                    final seatLists = secondState.seatLists;
+
+                    if (_animateIcon.value == 0 && seatLists.isEmpty) {
+                      DialogUtils.showBasicDialog(
+                        context: context,
+                        title: "알림",
+                        message: "좌석이 꽉 찼어요 ㅠ.ㅠ \n 예약정보 입력 화면으로 넘어갈게요!",
+                        enableCancelBtn: true,
+                        onConfirmClick: () {
+                          reservationBloc.add(
+                            ReservationProcessEvent(
+                              processIndex: (state.currentPosition - 1) %
+                                  Constants
+                                      .reservationProcessList.length,
+                            ),
+                          );
+                        },
+                      );
+
+                      return;
+                    }
+                  }
+
                   if (_animateIcon.value == 0 && state.selectedSeats.isEmpty) {
                     DialogUtils.showBasicDialog(
                       context: context,
@@ -164,7 +193,7 @@ class _CloseFloatingActionWidgetState extends State<CloseFloatingActionWidget>
                 }
             }
 
-            context.read<ReservationBloc>().add(
+            reservationBloc.add(
                   ReservationProcessEvent(
                     processIndex: (state.currentPosition + 1) %
                         Constants.reservationProcessList.length,

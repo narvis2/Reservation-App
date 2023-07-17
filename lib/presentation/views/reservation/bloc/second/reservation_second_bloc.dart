@@ -46,7 +46,10 @@ class ReservationSecondBloc
     final response = await getReservationTargetPartTimeUseCase.invoke(
       _numberToPartTime(selectedTime: event.partTime),
       selectedTime,
-      _countToReservationCount(count: event.count),
+      _countToReservationCount(
+        count: event.count,
+        maxUserCount: event.maxUserCount,
+      ),
     );
 
     if (response is DataSuccess) {
@@ -79,7 +82,8 @@ class ReservationSecondBloc
     final state = this.state;
     if (state is ReservationSecondStateSeatList) {
       List<ReservationTargetPartTimeSeatModel> seatLists = state.seatLists;
-      final currentSelectedList = state.seatLists.where((item) => item.isSelected).toList();
+      final currentSelectedList =
+          state.seatLists.where((item) => item.isSelected).toList();
 
       /// 📌 Item 최대 선택 수 설정
       /// Item 이 최대 선택 수를 초과하면 이전의 선택된 데이터들은 전부 비선택으로 바꾸고,
@@ -94,7 +98,8 @@ class ReservationSecondBloc
         }).toList();
       }
 
-      final List<ReservationTargetPartTimeSeatModel> newSeatLists = seatLists.toList();
+      final List<ReservationTargetPartTimeSeatModel> newSeatLists =
+          seatLists.toList();
 
       final updatedSeatList = seatLists[event.currentItem].copyWith(
         isSelected: !seatLists[event.currentItem].isSelected,
@@ -116,9 +121,10 @@ class ReservationSecondBloc
                 : PartTime.partA;
   }
 
-  int _countToReservationCount({required int count}) {
+  int _countToReservationCount(
+      {required int count, required int maxUserCount}) {
     return count == 0
-        ? 3
+        ? maxUserCount
         : count == 1
             ? 4
             : count == 2

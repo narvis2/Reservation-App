@@ -8,15 +8,17 @@ class ReservationSecondEventGetSeatList extends ReservationSecondEvent {
   final int partTime;
   final DateTime? date;
   final int count;
+  final int maxUserCount;
 
   const ReservationSecondEventGetSeatList({
     required this.partTime,
     required this.date,
     required this.count,
+    required this.maxUserCount,
   });
 
   @override
-  List<Object?> get props => [partTime, date, count];
+  List<Object?> get props => [partTime, date, count, maxUserCount];
 }
 
 class ReservationSecondEventSelectedSeats extends ReservationSecondEvent {

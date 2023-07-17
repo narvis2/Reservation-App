@@ -85,6 +85,10 @@ class ReservationRepositoryImpl implements ReservationRepository {
           String prefix = count <= 3 ? 'a' : count >= 4 && count < 6 ? 'b' : 'c';
           final seatList = _parseByPartTime(responseData, prefix,);
 
+          if (prefix == 'a' && seatList.length < count) {
+            return DataSuccess([]);
+          }
+
           final mappingList = seatList
               .map(
                 (item) => ReservationTargetPartTimeSeatModel(

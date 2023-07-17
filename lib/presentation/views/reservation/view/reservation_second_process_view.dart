@@ -31,6 +31,7 @@ class _ReservationSecondProcessViewState
         partTime: reservationBloc.state.selectedTime,
         date: reservationBloc.state.dateTime,
         count: reservationBloc.state.selectedCount,
+        maxUserCount: reservationBloc.state.realUserCount,
       ));
 
     void onReservationClick(
@@ -124,104 +125,168 @@ class _ReservationSecondProcessViewState
                   bottom: 20.0,
                 ),
                 width: MediaQuery.of(context).size.width,
-                child: seatList.isEmpty
-                    ? SizedBox.expand()
-                    : ListView(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(
-                              bottom: 15,
-                              left: 20,
-                              right: 20,
+                child: ListView(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(
+                        bottom: 15,
+                        left: 20,
+                        right: 20,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: seatList.isEmpty
+                              ? ColorsConstants.primary
+                              : ColorsConstants
+                                  .calendarPickerColor, // 테두리 색상 설정
+                          width: 2.0, // 테두리 너비 설정
+                        ),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Lottie.asset(
+                              seatList.isEmpty
+                                  ? 'assets/lottie/error-animation.json'
+                                  : 'assets/lottie/success_animation.json',
+                              animate: true,
+                              width: 100,
+                              height: 100,
+                              repeat: false,
                             ),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: ColorsConstants
-                                    .calendarPickerColor, // 테두리 색상 설정
-                                width: 2.0, // 테두리 너비 설정
+                            Text(
+                              "선택하신 날짜",
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: ColorsConstants.divider,
                               ),
-                              borderRadius: BorderRadius.circular(15),
                             ),
-                            child: Center(
-                              child: Column(
-                                children: [
-                                  Lottie.asset(
-                                    'assets/lottie/success_animation.json',
-                                    animate: true,
-                                    width: 100,
-                                    height: 100,
-                                    repeat: false,
+                            Text(
+                              "${DateTimeUtils.dateTimeToString(
+                                pattern: "yyyy년 MM월 dd일",
+                                date: reservationBloc.state.dateTime!,
+                              )} ${DateTimeUtils.dateTimeToWeekDay(
+                                date: reservationBloc.state.dateTime!,
+                              )}",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: ColorsConstants.strokeColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  ReservationUtils.partTimeToString(
+                                    partTime:
+                                        reservationBloc.state.selectedTime,
                                   ),
-                                  Text(
-                                    "선택하신 날짜",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: ColorsConstants.divider,
-                                    ),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: ColorsConstants.strokeColor,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Text(
-                                    "${DateTimeUtils.dateTimeToString(
-                                      pattern: "yyyy년 MM월 dd일",
-                                      date: reservationBloc.state.dateTime!,
-                                    )} ${DateTimeUtils.dateTimeToWeekDay(
-                                      date: reservationBloc.state.dateTime!,
-                                    )}",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: ColorsConstants.strokeColor,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                ),
+                                Text(
+                                  "시에",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: ColorsConstants.divider,
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  ReservationUtils.reservationCountToString(
+                                    count: reservationBloc.state.selectedCount,
+                                    realUserCount:
+                                        reservationBloc.state.realUserCount,
+                                  ),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: ColorsConstants.strokeColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  seatList.isEmpty ? "은" : "으로",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: ColorsConstants.divider,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            seatList.isEmpty
+                                ? Column(
                                     children: [
-                                      Text(
-                                        ReservationUtils.partTimeToString(
-                                          partTime: reservationBloc
-                                              .state.selectedTime,
-                                        ),
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: ColorsConstants.strokeColor,
-                                          fontWeight: FontWeight.bold,
+                                      RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: '이미 예약이 ',
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: ColorsConstants.divider,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: '꽉 찼어요ㅠ',
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: ColorsConstants.primary,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      Text(
-                                        "시에",
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          color: ColorsConstants.divider,
+                                      RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: '다른 날짜',
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color:
+                                                    ColorsConstants.strokeColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: '로 ',
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: ColorsConstants.divider,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: '변경',
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color:
+                                                    ColorsConstants.strokeColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: '해주세요..!',
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: ColorsConstants.divider,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        ReservationUtils
-                                            .reservationCountToString(
-                                          count: reservationBloc
-                                              .state.selectedCount,
-                                          realUserCount: reservationBloc
-                                              .state.realUserCount,
-                                        ),
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: ColorsConstants.strokeColor,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        "으로",
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          color: ColorsConstants.divider,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  RichText(
+                                  )
+                                : RichText(
                                     text: TextSpan(
                                       children: [
                                         TextSpan(
@@ -257,7 +322,12 @@ class _ReservationSecondProcessViewState
                                       ],
                                     ),
                                   ),
-                                  Container(
+                            seatList.isEmpty
+                                ? Container(
+                                    constraints:
+                                        BoxConstraints.expand(height: 10),
+                                  )
+                                : Container(
                                     constraints: BoxConstraints.expand(
                                       height:
                                           reservationBloc.state.selectedCount ==
@@ -266,126 +336,121 @@ class _ReservationSecondProcessViewState
                                               : 30.0,
                                     ),
                                   ),
-                                  Visibility(
-                                    visible: reservationBloc
-                                                .state.selectedCount ==
-                                            0 &&
+                            if (seatList.isNotEmpty)
+                              Visibility(
+                                visible:
+                                    reservationBloc.state.selectedCount == 0 &&
                                         reservationBloc.state.realUserCount < 4,
-                                    child: RemainSeatListAdapter(
-                                      seatList: seatList,
-                                      onSelectedSeat: ({
-                                        required int selectedItem,
-                                      }) {
-                                        reservationSecondBloc.add(
-                                          ReservationSecondEventSelectedSeats(
-                                            currentItem: selectedItem,
-                                            selectedLimitUserCount:
-                                                reservationBloc
-                                                    .state.realUserCount,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  Container(
-                                    constraints: BoxConstraints.expand(
-                                      height:
-                                          reservationBloc.state.selectedCount ==
-                                                  0
-                                              ? 10
-                                              : 0,
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1,
-                                    color: ColorsConstants.calendarPickerColor,
-                                  ),
-                                  Container(
-                                    constraints: const BoxConstraints.expand(
-                                      height: 10.0,
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          onReservationClick(
-                                            seatList: seatList,
-                                          );
-                                        },
-                                        style: ButtonStyle(
-                                          shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                50.0,
-                                              ),
-                                            ),
-                                          ),
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                            ColorsConstants.strokeColor,
-                                          ),
-                                        ),
-                                        child: Text(
-                                          "해당 날짜로 예약",
-                                          style: TextStyle(
-                                            color: ColorsConstants.background,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
+                                child: RemainSeatListAdapter(
+                                  seatList: seatList,
+                                  onSelectedSeat: ({
+                                    required int selectedItem,
+                                  }) {
+                                    reservationSecondBloc.add(
+                                      ReservationSecondEventSelectedSeats(
+                                        currentItem: selectedItem,
+                                        selectedLimitUserCount:
+                                            reservationBloc.state.realUserCount,
                                       ),
-                                      SizedBox(width: 30),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          reservationBloc.add(
-                                            ReservationProcessEvent(
-                                              processIndex: (reservationBloc
-                                                          .state
-                                                          .currentPosition -
-                                                      1) %
-                                                  Constants
-                                                      .reservationProcessList
-                                                      .length,
-                                            ),
-                                          );
-                                        },
-                                        style: ButtonStyle(
-                                          shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                50.0,
-                                              ),
-                                            ),
-                                          ),
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                            ColorsConstants.primary,
-                                          ),
-                                        ),
-                                        child: Text(
-                                          "예약 정보 변경",
-                                          style: TextStyle(
-                                            color: ColorsConstants.background,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
+                                    );
+                                  },
+                                ),
+                              ),
+                            Container(
+                              constraints: BoxConstraints.expand(
+                                height: reservationBloc.state.selectedCount == 0
+                                    ? 10
+                                    : 0,
                               ),
                             ),
-                          ),
-                          Container(
+                            Divider(
+                              height: 1,
+                              color: ColorsConstants.calendarPickerColor,
+                            ),
+                            Container(
+                              constraints: const BoxConstraints.expand(
+                                height: 10.0,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                if (seatList.isNotEmpty)
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      onReservationClick(
+                                        seatList: seatList,
+                                      );
+                                    },
+                                    style: ButtonStyle(
+                                      shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            50.0,
+                                          ),
+                                        ),
+                                      ),
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                        ColorsConstants.strokeColor,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      "해당 날짜로 예약",
+                                      style: TextStyle(
+                                        color: ColorsConstants.background,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                if (seatList.isNotEmpty) SizedBox(width: 30),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    reservationBloc.add(
+                                      ReservationProcessEvent(
+                                        processIndex: (reservationBloc
+                                                    .state.currentPosition -
+                                                1) %
+                                            Constants
+                                                .reservationProcessList.length,
+                                      ),
+                                    );
+                                  },
+                                  style: ButtonStyle(
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          50.0,
+                                        ),
+                                      ),
+                                    ),
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                      ColorsConstants.primary,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    "예약 정보 변경",
+                                    style: TextStyle(
+                                      color: ColorsConstants.background,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    seatList.isEmpty
+                        ? SizedBox.expand()
+                        : Container(
                             margin: EdgeInsets.only(top: 20),
                             padding: EdgeInsets.only(
                               top: 20,
@@ -623,8 +688,8 @@ class _ReservationSecondProcessViewState
                               ],
                             ),
                           ),
-                        ],
-                      ),
+                  ],
+                ),
               );
 
             default:
