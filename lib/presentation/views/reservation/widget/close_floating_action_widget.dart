@@ -4,6 +4,7 @@ import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/constants.dart';
 import 'package:reservation_app/presentation/utils/dialog_utils.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/reservation_bloc.dart';
+import 'package:reservation_app/presentation/views/reservation/bloc/second/reservation_second_bloc.dart';
 
 class CloseFloatingActionWidget extends StatefulWidget {
   const CloseFloatingActionWidget({Key? key}) : super(key: key);
@@ -64,22 +65,54 @@ class _CloseFloatingActionWidgetState extends State<CloseFloatingActionWidget>
 
   @override
   Widget build(BuildContext context) {
+    final reservationBloc = context.read<ReservationBloc>();
+    final reservationSecondBloc = context.read<ReservationSecondBloc>();
+
     return BlocConsumer<ReservationBloc, ReservationState>(
       // 이전값과 현재값을 비교하여 true 일 경우에만 listener 실행됨
       listenWhen: (previous, current) {
-        if (previous is ReservationProcessState &&
-            current is ReservationProcessState) {
-          // 첫 번째 Process 이고 선택된 예약날짜가 null 이 아니면 listener 시작
-          return _animateIcon.value == 0 && current.currentPosition == 0 && (current.dateTime != null || previous.dateTime != null);
-        }
-
-        return current.currentPosition > previous.currentPosition;
+        return true;
       },
       listener: (context, state) {
-        // X 버튼을 다음 버튼으로 바꿔줌
-        animate();
-      },
-      // 이전값과 연재값을 비교하여 true 일 경우에만 builder 실행됨
+        // ❌ 버튼을 ▶️ 버튼으로 바꿔줌
+        switch (state.currentPosition) {
+          case 0:
+            {
+              if (_animateIcon.value == 0 && state.dateTime != null) {
+                animate();
+              }
+
+              break;
+            }
+
+          case 1:
+            {
+              if (_animateIcon.value == 0 && state.selectedSeats.isNotEmpty) {
+                animate();
+              } else if (isOpened && state.selectedSeats.isEmpty) {
+                _animationController.reverse();
+                isOpened = !isOpened;
+              }
+
+              break;
+            }
+
+          case 2:
+            {
+              break;
+            }
+
+          case 3:
+            {
+              break;
+            }
+
+          case 4:
+            {
+              break;
+            }
+        }
+      }, // 이전값과 연재값을 비교하여 true 일 경우에만 builder 실행됨
       buildWhen: (previous, current) {
         // FloatingActionButton 은 항상 보여야 하므로 true
         return true;
@@ -88,22 +121,85 @@ class _CloseFloatingActionWidgetState extends State<CloseFloatingActionWidget>
         return FloatingActionButton(
           backgroundColor: _animateColor.value,
           onPressed: () {
-            if (_animateIcon.value == 0) {
-              DialogUtils.showBasicDialog(
-                context: context,
-                title: "알림",
-                message: "예약날짜를 선택해 주세요.",
-              );
+            switch (state.currentPosition) {
+              case 0:
+                {
+                  if (_animateIcon.value == 0 && state.dateTime == null) {
+                    DialogUtils.showBasicDialog(
+                      context: context,
+                      title: "알림",
+                      message: "예약날짜를 선택해 주세요.",
+                    );
 
-              return;
+                    return;
+                  }
+
+                  break;
+                }
+
+              case 1:
+                {
+                  final secondState = reservationSecondBloc.state;
+                  if (secondState is ReservationSecondStateSeatList) {
+                    final seatLists = secondState.seatLists;
+
+                    if (_animateIcon.value == 0 && seatLists.isEmpty) {
+                      DialogUtils.showBasicDialog(
+                        context: context,
+                        title: "알림",
+                        message: "좌석이 꽉 찼어요 ㅠ.ㅠ \n 예약정보 입력 화면으로 넘어갈게요!",
+                        enableCancelBtn: true,
+                        onConfirmClick: () {
+                          reservationBloc.add(
+                            ReservationProcessEvent(
+                              processIndex: (state.currentPosition - 1) %
+                                  Constants
+                                      .reservationProcessList.length,
+                            ),
+                          );
+                        },
+                      );
+
+                      return;
+                    }
+                  }
+
+                  if (_animateIcon.value == 0 && state.selectedSeats.isEmpty) {
+                    DialogUtils.showBasicDialog(
+                      context: context,
+                      title: "알림",
+                      message: "예약 정보에 문제가 없다면\n'해당 날짜로 예약' 버튼을 눌러주세요!",
+                    );
+
+                    return;
+                  }
+
+                  break;
+                }
+
+              case 2:
+                {
+                  return;
+                }
+
+              case 3:
+                {
+                  return;
+                }
+
+              case 4:
+                {
+                  return;
+                }
             }
 
-            context.read<ReservationBloc>().add(
+            reservationBloc.add(
                   ReservationProcessEvent(
                     processIndex: (state.currentPosition + 1) %
                         Constants.reservationProcessList.length,
                   ),
                 );
+            animate();
           },
           child: AnimatedIcon(
             icon: _animateIcon.value == 0

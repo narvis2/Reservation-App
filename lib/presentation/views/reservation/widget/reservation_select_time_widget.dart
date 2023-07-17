@@ -20,11 +20,7 @@ class _ReservationSelectTimeWidgetState
 
     return BlocSelector<ReservationBloc, ReservationState, int>(
       selector: (state) {
-        if (state is ReservationProcessState) {
-          return state.selectedTime;
-        } else {
-          return 0;
-        }
+        return state.selectedTime;
       },
       builder: (context, state) {
         return SizedBox(
@@ -87,7 +83,7 @@ class _ReservationSelectTimeWidgetState
                 value: 2,
                 groupValue: state,
                 title: Text(
-                  "PM 5:50",
+                  "PM 8:00",
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,

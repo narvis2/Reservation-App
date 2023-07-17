@@ -46,6 +46,38 @@ class _ReservationApiService implements ReservationApiService {
     return value;
   }
 
+  @override
+  Future<BaseListResponse<SeatType>> getTargetPartTimeDateReservation(
+    partTime,
+    date,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'timeType': partTime.toJson(),
+      r'reservationDateTime': date,
+    };
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseListResponse<SeatType>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/reservation/seats',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BaseListResponse<SeatType>.fromJson(
+      _result.data!,
+          (json) => SeatTypeExtension.fromJson(json.toString()),
+    );
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

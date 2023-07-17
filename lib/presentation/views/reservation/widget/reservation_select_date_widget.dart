@@ -42,11 +42,7 @@ class _ReservationSelectDateWidgetState
         ),
         BlocSelector<ReservationBloc, ReservationState, DateTime?>(
           selector: (state) {
-            if (state is ReservationProcessState) {
-              return state.dateTime;
-            } else {
-              return null;
-            }
+            return state.dateTime;
           },
           builder: (context, state) {
             return OutlinedButton(
@@ -74,7 +70,6 @@ class _ReservationSelectDateWidgetState
                   },
                 ).then((value) {
                   // 확인 버튼 눌렀을 경우 Callback
-                  debugPrint("🌹 value 👉 $value");
                   if (value != null) {
                     reservationBloc.add(
                       ReservationDatePickerEvent(

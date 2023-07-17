@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'response_list_base.g.dart';
 
 @JsonSerializable(genericArgumentFactories: true)
-class BaseListResponse<T extends Equatable> {
+class BaseListResponse<T> {
   bool success;
   String? resultMsg;
   int code;
