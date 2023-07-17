@@ -85,6 +85,8 @@ class _CloseFloatingActionWidgetState extends State<CloseFloatingActionWidget>
             {
               if (_animateIcon.value == 0 && state.selectedSeats.isNotEmpty) {
                 animate();
+              } else if (_animateIcon.value != 0 && state.selectedSeats.isEmpty) {
+                animate();
               }
 
               break;

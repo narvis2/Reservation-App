@@ -24,6 +24,12 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
     on<ReservationSelectedSeatsEvent>(
       (event, emit) => _setSelectedSeatList(event, emit),
     );
+    on<ReservationInputRealUserCountAddEvent>(
+      (event, emit) => _setInputRealUserCountAdd(event, emit),
+    );
+    on<ReservationInputRealUserCountMinusEvent>(
+      (event, emit) => _setInputRealUserCountMinus(event, emit),
+    );
   }
 
   void _setProcessCurrentPosition(
@@ -52,6 +58,14 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
     Emitter<ReservationState> emit,
   ) {
     emit(state.copyWith(selectedCount: event.reservationCount));
+
+    if (event.reservationCount == 0) {
+      emit(state.copyWith(realUserCount: 1));
+    } else if (event.reservationCount == 1) {
+      emit(state.copyWith(realUserCount: 4));
+    } else if (event.reservationCount == 2) {
+      emit(state.copyWith(realUserCount: 6));
+    }
   }
 
   void _setSelectedSeatList(
@@ -59,5 +73,43 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
     Emitter<ReservationState> emit,
   ) {
     emit(state.copyWith(selectedSeats: event.selectedSeatList));
+  }
+
+  void _setInputRealUserCountAdd(
+    ReservationInputRealUserCountAddEvent event,
+    Emitter<ReservationState> emit,
+  ) {
+    if (state.selectedCount == 0 && state.realUserCount == 3) {
+      return;
+    }
+
+    if (state.selectedCount == 1 && state.realUserCount == 5) {
+      return;
+    }
+
+    if (state.selectedCount == 2 && state.realUserCount == 8) {
+      return;
+    }
+
+    emit(state.copyWith(realUserCount: state.realUserCount + 1));
+  }
+
+  void _setInputRealUserCountMinus(
+    ReservationInputRealUserCountMinusEvent event,
+    Emitter<ReservationState> emit,
+  ) {
+    if (state.selectedCount == 0 && state.realUserCount == 1) {
+      return;
+    }
+
+    if (state.selectedCount == 1 && state.realUserCount == 4) {
+      return;
+    }
+
+    if (state.selectedCount == 2 && state.realUserCount == 6) {
+      return;
+    }
+
+    emit(state.copyWith(realUserCount: state.realUserCount - 1));
   }
 }

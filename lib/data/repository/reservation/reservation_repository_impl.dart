@@ -89,6 +89,7 @@ class ReservationRepositoryImpl implements ReservationRepository {
               .map(
                 (item) => ReservationTargetPartTimeSeatModel(
                   remainSeatList: item,
+                  isSelected: false
                 ),
               )
               .toList();

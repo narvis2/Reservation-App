@@ -10,12 +10,14 @@ ReservationTargetPartTimeSeatModel _$ReservationTargetPartTimeSeatModelFromJson(
         Map<String, dynamic> json) =>
     ReservationTargetPartTimeSeatModel(
       remainSeatList: $enumDecode(_$SeatTypeEnumMap, json['remainSeatList']),
+      isSelected: json['isSelected'] as bool,
     );
 
 Map<String, dynamic> _$ReservationTargetPartTimeSeatModelToJson(
         ReservationTargetPartTimeSeatModel instance) =>
     <String, dynamic>{
       'remainSeatList': _$SeatTypeEnumMap[instance.remainSeatList]!,
+      'isSelected': instance.isSelected,
     };
 
 const _$SeatTypeEnumMap = {

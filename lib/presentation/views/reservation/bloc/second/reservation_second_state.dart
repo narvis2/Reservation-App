@@ -25,6 +25,9 @@ class ReservationSecondStateSeatList extends ReservationSecondState {
 
   @override
   List<Object?> get props => [seatLists];
+
+  @override
+  bool? get stringify => true;
 }
 
 class ReservationSecondStateFailed extends ReservationSecondState {

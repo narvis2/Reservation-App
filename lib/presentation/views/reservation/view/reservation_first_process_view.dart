@@ -14,6 +14,28 @@ class ReservationFirstProcessView extends StatefulWidget {
 
 class _ReservationFirstProcessViewState
     extends State<ReservationFirstProcessView> {
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void scrollToBottom() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: Duration(milliseconds: 500), // 스크롤 애니메이션 소요 시간
+      curve: Curves.easeOut, // 스크롤 애니메이션 효과
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -21,6 +43,7 @@ class _ReservationFirstProcessViewState
         margin: EdgeInsets.all(15.0),
         width: double.infinity,
         child: ListView(
+          controller: _scrollController,
           children: [
             Text(
               '예약 날짜/시간 선택',
@@ -61,7 +84,11 @@ class _ReservationFirstProcessViewState
             Container(
               constraints: const BoxConstraints.expand(height: 10.0),
             ),
-            ReservationSelectCountWidget(), // 예약 인원 수 선택
+            ReservationSelectCountWidget(
+              onScrollBottom: () {
+                scrollToBottom();
+              },
+            ),
           ],
         ),
       ),

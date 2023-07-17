@@ -63,3 +63,25 @@ class ReservationSelectedSeatsEvent extends ReservationEvent {
   @override
   bool? get stringify => false;
 }
+
+// 📌 실제 예약 인원수 Add Event
+class ReservationInputRealUserCountAddEvent extends ReservationEvent {
+  const ReservationInputRealUserCountAddEvent();
+
+  @override
+  List<Object?> get props => [];
+
+  @override
+  bool? get stringify => false;
+}
+
+// 📌 실제 예약 인원수 Minus Event
+class ReservationInputRealUserCountMinusEvent extends ReservationEvent {
+  const ReservationInputRealUserCountMinusEvent();
+
+  @override
+  List<Object?> get props => [];
+
+  @override
+  bool? get stringify => false;
+}

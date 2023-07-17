@@ -7,9 +7,11 @@ part 'reservation_target_part_time_seat_model.g.dart';
 @JsonSerializable()
 class ReservationTargetPartTimeSeatModel extends Equatable {
   final SeatType remainSeatList;
+  final bool isSelected;
 
   ReservationTargetPartTimeSeatModel({
     required this.remainSeatList,
+    required this.isSelected,
   });
 
   factory ReservationTargetPartTimeSeatModel.fromJson(
@@ -20,6 +22,19 @@ class ReservationTargetPartTimeSeatModel extends Equatable {
   Map<String, dynamic> toJson() =>
       _$ReservationTargetPartTimeSeatModelToJson(this);
 
+  ReservationTargetPartTimeSeatModel copyWith({
+    SeatType? remainSeatList,
+    bool? isSelected,
+  }) {
+    return ReservationTargetPartTimeSeatModel(
+      remainSeatList: remainSeatList ?? this.remainSeatList,
+      isSelected: isSelected ?? this.isSelected,
+    );
+  }
+
   @override
-  List<Object?> get props => [remainSeatList];
+  List<Object?> get props => [remainSeatList, isSelected];
+
+  @override
+  bool? get stringify => true;
 }

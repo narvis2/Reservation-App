@@ -5,11 +5,13 @@ import 'package:reservation_app/domain/model/reservation/reservation_target_part
 import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/constants.dart';
 import 'package:reservation_app/presentation/utils/date_time_utils.dart';
+import 'package:reservation_app/presentation/utils/dialog_utils.dart';
 import 'package:reservation_app/presentation/views/common/network_error_widget.dart';
 import 'package:reservation_app/presentation/views/common/network_loading_widget.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/reservation_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/second/reservation_second_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/utils/reservation_utils.dart';
+import 'package:reservation_app/presentation/views/reservation/widget/adapter/remain_seat_list_adapter.dart';
 
 class ReservationSecondProcessView extends StatefulWidget {
   const ReservationSecondProcessView({Key? key}) : super(key: key);
@@ -24,17 +26,77 @@ class _ReservationSecondProcessViewState
   @override
   Widget build(BuildContext context) {
     final reservationBloc = BlocProvider.of<ReservationBloc>(context);
-    final reservationSecondBloc =
-        BlocProvider.of<ReservationSecondBloc>(context)
-          ..add(ReservationSecondEventGetSeatList(
-            partTime: reservationBloc.state.selectedTime,
-            date: reservationBloc.state.dateTime,
-            count: reservationBloc.state.selectedCount,
-          ));
+    final reservationSecondBloc = context.read<ReservationSecondBloc>()
+      ..add(ReservationSecondEventGetSeatList(
+        partTime: reservationBloc.state.selectedTime,
+        date: reservationBloc.state.dateTime,
+        count: reservationBloc.state.selectedCount,
+      ));
+
+    void _onReservationCick(
+        {required List<ReservationTargetPartTimeSeatModel> seatList}) {
+      if (reservationBloc.state.selectedCount > 0) {
+        reservationBloc.add(
+          ReservationSelectedSeatsEvent(
+            selectedSeatList: ReservationUtils.modelToSeatTypeList(
+              selectedSeatList: seatList,
+            ),
+          ),
+        );
+      } else if (reservationBloc.state.selectedCount == 0) {
+        final selectedList = seatList
+            .where(
+              (item) => item.isSelected,
+            )
+            .toList();
+
+        if (selectedList.isEmpty) {
+          DialogUtils.showBasicDialog(
+            context: context,
+            title: "알림",
+            message: "좌석을 선택해주세요!",
+          );
+          return;
+        }
+
+        reservationBloc.add(
+          ReservationSelectedSeatsEvent(
+            selectedSeatList: ReservationUtils.modelToSeatTypeList(
+              selectedSeatList: selectedList,
+            ),
+          ),
+        );
+      }
+    }
 
     return Expanded(
-      child: BlocBuilder<ReservationSecondBloc, ReservationSecondState>(
+      child: BlocConsumer<ReservationSecondBloc, ReservationSecondState>(
         bloc: reservationSecondBloc,
+        listenWhen: (previous, current) {
+          return true;
+        },
+        listener: (context, state) {
+          if (state is ReservationSecondStateSeatList) {
+            if (reservationBloc.state.selectedCount == 0) {
+              final selectedList = state.seatLists
+                  .where(
+                    (item) => item.isSelected,
+                  )
+                  .toList();
+
+              if (selectedList.isEmpty) {
+                reservationBloc.add(
+                  ReservationSelectedSeatsEvent(
+                    selectedSeatList: [],
+                  ),
+                );
+              }
+            }
+          }
+        },
+        buildWhen: (previous, current) {
+          return true;
+        },
         builder: (context, state) {
           switch (state.runtimeType) {
             case ReservationSecondStateLoading:
@@ -56,7 +118,11 @@ class _ReservationSecondProcessViewState
 
               return Container(
                 margin: EdgeInsets.only(
-                    top: 30.0, left: 20.0, right: 20.0, bottom: 20.0),
+                  top: 30.0,
+                  left: 20.0,
+                  right: 20.0,
+                  bottom: 20.0,
+                ),
                 width: MediaQuery.of(context).size.width,
                 child: seatList.isEmpty
                     ? SizedBox.expand()
@@ -137,6 +203,8 @@ class _ReservationSecondProcessViewState
                                             .reservationCountToString(
                                           count: reservationBloc
                                               .state.selectedCount,
+                                          realUserCount: reservationBloc
+                                              .state.realUserCount,
                                         ),
                                         style: TextStyle(
                                           fontSize: 16,
@@ -190,8 +258,42 @@ class _ReservationSecondProcessViewState
                                     ),
                                   ),
                                   Container(
-                                    constraints: const BoxConstraints.expand(
-                                      height: 30.0,
+                                    constraints: BoxConstraints.expand(
+                                      height:
+                                          reservationBloc.state.selectedCount ==
+                                                  0
+                                              ? 10
+                                              : 30.0,
+                                    ),
+                                  ),
+                                  Visibility(
+                                    visible: reservationBloc
+                                                .state.selectedCount ==
+                                            0 &&
+                                        reservationBloc.state.realUserCount < 4,
+                                    child: RemainSeatListAdapter(
+                                      seatList: seatList,
+                                      onSelectedSeat: ({
+                                        required int selectedItem,
+                                      }) {
+                                        reservationSecondBloc.add(
+                                          ReservationSecondEventSelectedSeats(
+                                            currentItem: selectedItem,
+                                            selectedLimitUserCount:
+                                                reservationBloc
+                                                    .state.realUserCount,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  Container(
+                                    constraints: BoxConstraints.expand(
+                                      height:
+                                          reservationBloc.state.selectedCount ==
+                                                  0
+                                              ? 10
+                                              : 0,
                                     ),
                                   ),
                                   Divider(
@@ -210,19 +312,8 @@ class _ReservationSecondProcessViewState
                                     children: [
                                       ElevatedButton(
                                         onPressed: () {
-                                          if (reservationBloc
-                                                  .state.selectedCount >
-                                              0) {
-                                            reservationBloc.add(
-                                              ReservationSelectedSeatsEvent(
-                                                selectedSeatList:
-                                                    ReservationUtils
-                                                        .modelToSeatTypeList(
-                                                  selectedSeatList: seatList,
-                                                ),
-                                              ),
-                                            );
-                                          }
+                                          _onReservationCick(
+                                              seatList: seatList);
                                         },
                                         style: ButtonStyle(
                                           shape: MaterialStateProperty.all<

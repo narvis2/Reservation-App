@@ -14,13 +14,15 @@ class ReservationUtils {
     }
   }
 
-  static String reservationCountToString({required int count}) {
+  static String reservationCountToString({
+    required int count, required int realUserCount
+  }) {
     if (count == 0) {
-      return "여기는 좀 있다가..";
+      return "1 인석 $realUserCount명";
     } else if (count == 1) {
-      return "4 인석";
+      return "4 인석 $realUserCount명";
     } else if (count == 2) {
-      return "6 인석";
+      return "6 인석 $realUserCount명";
     } else {
       return "여기는 좀 있다가..";
     }

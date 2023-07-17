@@ -23,6 +23,12 @@ class ReservationSecondBloc
         emit,
       ),
     );
+    on<ReservationSecondEventSelectedSeats>(
+      (event, emit) => _selectedRemainSeatList(
+        event,
+        emit,
+      ),
+    );
   }
 
   void _getRemainSeatList(
@@ -63,6 +69,40 @@ class ReservationSecondBloc
         "🌹 ReservationSecondBloc DataError message 👉 ${response.error?.message}",
       );
       emit(ReservationSecondStateFailed(message: Constants.dataError));
+    }
+  }
+
+  void _selectedRemainSeatList(
+    ReservationSecondEventSelectedSeats event,
+    Emitter<ReservationSecondState> emit,
+  ) {
+    final state = this.state;
+    if (state is ReservationSecondStateSeatList) {
+      List<ReservationTargetPartTimeSeatModel> seatLists = state.seatLists;
+      final currentSelectedList = state.seatLists.where((item) => item.isSelected).toList();
+
+      /// 📌 Item 최대 선택 수 설정
+      /// Item 이 최대 선택 수를 초과하면 이전의 선택된 데이터들은 전부 비선택으로 바꾸고,
+      /// 현재 선택한 Item 만 선택으로 설정
+      if (currentSelectedList.length == event.selectedLimitUserCount) {
+        seatLists = seatLists.map((seat) {
+          if (seat.isSelected) {
+            return seat.copyWith(isSelected: false);
+          } else {
+            return seat;
+          }
+        }).toList();
+      }
+
+      final List<ReservationTargetPartTimeSeatModel> newSeatLists = seatLists.toList();
+
+      final updatedSeatList = seatLists[event.currentItem].copyWith(
+        isSelected: !seatLists[event.currentItem].isSelected,
+      );
+
+      newSeatLists[event.currentItem] = updatedSeatList;
+
+      emit(ReservationSecondStateSeatList(seatLists: newSeatLists));
     }
   }
 
