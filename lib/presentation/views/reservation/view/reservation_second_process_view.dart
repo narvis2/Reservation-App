@@ -33,7 +33,7 @@ class _ReservationSecondProcessViewState
         count: reservationBloc.state.selectedCount,
       ));
 
-    void _onReservationCick(
+    void onReservationClick(
         {required List<ReservationTargetPartTimeSeatModel> seatList}) {
       if (reservationBloc.state.selectedCount > 0) {
         reservationBloc.add(
@@ -312,8 +312,9 @@ class _ReservationSecondProcessViewState
                                     children: [
                                       ElevatedButton(
                                         onPressed: () {
-                                          _onReservationCick(
-                                              seatList: seatList);
+                                          onReservationClick(
+                                            seatList: seatList,
+                                          );
                                         },
                                         style: ButtonStyle(
                                           shape: MaterialStateProperty.all<
