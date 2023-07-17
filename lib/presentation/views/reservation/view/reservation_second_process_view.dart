@@ -449,7 +449,7 @@ class _ReservationSecondProcessViewState
                       ),
                     ),
                     seatList.isEmpty
-                        ? SizedBox.expand()
+                        ? SizedBox()
                         : Container(
                             margin: EdgeInsets.only(top: 20),
                             padding: EdgeInsets.only(
