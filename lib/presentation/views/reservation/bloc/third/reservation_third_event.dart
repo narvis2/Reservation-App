@@ -15,7 +15,7 @@ class ReservationThirdTermListEvent extends ReservationThirdEvent {
   bool? get stringify => false;
 }
 
-// 📌 이용약관 개별 선택 
+// 📌 이용약관 개별 선택
 class ReservationThirdTermClickEvent extends ReservationThirdEvent {
   final int selectedIndex;
 

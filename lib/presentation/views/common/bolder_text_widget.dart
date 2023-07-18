@@ -5,12 +5,20 @@ class BorderTextWidget extends StatelessWidget {
   final List<dynamic> texts;
   final Color? normalColors;
   final Color? bolderColors;
+  final double? normalFontSize;
+  final double? bolderFontSize;
+  final double? letterSpacing;
+  final FontWeight? bolderFontWeight;
 
   const BorderTextWidget({
     Key? key,
     required this.texts,
     this.normalColors,
     this.bolderColors,
+    this.normalFontSize,
+    this.bolderFontSize,
+    this.letterSpacing,
+    this.bolderFontWeight,
   }) : super(key: key);
 
   @override
@@ -22,7 +30,8 @@ class BorderTextWidget extends StatelessWidget {
           text: text,
           style: TextStyle(
             color: normalColors ?? ColorsConstants.boldColor,
-            fontSize: 20,
+            fontSize: normalFontSize ?? 20,
+            letterSpacing: letterSpacing,
           ),
         ));
       } else if (text is List && text.length == 2) {
@@ -30,8 +39,9 @@ class BorderTextWidget extends StatelessWidget {
           text: text[0],
           style: TextStyle(
             color: bolderColors ?? ColorsConstants.boldColor,
-            fontSize: 20,
-            fontWeight: text[1] == true ? FontWeight.bold : FontWeight.normal,
+            fontSize: bolderFontSize ?? 20,
+            fontWeight: text[1] == true ? bolderFontWeight ?? FontWeight.bold : FontWeight.normal,
+            letterSpacing: letterSpacing,
           ),
         ));
       }
