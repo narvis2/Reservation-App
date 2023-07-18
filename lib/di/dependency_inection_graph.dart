@@ -22,6 +22,7 @@ import 'package:reservation_app/presentation/views/main/tabs/home/tabs/location/
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/notice/bloc/content_notice_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/reservation_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/second/reservation_second_bloc.dart';
+import 'package:reservation_app/presentation/views/reservation/bloc/third/reservation_third_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'local/local_module.dart';
@@ -100,6 +101,9 @@ Future<void> initializeDependencies() async {
   );
   locator.registerFactory(
     () => ReservationSecondBloc(locator<GetReservationTargetPartTimeUseCase>()),
+  );
+  locator.registerFactory(
+    () => ReservationThirdBloc(),
   );
   locator.registerFactory(
     () => ContentNoticeTabBloc(locator<GetAllNoticeListUseCase>()),

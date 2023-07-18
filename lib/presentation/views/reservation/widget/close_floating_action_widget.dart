@@ -99,6 +99,13 @@ class _CloseFloatingActionWidgetState extends State<CloseFloatingActionWidget>
 
           case 2:
             {
+              if (_animateIcon.value == 0 && state.termIsAllAgree) {
+                animate();
+              } else if (isOpened && !state.termIsAllAgree) {
+                _animationController.reverse();
+                isOpened = !isOpened;
+              }
+
               break;
             }
 
@@ -179,7 +186,17 @@ class _CloseFloatingActionWidgetState extends State<CloseFloatingActionWidget>
 
               case 2:
                 {
-                  return;
+                  if (_animateIcon.value == 0 && !state.termIsAllAgree) {
+                    DialogUtils.showBasicDialog(
+                      context: context,
+                      title: "알림",
+                      message: "이용약관을 동의해주세요!",
+                    );
+
+                    return;
+                  }
+
+                  break;
                 }
 
               case 3:

@@ -85,3 +85,16 @@ class ReservationInputRealUserCountMinusEvent extends ReservationEvent {
   @override
   bool? get stringify => false;
 }
+
+// 📌 약관동의 - 전체 동의했을 경우 Event
+class ReservationTermAllAgreeEvent extends ReservationEvent {
+  final bool isAllSelected;
+
+  const ReservationTermAllAgreeEvent({required this.isAllSelected});
+
+  @override
+  List<Object?> get props => [isAllSelected];
+
+  @override
+  bool? get stringify => false;
+}
