@@ -42,7 +42,7 @@ class _RemainSeatListAdapterState extends State<RemainSeatListAdapter> {
     return ConstrainedBox(
       constraints: BoxConstraints(
         maxHeight: 50,
-        maxWidth: MediaQuery.of(context).size.height,
+        maxWidth: MediaQuery.of(context).size.width,
       ),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,

@@ -30,6 +30,9 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
     on<ReservationInputRealUserCountMinusEvent>(
       (event, emit) => _setInputRealUserCountMinus(event, emit),
     );
+    on<ReservationTermAllAgreeEvent>(
+      (event, emit) => _setTermIsAllAgree(event, emit),
+    );
   }
 
   void _setProcessCurrentPosition(
@@ -111,5 +114,12 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
     }
 
     emit(state.copyWith(realUserCount: state.realUserCount - 1));
+  }
+
+  void _setTermIsAllAgree(
+    ReservationTermAllAgreeEvent event,
+    Emitter<ReservationState> emit,
+  ) {
+    emit(state.copyWith(termIsAllAgree: event.isAllSelected));
   }
 }

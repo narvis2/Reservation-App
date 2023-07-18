@@ -6,6 +6,7 @@ import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/constants.dart';
 import 'package:reservation_app/presentation/utils/date_time_utils.dart';
 import 'package:reservation_app/presentation/utils/dialog_utils.dart';
+import 'package:reservation_app/presentation/views/common/bolder_text_widget.dart';
 import 'package:reservation_app/presentation/views/common/network_error_widget.dart';
 import 'package:reservation_app/presentation/views/common/network_loading_widget.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/reservation_bloc.dart';
@@ -175,152 +176,77 @@ class _ReservationSecondProcessViewState
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  ReservationUtils.partTimeToString(
-                                    partTime:
-                                        reservationBloc.state.selectedTime,
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: ColorsConstants.strokeColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  "시에",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: ColorsConstants.divider,
-                                  ),
-                                ),
+                            BorderTextWidget(
+                              texts: [
+                                [ReservationUtils.partTimeToString(
+                                  partTime:
+                                  reservationBloc.state.selectedTime,
+                                ), true],
+                                "시에",
                               ],
+                              normalColors: ColorsConstants.divider,
+                              bolderColors: ColorsConstants.strokeColor,
+                              normalFontSize: 15,
+                              bolderFontSize: 16,
+                              bolderFontWeight: FontWeight.bold,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  ReservationUtils.reservationCountToString(
-                                    count: reservationBloc.state.selectedCount,
-                                    realUserCount:
-                                        reservationBloc.state.realUserCount,
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: ColorsConstants.strokeColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  seatList.isEmpty ? "은" : "으로",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: ColorsConstants.divider,
-                                  ),
-                                ),
+                            BorderTextWidget(
+                              texts: [
+                                [ReservationUtils.reservationCountToString(
+                                  count: reservationBloc.state.selectedCount,
+                                  realUserCount:
+                                  reservationBloc.state.realUserCount,
+                                ), true],
+                                seatList.isEmpty ? "은" : "으로",
                               ],
+                              normalColors: ColorsConstants.divider,
+                              bolderColors: ColorsConstants.strokeColor,
+                              normalFontSize: 15,
+                              bolderFontSize: 16,
+                              bolderFontWeight: FontWeight.bold,
                             ),
                             seatList.isEmpty
                                 ? Column(
                                     children: [
-                                      RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            TextSpan(
-                                              text: '이미 예약이 ',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                color: ColorsConstants.divider,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: '꽉 찼어요ㅠ',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                color: ColorsConstants.primary,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                      BorderTextWidget(
+                                        texts: [
+                                          "이미 예약이 ",
+                                          ["꽉 찼어요ㅠ", true],
+                                        ],
+                                        normalColors: ColorsConstants.divider,
+                                        bolderColors: ColorsConstants.primary,
+                                        normalFontSize: 15,
+                                        bolderFontSize: 15,
+                                        bolderFontWeight: FontWeight.bold,
                                       ),
-                                      RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            TextSpan(
-                                              text: '다른 날짜',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                color:
-                                                    ColorsConstants.strokeColor,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: '로 ',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                color: ColorsConstants.divider,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: '변경',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                color:
-                                                    ColorsConstants.strokeColor,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: '해주세요..!',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                color: ColorsConstants.divider,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                      BorderTextWidget(
+                                        texts: [
+                                          ["다른 날짜", true],
+                                          "로 ",
+                                          ["변경", true],
+                                          "해주세요..!"
+                                        ],
+                                        normalColors: ColorsConstants.divider,
+                                        bolderColors:
+                                            ColorsConstants.strokeColor,
+                                        normalFontSize: 15,
+                                        bolderFontSize: 15,
+                                        bolderFontWeight: FontWeight.bold,
                                       ),
                                     ],
                                   )
-                                : RichText(
-                                    text: TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: '예약',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: ColorsConstants.divider,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: '이 ',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: ColorsConstants.divider,
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: '가능',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: ColorsConstants.divider,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: '합니다!',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: ColorsConstants.divider,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                : BorderTextWidget(
+                                    texts: [
+                                      ['예약', true],
+                                      '이 ',
+                                      ['가능', true],
+                                      '합니다.'
+                                    ],
+                                    normalColors: ColorsConstants.divider,
+                                    bolderColors: ColorsConstants.divider,
+                                    normalFontSize: 15,
+                                    bolderFontSize: 15,
+                                    bolderFontWeight: FontWeight.w600,
                                   ),
                             seatList.isEmpty
                                 ? Container(
@@ -474,39 +400,18 @@ class _ReservationSecondProcessViewState
                                       color: ColorsConstants.guideText,
                                     ),
                                     Flexible(
-                                      child: RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            TextSpan(
-                                              text: '입력하신 예약 정보가 맞다면',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                color:
-                                                    ColorsConstants.guideText,
-                                                letterSpacing: -0.02,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: ' 해당 날짜로 예약 ',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                color:
-                                                    ColorsConstants.guideText,
-                                                letterSpacing: -0.02,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: '버튼을 눌러주세요.',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                color:
-                                                    ColorsConstants.guideText,
-                                                letterSpacing: -0.02,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                      child: BorderTextWidget(
+                                        texts: [
+                                          '입력하신 예약 정보가 맞다면 ',
+                                          ['해당 날짜로 예약', true],
+                                          ' 버튼을 눌러주세요.'
+                                        ],
+                                        normalColors: ColorsConstants.guideText,
+                                        bolderColors: ColorsConstants.guideText,
+                                        normalFontSize: 12,
+                                        bolderFontSize: 12,
+                                        letterSpacing: -0.02,
+                                        bolderFontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ],
@@ -525,39 +430,18 @@ class _ReservationSecondProcessViewState
                                       color: ColorsConstants.guideText,
                                     ),
                                     Flexible(
-                                      child: RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            TextSpan(
-                                              text: '예약 정보를 변경 하시려면',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                color:
-                                                    ColorsConstants.guideText,
-                                                letterSpacing: -0.02,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: ' 예약 정보 변경 ',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                color:
-                                                    ColorsConstants.guideText,
-                                                letterSpacing: -0.02,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: '버튼을 눌러주세요.',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                color:
-                                                    ColorsConstants.guideText,
-                                                letterSpacing: -0.02,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                      child: BorderTextWidget(
+                                        texts: [
+                                          '예약 정보를 변경 하시려면 ',
+                                          ['예약 정보 변경', true],
+                                          ' 버튼을 눌러주세요.'
+                                        ],
+                                        normalColors: ColorsConstants.guideText,
+                                        bolderColors: ColorsConstants.guideText,
+                                        normalFontSize: 12,
+                                        bolderFontSize: 12,
+                                        letterSpacing: -0.02,
+                                        bolderFontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ],
@@ -576,49 +460,21 @@ class _ReservationSecondProcessViewState
                                       color: ColorsConstants.guideText,
                                     ),
                                     Flexible(
-                                      child: RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            TextSpan(
-                                              text: '1인석 ',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                color:
-                                                    ColorsConstants.guideText,
-                                                letterSpacing: -0.02,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: '자리를 선택하신 경우',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                color:
-                                                    ColorsConstants.guideText,
-                                                letterSpacing: -0.02,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: ' 죄석 선택',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                color:
-                                                    ColorsConstants.guideText,
-                                                letterSpacing: -0.02,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: '이 가능합니다.',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                color:
-                                                    ColorsConstants.guideText,
-                                                letterSpacing: -0.02,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                      child: BorderTextWidget(
+                                        texts: [
+                                          ['1인석', true],
+                                          ' 자리를 선택하신 경우 ',
+                                          ['죄석 선택', true],
+                                          '이 ',
+                                          ['가능', true],
+                                          '합니다.'
+                                        ],
+                                        normalColors: ColorsConstants.guideText,
+                                        bolderColors: ColorsConstants.guideText,
+                                        normalFontSize: 12,
+                                        bolderFontSize: 12,
+                                        letterSpacing: -0.02,
+                                        bolderFontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ],
@@ -637,50 +493,19 @@ class _ReservationSecondProcessViewState
                                       color: ColorsConstants.guideText,
                                     ),
                                     Flexible(
-                                      child: RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            TextSpan(
-                                              text: '4인석, 6인석 ',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                color:
-                                                    ColorsConstants.guideText,
-                                                letterSpacing: -0.02,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: '자리를 선택하신 경우',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                color:
-                                                    ColorsConstants.guideText,
-                                                letterSpacing: -0.02,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: ' 별도의 룸',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                color:
-                                                    ColorsConstants.guideText,
-                                                letterSpacing: -0.02,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text:
-                                                  '으로 되어있어 좌석 선택을 하실 필요가 없습니다.',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                color:
-                                                    ColorsConstants.guideText,
-                                                letterSpacing: -0.02,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                      child: BorderTextWidget(
+                                        texts: [
+                                          ['4인석, 6인석', true],
+                                          ' 자리를 선택하신 경우 ',
+                                          ['별도의 룸', true],
+                                          '으로 되어있어 좌석 선택을 하실 필요가 없습니다.',
+                                        ],
+                                        normalColors: ColorsConstants.guideText,
+                                        bolderColors: ColorsConstants.guideText,
+                                        normalFontSize: 12,
+                                        bolderFontSize: 12,
+                                        letterSpacing: -0.02,
+                                        bolderFontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ],

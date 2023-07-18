@@ -5,6 +5,7 @@ import 'package:reservation_app/di/dependency_inection_graph.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/reservation_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/second/reservation_second_bloc.dart';
+import 'package:reservation_app/presentation/views/reservation/bloc/third/reservation_third_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/view/reservation_process_view.dart';
 import 'package:reservation_app/presentation/views/reservation/widget/reservation_app_bar_widget.dart';
 
@@ -38,6 +39,9 @@ class _ReservationScreenState extends State<ReservationScreen> {
         ),
         BlocProvider<ReservationSecondBloc>(
           create: (context) => locator.get<ReservationSecondBloc>(),
+        ),
+        BlocProvider<ReservationThirdBloc>(
+            create: (context) => locator.get<ReservationThirdBloc>(),
         ),
       ],
       child: Scaffold(
