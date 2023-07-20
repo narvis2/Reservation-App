@@ -1,6 +1,6 @@
-
 import 'package:dio/dio.dart';
 import 'package:reservation_app/data/common/response/response_base.dart';
+import 'package:reservation_app/data/model/sign/phone_auth_check_request.dart';
 import 'package:reservation_app/data/model/sign/phone_auth_request.dart';
 import 'package:retrofit/http.dart';
 
@@ -12,6 +12,11 @@ abstract class SignApiService {
 
   @POST("/sign/phone")
   Future<BaseResponse> requestAuthPhoneNumber(
-    @Body() PhoneAuthRequest request
+    @Body() PhoneAuthRequest request,
+  );
+
+  @POST("/sign/phone/check")
+  Future<BaseResponse> requestAuthPhoneNumberCheck(
+    @Body() PhoneAuthCheckRequest request,
   );
 }

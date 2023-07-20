@@ -8,6 +8,7 @@ class ReservationState extends Equatable {
   final List<SeatType> selectedSeats; // 선택된 좌석 List
   final int realUserCount; // 선택된 예약인원수 [실제 예약인원수]
   final bool termIsAllAgree; // 약관 동의 - 전체 동의 했는지 여부
+  final bool isCheckedAuth; // 본인 인증 여부
 
   const ReservationState({
     required this.currentPosition,
@@ -17,6 +18,7 @@ class ReservationState extends Equatable {
     required this.selectedSeats,
     required this.realUserCount,
     required this.termIsAllAgree,
+    required this.isCheckedAuth,
   });
 
   factory ReservationState.initial() {
@@ -28,6 +30,7 @@ class ReservationState extends Equatable {
       selectedSeats: [],
       realUserCount: 1,
       termIsAllAgree: false,
+      isCheckedAuth: false,
     );
   }
 
@@ -39,6 +42,7 @@ class ReservationState extends Equatable {
     List<SeatType>? selectedSeats,
     int? realUserCount,
     bool? termIsAllAgree,
+    bool? isCheckedAuth,
   }) {
     return ReservationState(
       currentPosition: currentPosition ?? this.currentPosition,
@@ -48,6 +52,7 @@ class ReservationState extends Equatable {
       selectedSeats: selectedSeats ?? this.selectedSeats,
       realUserCount: realUserCount ?? this.realUserCount,
       termIsAllAgree: termIsAllAgree ?? this.termIsAllAgree,
+      isCheckedAuth: isCheckedAuth ?? this.isCheckedAuth,
     );
   }
 
@@ -60,6 +65,7 @@ class ReservationState extends Equatable {
         selectedSeats,
         realUserCount,
         termIsAllAgree,
+        isCheckedAuth,
       ];
 
   @override

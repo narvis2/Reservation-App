@@ -26,4 +26,10 @@ class DateTimeUtils {
   static String dateTimeToWeekDay({required DateTime date}) {
     return DateFormat('EEEE', 'ko_KR').format(date);
   }
+
+  static String formatDuration(int durationInSeconds) {
+    int minutes = durationInSeconds ~/ 60;
+    int seconds = durationInSeconds % 60;
+    return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+  }
 }
