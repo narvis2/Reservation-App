@@ -145,9 +145,14 @@ class _ReservationFourthProcessViewState
                   allFocus.unfocus();
                 }
 
+
                 _stopTimer();
                 reservationBloc.add(
-                  ReservationUserAuthEvent(isCheckedAuth: true),
+                  ReservationUserAuthEvent(
+                    authName: _nameController.text,
+                    authPhoneNumber: _phoneController.text,
+                    isCheckedAuth: true,
+                  ),
                 );
               } else {
                 SnackBarUtils.showCustomSnackBar(
@@ -155,7 +160,11 @@ class _ReservationFourthProcessViewState
                   "인증에 실패하였습니다. 다시 시도해주세요.",
                 );
                 reservationBloc.add(
-                  ReservationUserAuthEvent(isCheckedAuth: false),
+                  ReservationUserAuthEvent(
+                      authName: '',
+                      authPhoneNumber: '',
+                      isCheckedAuth: false,
+                  ),
                 );
               }
             } else if (state.checkAuthNumberStatus == CheckAuthNumberStatus.error) {
@@ -164,7 +173,11 @@ class _ReservationFourthProcessViewState
                 "인증에 실패하였습니다. 다시 시도해주세요.",
               );
               reservationBloc.add(
-                ReservationUserAuthEvent(isCheckedAuth: false),
+                ReservationUserAuthEvent(
+                  authName: '',
+                  authPhoneNumber: '',
+                  isCheckedAuth: false,
+                ),
               );
             }
           },
@@ -647,8 +660,8 @@ class _ReservationFourthProcessViewState
                                 ),
                               ),
                               AnimatedTextKit(
-                                repeatForever: true,
-                                isRepeatingAnimation: true,
+                                repeatForever: false,
+                                isRepeatingAnimation: false,
                                 animatedTexts: [
                                   WavyAnimatedText(
                                     "본인 인증에 성공하였습니다.",

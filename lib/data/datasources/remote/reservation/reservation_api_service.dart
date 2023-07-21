@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:reservation_app/data/common/response/response_base.dart';
+import 'package:reservation_app/data/model/reservation/reservation_create_request.dart';
 import 'package:reservation_app/data/model/reservation/reservation_target_date_response.dart';
 import 'package:reservation_app/domain/model/reservation/enum/part_time.dart';
 import 'package:reservation_app/domain/model/seat/enum/seat_type.dart';
@@ -25,5 +27,10 @@ abstract class ReservationApiService {
   Future<BaseListResponse<SeatType>> getTargetPartTimeDateReservation(
     @Query("timeType") PartTime partTime,
     @Query("reservationDateTime") String date,
+  );
+
+  @POST("/reservation")
+  Future<BaseResponse> requestCreateReservation(
+    @Body() ReservationCreateRequest request,
   );
 }

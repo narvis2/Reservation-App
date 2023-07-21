@@ -9,6 +9,8 @@ class ReservationState extends Equatable {
   final int realUserCount; // 선택된 예약인원수 [실제 예약인원수]
   final bool termIsAllAgree; // 약관 동의 - 전체 동의 했는지 여부
   final bool isCheckedAuth; // 본인 인증 여부
+  final String authName; // 인증된 예약 유저 이름
+  final String authPhoneNumber; // 인증된 예약 유저 전화번호
 
   const ReservationState({
     required this.currentPosition,
@@ -19,6 +21,8 @@ class ReservationState extends Equatable {
     required this.realUserCount,
     required this.termIsAllAgree,
     required this.isCheckedAuth,
+    required this.authName,
+    required this.authPhoneNumber,
   });
 
   factory ReservationState.initial() {
@@ -31,6 +35,8 @@ class ReservationState extends Equatable {
       realUserCount: 1,
       termIsAllAgree: false,
       isCheckedAuth: false,
+      authName: '',
+      authPhoneNumber: '',
     );
   }
 
@@ -43,6 +49,8 @@ class ReservationState extends Equatable {
     int? realUserCount,
     bool? termIsAllAgree,
     bool? isCheckedAuth,
+    String? authName,
+    String? authPhoneNumber,
   }) {
     return ReservationState(
       currentPosition: currentPosition ?? this.currentPosition,
@@ -53,6 +61,8 @@ class ReservationState extends Equatable {
       realUserCount: realUserCount ?? this.realUserCount,
       termIsAllAgree: termIsAllAgree ?? this.termIsAllAgree,
       isCheckedAuth: isCheckedAuth ?? this.isCheckedAuth,
+      authName: authName ?? this.authName,
+      authPhoneNumber: authPhoneNumber ?? this.authPhoneNumber,
     );
   }
 
@@ -66,6 +76,8 @@ class ReservationState extends Equatable {
         realUserCount,
         termIsAllAgree,
         isCheckedAuth,
+        authName,
+        authPhoneNumber,
       ];
 
   @override

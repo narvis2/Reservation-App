@@ -130,6 +130,14 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
     ReservationUserAuthEvent event,
     Emitter<ReservationState> emit,
   ) {
+    if (event.authName.isNotEmpty) {
+      emit(state.copyWith(authName: event.authName));
+    }
+
+    if (event.authPhoneNumber.isNotEmpty) {
+      emit(state.copyWith(authPhoneNumber: event.authPhoneNumber));
+    }
+
     emit(state.copyWith(isCheckedAuth: event.isCheckedAuth));
   }
 }

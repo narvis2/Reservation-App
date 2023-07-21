@@ -19,11 +19,9 @@ class SignRepositoryImpl implements SignRepository {
       final response = await _signApiService.requestAuthPhoneNumber(request);
 
       if (response.success && response.code == 200) {
-        if (response.resultMsg != null && response.resultMsg == "응답 성공") {
-          return DataSuccess(true);
-        }
-
-        return DataSuccess(false);
+        return DataSuccess(
+          response.resultMsg != null && response.resultMsg == "응답 성공",
+        );
       }
 
       return DataNetworkError(response.resultMsg);
@@ -38,14 +36,14 @@ class SignRepositoryImpl implements SignRepository {
     PhoneAuthCheckRequest request,
   ) async {
     try {
-      final response = await _signApiService.requestAuthPhoneNumberCheck(request);
+      final response = await _signApiService.requestAuthPhoneNumberCheck(
+        request,
+      );
 
       if (response.success && response.code == 200) {
-        if (response.resultMsg != null && response.resultMsg == "응답 성공") {
-          return DataSuccess(true);
-        }
-
-        return DataSuccess(false);
+        return DataSuccess(
+          response.resultMsg != null && response.resultMsg == "응답 성공",
+        );
       }
 
       return DataNetworkError(response.resultMsg);

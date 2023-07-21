@@ -100,11 +100,21 @@ class ReservationTermAllAgreeEvent extends ReservationEvent {
 }
 
 class ReservationUserAuthEvent extends ReservationEvent {
+  final String authName;
+  final String authPhoneNumber;
   final bool isCheckedAuth;
-  const ReservationUserAuthEvent({required this.isCheckedAuth});
+  const ReservationUserAuthEvent({
+    required this.authName,
+    required this.authPhoneNumber,
+    required this.isCheckedAuth,
+  });
 
   @override
-  List<Object?> get props => [isCheckedAuth];
+  List<Object?> get props => [
+        authName,
+        authPhoneNumber,
+        isCheckedAuth,
+      ];
 
   @override
   bool? get stringify => false;

@@ -18,6 +18,7 @@ import 'package:reservation_app/domain/usecase/banner/get_all_banner_image_use_c
 import 'package:reservation_app/domain/usecase/notice/get_all_notice_list_use_case.dart';
 import 'package:reservation_app/domain/usecase/reservation/get_reservation_target_part_time_use_case.dart';
 import 'package:reservation_app/domain/usecase/reservation/get_tartget_date_reservation_use_case.dart';
+import 'package:reservation_app/domain/usecase/reservation/request_create_reservation_use_case.dart';
 import 'package:reservation_app/domain/usecase/sign/get_auth_phone_number_check_use_case.dart';
 import 'package:reservation_app/domain/usecase/sign/get_auth_phone_number_use_case.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
@@ -25,6 +26,7 @@ import 'package:reservation_app/presentation/views/main/tabs/home/block/home_tab
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/home/bloc/content_home_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/location/bloc/content_location_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/notice/bloc/content_notice_tab_bloc.dart';
+import 'package:reservation_app/presentation/views/reservation/bloc/fifth/reservation_fifth_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/fourth/reservation_fourth_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/reservation_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/second/reservation_second_bloc.dart';
@@ -104,6 +106,11 @@ Future<void> initializeDependencies() async {
       locator<SignRepository>(),
     ),
   );
+  locator.registerLazySingleton<RequestCreateReservationUseCase>(
+    () => RequestCreateReservationUseCase(
+      locator<ReservationRepository>(),
+    ),
+  );
 
   // 📌 Block
   locator.registerFactory(() => MainBloc());
@@ -132,6 +139,11 @@ Future<void> initializeDependencies() async {
     () => ReservationFourthBloc(
       locator<GetAuthPhoneNumberUseCase>(),
       locator<GetAuthPhoneNumberCheckUseCase>(),
+    ),
+  );
+  locator.registerFactory(
+    () => ReservationFifthBloc(
+      locator<RequestCreateReservationUseCase>(),
     ),
   );
 }
