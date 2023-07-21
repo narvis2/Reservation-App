@@ -3,23 +3,29 @@ import 'package:get_it/get_it.dart';
 import 'package:reservation_app/data/datasources/remote/banner/banner_api_service.dart';
 import 'package:reservation_app/data/datasources/remote/notice/notice_api_service.dart';
 import 'package:reservation_app/data/datasources/remote/reservation/reservation_api_service.dart';
+import 'package:reservation_app/data/datasources/remote/sign/sign_api_service.dart';
 import 'package:reservation_app/data/repository/banner/banner_repository_impl.dart';
 import 'package:reservation_app/data/repository/notice/notice_repository_impl.dart';
 import 'package:reservation_app/data/repository/reservation/reservation_repository_impl.dart';
+import 'package:reservation_app/data/repository/sign/sign_repository_impl.dart';
 import 'package:reservation_app/di/network/network_module.dart';
 import 'package:reservation_app/di/prefs/shared_pref_module.dart';
 import 'package:reservation_app/domain/repository/banner/banner_repository.dart';
 import 'package:reservation_app/domain/repository/notice/notice_repository.dart';
 import 'package:reservation_app/domain/repository/reservation/reservation_repository.dart';
+import 'package:reservation_app/domain/repository/sign/sign_repository.dart';
 import 'package:reservation_app/domain/usecase/banner/get_all_banner_image_use_case.dart';
 import 'package:reservation_app/domain/usecase/notice/get_all_notice_list_use_case.dart';
 import 'package:reservation_app/domain/usecase/reservation/get_reservation_target_part_time_use_case.dart';
 import 'package:reservation_app/domain/usecase/reservation/get_tartget_date_reservation_use_case.dart';
+import 'package:reservation_app/domain/usecase/sign/get_auth_phone_number_check_use_case.dart';
+import 'package:reservation_app/domain/usecase/sign/get_auth_phone_number_use_case.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/block/home_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/home/bloc/content_home_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/location/bloc/content_location_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/notice/bloc/content_notice_tab_bloc.dart';
+import 'package:reservation_app/presentation/views/reservation/bloc/fourth/reservation_fourth_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/reservation_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/second/reservation_second_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/third/reservation_third_bloc.dart';
@@ -59,6 +65,9 @@ Future<void> initializeDependencies() async {
   locator.registerLazySingleton<NoticeApiService>(
     () => NoticeApiService(locator<Dio>()),
   );
+  locator.registerLazySingleton<SignApiService>(
+    () => SignApiService(locator<Dio>()),
+  );
 
   // 📌 Repository
   locator.registerLazySingleton<BannerRepository>(
@@ -69,6 +78,9 @@ Future<void> initializeDependencies() async {
   );
   locator.registerLazySingleton<NoticeRepository>(
     () => NoticeRepositoryImpl(locator<NoticeApiService>()),
+  );
+  locator.registerLazySingleton<SignRepository>(
+    () => SignRepositoryImpl(locator<SignApiService>()),
   );
 
   // 📌 UseCase
@@ -83,6 +95,14 @@ Future<void> initializeDependencies() async {
   );
   locator.registerLazySingleton<GetReservationTargetPartTimeUseCase>(
     () => GetReservationTargetPartTimeUseCase(locator<ReservationRepository>()),
+  );
+  locator.registerLazySingleton<GetAuthPhoneNumberUseCase>(
+    () => GetAuthPhoneNumberUseCase(locator<SignRepository>()),
+  );
+  locator.registerLazySingleton<GetAuthPhoneNumberCheckUseCase>(
+    () => GetAuthPhoneNumberCheckUseCase(
+      locator<SignRepository>(),
+    ),
   );
 
   // 📌 Block
@@ -107,5 +127,11 @@ Future<void> initializeDependencies() async {
   );
   locator.registerFactory(
     () => ContentNoticeTabBloc(locator<GetAllNoticeListUseCase>()),
+  );
+  locator.registerFactory(
+    () => ReservationFourthBloc(
+      locator<GetAuthPhoneNumberUseCase>(),
+      locator<GetAuthPhoneNumberCheckUseCase>(),
+    ),
   );
 }

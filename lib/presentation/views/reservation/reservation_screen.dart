@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_app/di/dependency_inection_graph.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
+import 'package:reservation_app/presentation/views/reservation/bloc/fourth/reservation_fourth_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/reservation_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/second/reservation_second_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/third/reservation_third_bloc.dart';
@@ -41,13 +42,18 @@ class _ReservationScreenState extends State<ReservationScreen> {
           create: (context) => locator.get<ReservationSecondBloc>(),
         ),
         BlocProvider<ReservationThirdBloc>(
-            create: (context) => locator.get<ReservationThirdBloc>(),
+          create: (context) => locator.get<ReservationThirdBloc>(),
+        ),
+        BlocProvider<ReservationFourthBloc>(
+          create: (context) => locator.get<ReservationFourthBloc>(),
         ),
       ],
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: ReservationAppBarWidget(),
-        body: SafeArea(child: ReservationProcessView(),),
+        body: SafeArea(
+          child: ReservationProcessView(),
+        ),
         floatingActionButton: CloseFloatingActionWidget(),
       ),
     );

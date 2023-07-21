@@ -111,6 +111,13 @@ class _CloseFloatingActionWidgetState extends State<CloseFloatingActionWidget>
 
           case 3:
             {
+              if (_animateIcon.value == 0 && state.isCheckedAuth) {
+                animate();
+              } else if (isOpened && !state.isCheckedAuth) {
+                _animationController.reverse();
+                isOpened = !isOpened;
+              }
+
               break;
             }
 
@@ -201,7 +208,17 @@ class _CloseFloatingActionWidgetState extends State<CloseFloatingActionWidget>
 
               case 3:
                 {
-                  return;
+                  if (_animateIcon.value == 0 && !state.isCheckedAuth) {
+                    DialogUtils.showBasicDialog(
+                      context: context,
+                      title: "알림",
+                      message: "본인 인증을 완료해주세요!",
+                    );
+
+                    return;
+                  }
+
+                  break;
                 }
 
               case 4:

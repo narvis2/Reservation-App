@@ -33,6 +33,9 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
     on<ReservationTermAllAgreeEvent>(
       (event, emit) => _setTermIsAllAgree(event, emit),
     );
+    on<ReservationUserAuthEvent>(
+      (event, emit) => _setIsCheckedAuth(event, emit),
+    );
   }
 
   void _setProcessCurrentPosition(
@@ -121,5 +124,12 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
     Emitter<ReservationState> emit,
   ) {
     emit(state.copyWith(termIsAllAgree: event.isAllSelected));
+  }
+
+  void _setIsCheckedAuth(
+    ReservationUserAuthEvent event,
+    Emitter<ReservationState> emit,
+  ) {
+    emit(state.copyWith(isCheckedAuth: event.isCheckedAuth));
   }
 }

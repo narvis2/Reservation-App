@@ -28,6 +28,8 @@ class ColorsConstants {
   static const Color textDark = Color(0xFFFFFFFF);
   static const Color textLight = Color(0xFFEEEEEE);
   static const Color textExtraLight = Color(0xFFCCCCCC);
+  static const Color textHint = Color(0xFFBEC0C7);
+  static const Color inputFocus = Color(0xFF01BFB1);
 
   // Button Primary
   static const Color primaryButtonBackground = Color(0xFFFFFFFF);
