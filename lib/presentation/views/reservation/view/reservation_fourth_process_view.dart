@@ -136,20 +136,29 @@ class _ReservationFourthProcessViewState
               return;
             }
 
-            if (state.checkAuthNumberStatus == CheckAuthNumberStatus.success &&
-                state.isCheckSuccess) {
-              SnackBarUtils.showCustomSnackBar(context, "인증 완료되었습니다.");
+            if (state.checkAuthNumberStatus == CheckAuthNumberStatus.success) {
+              if (state.isCheckSuccess) {
+                SnackBarUtils.showCustomSnackBar(context, "인증 완료되었습니다.");
 
-              final allFocus = FocusScope.of(context);
-              if (allFocus.hasFocus) {
-                allFocus.unfocus();
+                final allFocus = FocusScope.of(context);
+                if (allFocus.hasFocus) {
+                  allFocus.unfocus();
+                }
+
+                _stopTimer();
+                reservationBloc.add(
+                  ReservationUserAuthEvent(isCheckedAuth: true),
+                );
+              } else {
+                SnackBarUtils.showCustomSnackBar(
+                  context,
+                  "인증에 실패하였습니다. 다시 시도해주세요.",
+                );
+                reservationBloc.add(
+                  ReservationUserAuthEvent(isCheckedAuth: false),
+                );
               }
-
-              _stopTimer();
-              reservationBloc.add(
-                ReservationUserAuthEvent(isCheckedAuth: true),
-              );
-            } else {
+            } else if (state.checkAuthNumberStatus == CheckAuthNumberStatus.error) {
               SnackBarUtils.showCustomSnackBar(
                 context,
                 "인증에 실패하였습니다. 다시 시도해주세요.",
