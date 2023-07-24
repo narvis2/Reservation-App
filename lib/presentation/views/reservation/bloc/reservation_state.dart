@@ -29,7 +29,7 @@ class ReservationState extends Equatable {
     return ReservationState(
       currentPosition: 0,
       dateTime: null,
-      selectedTime: 0,
+      selectedTime: 2,
       selectedCount: 0,
       selectedSeats: [],
       realUserCount: 1,

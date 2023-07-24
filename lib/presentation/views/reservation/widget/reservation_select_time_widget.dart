@@ -53,7 +53,7 @@ class _ReservationSelectTimeWidgetState
                 ),
               ),
               Visibility(
-                visible: state.dateTime == null ? true : _isEnableTime(
+                visible: _isEnableTime(
                   state.dateTime ?? DateTime.now(),
                   PartTime.partA,
                 ),
@@ -80,7 +80,7 @@ class _ReservationSelectTimeWidgetState
                 ),
               ),
               Visibility(
-                visible: state.dateTime == null ? true : _isEnableTime(
+                visible: _isEnableTime(
                   state.dateTime ?? DateTime.now(),
                   PartTime.partB,
                 ),
@@ -107,7 +107,7 @@ class _ReservationSelectTimeWidgetState
                 ),
               ),
               Visibility(
-                visible: state.dateTime == null ? true : _isEnableTime(
+                visible: _isEnableTime(
                   state.dateTime ?? DateTime.now(),
                   PartTime.partC,
                 ),
