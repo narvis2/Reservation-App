@@ -92,28 +92,11 @@ class _ReservationFifthProcessViewState
                           repeat: false,
                         ),
                         AnimatedTextKit(
-                          repeatForever: false,
-                          isRepeatingAnimation: false,
-                          animatedTexts: [
-                            FadeAnimatedText(
-                              "예약 성공!",
-                              textStyle: const TextStyle(
-                                fontSize: 25,
-                                color: ColorsConstants.strokeColor,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                          onTap: () {
-                            debugPrint("Tap Event");
-                          },
-                        ),
-                        AnimatedTextKit(
                           repeatForever: true,
                           isRepeatingAnimation: true,
                           animatedTexts: [
                             ColorizeAnimatedText(
-                              "감사합니다!",
+                              "예약 성공!",
                               textStyle: const TextStyle(
                                 fontSize: 25,
                                 color: ColorsConstants.strokeColor,
