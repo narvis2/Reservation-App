@@ -42,11 +42,17 @@ class ReservationRepositoryImpl implements ReservationRepository {
 
             List<PartTimeSeatList> remainsSeatList = [
               PartTimeSeatList(
-                  seatCategory: '1 인석', seatCount: seatAList.length),
+                seatCategory: '1 인석',
+                seatCount: seatAList.length,
+              ),
               PartTimeSeatList(
-                  seatCategory: '4 ~ 5 인석', seatCount: seatBList.length),
+                seatCategory: '4 ~ 5 인석',
+                seatCount: seatBList.length,
+              ),
               PartTimeSeatList(
-                  seatCategory: '6 인석', seatCount: seatCList.length),
+                seatCategory: '6 인석',
+                seatCount: seatCList.length,
+              ),
             ];
 
             return ReservationTargetDateModel(
@@ -77,8 +83,14 @@ class ReservationRepositoryImpl implements ReservationRepository {
     int count,
   ) async {
     try {
-      final response = await _reservationApiService
-          .getTargetPartTimeDateReservation(partTime, _dateTimeToString(date));
+      final response =
+          await _reservationApiService.getTargetPartTimeDateReservation(
+        partTime,
+        _dateTimeToStringWithPartTime(
+          date,
+          partTime,
+        ),
+      );
       final List<SeatType>? responseData = response.data;
 
       if (response.success && responseData != null) {
