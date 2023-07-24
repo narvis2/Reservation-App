@@ -61,6 +61,16 @@ class _ReservationSecondProcessViewState
           return;
         }
 
+        if (selectedList.length != reservationBloc.state.realUserCount) {
+            DialogUtils.showBasicDialog(
+              context: context,
+              title: "알림",
+              message: "선택하신 인원수(${reservationBloc.state.realUserCount}) 만큼\n좌석을 선택해 주세요.",
+            );
+
+            return;
+        }
+
         reservationBloc.add(
           ReservationSelectedSeatsEvent(
             selectedSeatList: ReservationUtils.modelToSeatTypeList(
