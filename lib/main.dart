@@ -6,6 +6,7 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:reservation_app/presentation/config/router/app_router.dart';
 import 'package:reservation_app/presentation/config/themes/app_theme.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
+import 'package:reservation_app/presentation/views/network/bloc/network_bloc.dart';
 
 import 'di/dependency_inection_graph.dart';
 import 'presentation/views/main/tabs/home/tabs/notice/bloc/content_notice_tab_bloc.dart';
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<ContentNoticeTabBloc>(
             create: (create) => locator<ContentNoticeTabBloc>(),
+          ),
+          BlocProvider<NetworkBloc>(
+            create: (create) => locator<NetworkBloc>(),
           ),
         ],
         child: MaterialApp.router(

@@ -26,6 +26,7 @@ import 'package:reservation_app/presentation/views/main/tabs/home/block/home_tab
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/home/bloc/content_home_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/location/bloc/content_location_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/notice/bloc/content_notice_tab_bloc.dart';
+import 'package:reservation_app/presentation/views/network/bloc/network_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/fifth/reservation_fifth_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/fourth/reservation_fourth_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/reservation_bloc.dart';
@@ -114,6 +115,7 @@ Future<void> initializeDependencies() async {
 
   // 📌 Block
   locator.registerFactory(() => MainBloc());
+  locator.registerFactory(() => NetworkBloc());
   locator.registerFactory(
     () => HomeTabBloc(locator<GetAllBannerImageUseCase>()),
   );
