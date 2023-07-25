@@ -4,7 +4,11 @@ import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:reservation_app/domain/model/notice/notice_model.dart';
 import 'package:reservation_app/presentation/config/router/app_router.dart';
+import 'package:reservation_app/presentation/views/common/network_error_widget.dart';
+import 'package:reservation_app/presentation/views/common/network_loading_widget.dart';
+import 'package:reservation_app/presentation/views/main/tabs/home/tabs/notice/bloc/content_notice_tab_bloc.dart';
 
 import '../../../../utils/color_constants.dart';
 import '../../block/main_bloc.dart';
@@ -22,28 +26,54 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
   @override
   Widget build(BuildContext context) {
     final mainBlock = BlocProvider.of<MainBloc>(context);
+    final contentNoticeTabBloc = BlocProvider.of<ContentNoticeTabBloc>(context)
+      ..add(
+        ContentNoticeTabNoticeListEvent(),
+      );
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Center(
-          child: AnimatedTextKit(
-            repeatForever: true,
-            isRepeatingAnimation: true,
-            animatedTexts: [
-              WavyAnimatedText(
-                "공지사항 들어갈거임",
-                textStyle: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: ColorsConstants.splashText,
-                ),
-              ),
-            ],
-            onTap: () {
-              debugPrint("Tap Event");
-            },
-          ),
+          child: BlocBuilder<ContentNoticeTabBloc, ContentNoticeTabState>(
+              bloc: contentNoticeTabBloc,
+              builder: (context, state) {
+                switch (state.runtimeType) {
+                  case ContentNoticeTabStateLoading:
+                    return const NetworkLoadingWidget();
+
+                  case ContentNoticeTabStateNoticeListFailed:
+                    final errorMessage =
+                        (state as ContentNoticeTabStateNoticeListFailed)
+                            .message;
+                    return NetworkErrorWidget(
+                      errorMessage: errorMessage,
+                    );
+
+                  case ContentNoticeTabStateNoticeList:
+                    final List<NoticeModel> noticeList =
+                        (state as ContentNoticeTabStateNoticeList).noticeList;
+
+                    noticeList.map((e) => WavyAnimatedText(e.title.toString()));
+                    return DefaultTextStyle(
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: ColorsConstants.splashText),
+                      child: AnimatedTextKit(
+                        animatedTexts: noticeList
+                            .map((e) => WavyAnimatedText(e.title.toString()))
+                            .toList(),
+                        isRepeatingAnimation: true,
+                        onTap: () {
+                          debugPrint("Tap Event");
+                        },
+                      ),
+                    );
+                  default:
+                    return Text("Test");
+                }
+              }),
         ),
         leading: Padding(
           padding: EdgeInsets.only(left: 10.0),

@@ -39,6 +39,13 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const MainScreen(),
       );
     },
+    NoticeDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<NoticeDetailRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: NoticeDetailScreen(notice: args.notice),
+      );
+    },
   };
 }
 
@@ -96,4 +103,33 @@ class MainRoute extends PageRouteInfo<void> {
   static const String name = 'MainRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [NoticeDetailScreen]
+class NoticeDetailRoute extends PageRouteInfo<NoticeDetailRouteArgs> {
+  NoticeDetailRoute({
+    required NoticeModel notice,
+    List<PageRouteInfo>? children,
+  }) : super(
+          NoticeDetailRoute.name,
+          args: NoticeDetailRouteArgs(notice: notice),
+          initialChildren: children,
+        );
+
+  static const String name = 'NoticeDetailRoute';
+
+  static const PageInfo<NoticeDetailRouteArgs> page =
+      PageInfo<NoticeDetailRouteArgs>(name);
+}
+
+class NoticeDetailRouteArgs {
+  const NoticeDetailRouteArgs({required this.notice});
+
+  final NoticeModel notice;
+
+  @override
+  String toString() {
+    return 'NoticeDetailRouteArgs{notice: $notice}';
+  }
 }

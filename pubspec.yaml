@@ -65,6 +65,9 @@ dependencies:
   flutter_naver_map: ^1.0.2
   timelines: ^0.1.0
   flutter_speed_dial: ^7.0.0
+  expandable: ^5.0.1
+  photo_view: ^0.14.0
+  custom_pop_up_menu: ^1.2.4
 
   flutter_localizations:
     sdk: flutter
