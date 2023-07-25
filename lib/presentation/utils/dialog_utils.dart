@@ -22,6 +22,7 @@ class DialogUtils {
 
   static Future<DateTime?> showDatePickerDialog({
     required BuildContext context,
+    required DateTime initDate,
     required bool Function(
       DateTime dateTime,
       bool available,
@@ -29,7 +30,7 @@ class DialogUtils {
   }) async {
     return await showRoundedDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: initDate,
       firstDate: DateTime(DateTime.now().year),
       lastDate: DateTime(DateTime.now().year + 1),
       onTapDay: onTabDay,

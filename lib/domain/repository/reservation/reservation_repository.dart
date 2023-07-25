@@ -1,4 +1,5 @@
 import 'package:reservation_app/domain/model/reservation/enum/part_time.dart';
+import 'package:reservation_app/domain/model/reservation/request/reservation_create_request_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_target_date_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_target_part_time_seat_model.dart';
 
@@ -14,5 +15,9 @@ abstract class ReservationRepository {
     PartTime partTime,
     DateTime date,
     int count,
+  );
+
+  Future<DataState<bool>> requestCreateReservation(
+    ReservationCreateRequestModel request,
   );
 }
