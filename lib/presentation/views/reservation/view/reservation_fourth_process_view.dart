@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
+import 'package:reservation_app/presentation/utils/constants.dart';
 import 'package:reservation_app/presentation/utils/date_time_utils.dart';
 import 'package:reservation_app/presentation/utils/snack_bar_utils.dart';
 import 'package:reservation_app/presentation/utils/text_utils.dart';
@@ -20,7 +21,10 @@ class ReservationFourthProcessView extends StatefulWidget {
 }
 
 class _ReservationFourthProcessViewState
-    extends State<ReservationFourthProcessView> {
+    extends State<ReservationFourthProcessView> with TickerProviderStateMixin {
+  late final ReservationBloc reservationBloc;
+  late final ReservationFourthBloc reservationFourthBloc;
+
   final _formKey = GlobalKey<FormState>();
   final _nameKey = GlobalKey<FormFieldState>();
   final _phoneNumberKey = GlobalKey<FormFieldState>();
@@ -30,14 +34,66 @@ class _ReservationFourthProcessViewState
   final _phoneController = TextEditingController();
   final _authNumberController = TextEditingController();
 
+  late final AnimationController _rootViewAnimationController;
+  late final AnimationController _phoneNumberAnimationController;
+  late final AnimationController _authCodeAnimationController;
+
   final List<FocusNode> _focusNodes = List.generate(3, (index) => FocusNode());
 
   int _durationInSeconds = 3 * 60; // 5 분에서 시작
   Timer? _timer;
 
+  bool _isRootAnimationRevers = false;
   bool _isNameValidate = false;
   bool _isPhoneNumberValidate = false;
   bool _isAuthCodeValidate = false;
+
+  @override
+  void initState() {
+    super.initState();
+    reservationBloc = BlocProvider.of<ReservationBloc>(context);
+    reservationFourthBloc  = BlocProvider.of<ReservationFourthBloc>(context);
+
+    _rootViewAnimationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 500),
+    )..addStatusListener((status) {
+      if (status == AnimationStatus.dismissed && _isRootAnimationRevers) {
+        reservationBloc.add(
+          ReservationProcessEvent(
+            processIndex: (reservationBloc.state.currentPosition + 1) %
+                Constants.reservationProcessList.length,
+          ),
+        );
+      }
+    });
+
+    _onRootAnimationForward();
+
+    _phoneNumberAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+
+    _authCodeAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+  }
+
+  void _onRootAnimationForward() {
+    setState(() {
+      _isRootAnimationRevers = false;
+    });
+    _rootViewAnimationController.forward();
+  }
+
+  void _onRootAnimationReverse() {
+    setState(() {
+      _isRootAnimationRevers = true;
+    });
+    _rootViewAnimationController.reverse();
+  }
 
   bool _isFocusInput(int index) {
     return _focusNodes[index].hasFocus;
@@ -91,10 +147,13 @@ class _ReservationFourthProcessViewState
 
   @override
   void dispose() {
+    _rootViewAnimationController.dispose();
     _stopTimer();
     _nameController.dispose();
     _phoneController.dispose();
     _authNumberController.dispose();
+    _phoneNumberAnimationController.dispose();
+    _authCodeAnimationController.dispose();
     for (var node in _focusNodes) {
       node.dispose();
     }
@@ -104,9 +163,6 @@ class _ReservationFourthProcessViewState
 
   @override
   Widget build(BuildContext context) {
-    final reservationBloc = BlocProvider.of<ReservationBloc>(context);
-    final reservationFourthBloc = context.read<ReservationFourthBloc>();
-
     return Expanded(
       child: GestureDetector(
         onTap: () {
@@ -133,6 +189,8 @@ class _ReservationFourthProcessViewState
 
               _onFocusInput(context, 2);
               _timer == null ? _startTimer() : _restartTimer();
+
+              _authCodeAnimationController.forward();
               return;
             }
 
@@ -145,7 +203,6 @@ class _ReservationFourthProcessViewState
                   allFocus.unfocus();
                 }
 
-
                 _stopTimer();
                 reservationBloc.add(
                   ReservationUserAuthEvent(
@@ -154,6 +211,7 @@ class _ReservationFourthProcessViewState
                     isCheckedAuth: true,
                   ),
                 );
+                _onRootAnimationReverse();
               } else {
                 SnackBarUtils.showCustomSnackBar(
                   context,
@@ -161,13 +219,14 @@ class _ReservationFourthProcessViewState
                 );
                 reservationBloc.add(
                   ReservationUserAuthEvent(
-                      authName: '',
-                      authPhoneNumber: '',
-                      isCheckedAuth: false,
+                    authName: '',
+                    authPhoneNumber: '',
+                    isCheckedAuth: false,
                   ),
                 );
               }
-            } else if (state.checkAuthNumberStatus == CheckAuthNumberStatus.error) {
+            } else if (state.checkAuthNumberStatus ==
+                CheckAuthNumberStatus.error) {
               SnackBarUtils.showCustomSnackBar(
                 context,
                 "인증에 실패하였습니다. 다시 시도해주세요.",
@@ -181,519 +240,592 @@ class _ReservationFourthProcessViewState
               );
             }
           },
-          child: Container(
-            margin: EdgeInsets.only(
-              top: 20.0,
-              left: 30.0,
-              right: 30.0,
-              bottom: 20.0,
-            ),
-            child: SingleChildScrollView(
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    Container(
-                      constraints: const BoxConstraints.expand(height: 10),
-                    ),
-                    TextFormField(
-                      key: _nameKey,
-                      controller: _nameController,
-                      focusNode: _focusNodes[0],
-                      autovalidateMode: AutovalidateMode.always,
-                      textInputAction: TextInputAction.done,
-                      onFieldSubmitted: (value) {
-                        _onFocusOutInput(0);
-                        if (!_isPhoneNumberValidate) {
-                          _onFocusInput(context, 1);
-                        }
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          _isNameValidate = value.isNotEmpty &&
-                              value.length > 2 &&
-                              TextUtils.isNameValid(value);
-                        });
-                      },
-                      validator: (value) {
-                        final text = value;
-                        if (text == null || text.isEmpty || text.length < 2) {
-                          return '2~4자 이내의 문자';
-                        }
+          child: ScaleTransition(
+            scale: _rootViewAnimationController,
+            child: Container(
+              margin: EdgeInsets.only(
+                top: 20.0,
+                left: 30.0,
+                right: 30.0,
+                bottom: 20.0,
+              ),
+              child: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      Container(
+                        constraints: const BoxConstraints.expand(height: 10),
+                      ),
+                      TextFormField(
+                        key: _nameKey,
+                        controller: _nameController,
+                        focusNode: _focusNodes[0],
+                        autovalidateMode: AutovalidateMode.always,
+                        textInputAction: TextInputAction.done,
+                        onFieldSubmitted: (value) {
+                          _onFocusOutInput(0);
+                          if (!_isPhoneNumberValidate) {
+                            _onFocusInput(context, 1);
+                          }
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            _isNameValidate = value.isNotEmpty &&
+                                value.length > 2 &&
+                                TextUtils.isNameValid(value);
 
-                        if (text.isNotEmpty && !TextUtils.isNameValid(text)) {
-                          return '2~4자 이내로 제대로된 성함을 입력해 주세요.';
-                        }
+                            if (_isNameValidate) {
+                              _phoneNumberAnimationController.forward();
+                            } else {
+                              _phoneNumberAnimationController.reverse();
+                            }
+                          });
+                        },
+                        validator: (value) {
+                          final text = value;
+                          if (text == null || text.isEmpty || text.length < 2) {
+                            return '2~4자 이내의 문자';
+                          }
 
-                        return null;
-                      },
-                      maxLength: 4,
-                      inputFormatters: [
-                        // 한글 자판만 허용 (숫자, 영어, 이모티콘 다 안됨)
-                        FilteringTextInputFormatter.allow(RegExp('[ㄱ-ㅣ가-힣]*')),
-                      ],
-                      keyboardType: TextInputType.name,
-                      decoration: InputDecoration(
-                        suffixIcon: InkWell(
-                          onTap: () => _nameController.clear(),
-                          child: Icon(
-                            Icons.cancel,
-                            color: ColorsConstants.boldColor,
-                            size: 20,
+                          if (text.isNotEmpty && !TextUtils.isNameValid(text)) {
+                            return '2~4자 이내로 제대로된 성함을 입력해 주세요.';
+                          }
+
+                          return null;
+                        },
+                        maxLength: 4,
+                        inputFormatters: [
+                          // 한글 자판만 허용 (숫자, 영어, 이모티콘 다 안됨)
+                          FilteringTextInputFormatter.allow(RegExp('[ㄱ-ㅣ가-힣]*')),
+                        ],
+                        keyboardType: TextInputType.name,
+                        decoration: InputDecoration(
+                          suffixIcon: InkWell(
+                            onTap: () => _nameController.clear(),
+                            child: Icon(
+                              Icons.cancel,
+                              color: ColorsConstants.boldColor,
+                              size: 20,
+                            ),
                           ),
+                          prefixIcon: Icon(Icons.person),
+                          prefixIconColor: ColorsConstants.strokeColor,
+                          helperText: "2~4자 이내의 문자",
+                          helperStyle: TextStyle(
+                            color: ColorsConstants.strokeColor,
+                          ),
+                          iconColor: ColorsConstants.strokeColor,
+                          hintText: '예약자 성함을 입력해주세요.',
+                          hintStyle: TextStyle(
+                            color: ColorsConstants.textHint,
+                            fontSize: 15,
+                          ),
+                          labelText: '예약자 성함',
+                          labelStyle: TextStyle(
+                            color: ColorsConstants.strokeColor,
+                            fontSize: 14,
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide: BorderSide(
+                              color: ColorsConstants.primary,
+                              width: 1,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide: BorderSide(
+                              color: ColorsConstants.primary,
+                              width: 1,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide: BorderSide(
+                              color:
+                                  ColorsConstants.primaryButtonBackgroundDisabled,
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide: BorderSide(
+                              color: ColorsConstants.strokeColor,
+                              width: 1,
+                            ),
+                          ),
+                          contentPadding: EdgeInsets.symmetric(vertical: 10),
                         ),
-                        prefixIcon: Icon(Icons.person),
-                        prefixIconColor: ColorsConstants.strokeColor,
-                        helperText: "2~4자 이내의 문자",
-                        helperStyle: TextStyle(
-                          color: ColorsConstants.strokeColor,
-                        ),
-                        iconColor: ColorsConstants.strokeColor,
-                        hintText: '예약자 성함을 입력해주세요.',
-                        hintStyle: TextStyle(
-                          color: ColorsConstants.textHint,
+                        style: TextStyle(
+                          color: ColorsConstants.boldColor,
                           fontSize: 15,
                         ),
-                        labelText: '예약자 성함',
-                        labelStyle: TextStyle(
-                          color: ColorsConstants.strokeColor,
-                          fontSize: 14,
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          borderSide: BorderSide(
-                            color: ColorsConstants.primary,
-                            width: 1,
-                          ),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          borderSide: BorderSide(
-                            color: ColorsConstants.primary,
-                            width: 1,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          borderSide: BorderSide(
-                            color:
-                            ColorsConstants.primaryButtonBackgroundDisabled,
-                            width: 1,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          borderSide: BorderSide(
-                            color: ColorsConstants.strokeColor,
-                            width: 1,
-                          ),
-                        ),
-                        contentPadding: EdgeInsets.symmetric(vertical: 10),
                       ),
-                      style: TextStyle(
-                        color: ColorsConstants.boldColor,
-                        fontSize: 15,
+                      Container(
+                        constraints: const BoxConstraints.expand(height: 25.0),
                       ),
-                    ),
-                    Container(
-                      constraints: const BoxConstraints.expand(height: 25.0),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 7,
-                          child: TextFormField(
-                            key: _phoneNumberKey,
-                            controller: _phoneController,
-                            focusNode: _focusNodes[1],
-                            autovalidateMode: AutovalidateMode.always,
-                            onChanged: (value) {
-                              setState(() {
-                                _isPhoneNumberValidate = value.isNotEmpty &&
-                                    value.length > 10 &&
-                                    TextUtils.isPhoneNumberValid(value);
-                              });
-                            },
-                            validator: (value) {
-                              final text = value;
-                              if (text == null ||
-                                  text.isEmpty ||
-                                  text.length < 10) {
-                                return '10~11자 이내의 숫자';
-                              }
+                      AnimatedBuilder(
+                        animation: _phoneNumberAnimationController,
+                        builder: (context, child) {
+                          final slideAnimation = Tween<Offset>(
+                            begin: Offset(-1.0, 0.0),
+                            end: Offset(0.0, 0.0),
+                          ).animate(CurvedAnimation(
+                            parent: _phoneNumberAnimationController,
+                            curve: Curves.easeInOut,
+                          ));
 
-                              if (text.isNotEmpty &&
-                                  !TextUtils.isPhoneNumberValid(text)) {
-                                return '10~11자 이내로 제대로된 전화번호를 입력해 주세요.';
-                              }
+                          return Visibility(
+                            visible: _isNameValidate,
+                            child: SlideTransition(
+                              position: slideAnimation,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    flex: 7,
+                                    child: TextFormField(
+                                      key: _phoneNumberKey,
+                                      controller: _phoneController,
+                                      focusNode: _focusNodes[1],
+                                      autovalidateMode: AutovalidateMode.always,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _isPhoneNumberValidate = value
+                                                  .isNotEmpty &&
+                                              value.length > 10 &&
+                                              TextUtils.isPhoneNumberValid(value);
+                                        });
+                                      },
+                                      validator: (value) {
+                                        final text = value;
+                                        if (text == null ||
+                                            text.isEmpty ||
+                                            text.length < 10) {
+                                          return '10~11자 이내의 숫자';
+                                        }
 
-                              return null;
-                            },
-                            maxLength: 11,
-                            inputFormatters: [
-                              // 숫자만 자판만 허용(한글, 영어, 이모티콘 다 안됨)
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'[0-9]'),
-                              ),
-                            ],
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              suffixIcon: InkWell(
-                                onTap: () => _phoneController.clear(),
-                                child: Icon(
-                                  Icons.cancel,
-                                  color: ColorsConstants.boldColor,
-                                  size: 20,
-                                ),
-                              ),
-                              helperText: "10~11자 이내의 숫자",
-                              helperStyle: TextStyle(
-                                color: ColorsConstants.strokeColor,
-                              ),
-                              prefixIcon: Icon(Icons.phone_enabled),
-                              prefixIconColor: ColorsConstants.strokeColor,
-                              iconColor: ColorsConstants.strokeColor,
-                              hintText: '예약자 휴대폰 번호를 입력해주세요.',
-                              hintStyle: TextStyle(
-                                color: ColorsConstants.textHint,
-                                fontSize: 15,
-                              ),
-                              labelText: '예약자 휴대폰 번호',
-                              labelStyle: TextStyle(
-                                color: ColorsConstants.strokeColor,
-                                fontSize: 14,
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide(
-                                  color: ColorsConstants.primary,
-                                  width: 1,
-                                ),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide(
-                                  color: ColorsConstants.primary,
-                                  width: 1,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide(
-                                  color: ColorsConstants
-                                      .primaryButtonBackgroundDisabled,
-                                  width: 1,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide(
-                                  color: ColorsConstants.strokeColor,
-                                  width: 1,
-                                ),
-                              ),
-                              contentPadding:
-                              EdgeInsets.symmetric(vertical: 10),
-                            ),
-                            style: TextStyle(
-                              color: ColorsConstants.boldColor,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: SizedBox(
-                            width: 10,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: OutlinedButton(
-                            onPressed: () {
-                              if (!_nameKey.currentState!.validate() ||
-                                  !_phoneNumberKey.currentState!.validate()) {
-                                if (!_nameKey.currentState!.validate()) {
-                                  _onFocusOutInput(1);
-                                  _onFocusInput(context, 0);
-                                  return;
-                                }
+                                        if (text.isNotEmpty &&
+                                            !TextUtils.isPhoneNumberValid(text)) {
+                                          return '10~11자 이내로 제대로된 전화번호를 입력해 주세요.';
+                                        }
 
-                                if (!_phoneNumberKey.currentState!.validate()) {
-                                  _onFocusOutInput(0);
-                                  _onFocusInput(context, 1);
-                                  return;
-                                }
-                              }
-
-                              _stopTimer();
-
-                              reservationFourthBloc.add(
-                                ReservationFourthRequestPhoneAuthNumber(
-                                  name: _nameController.text,
-                                  phoneNumber: _phoneController.text,
-                                ),
-                              );
-                            },
-                            style: ButtonStyle(
-                              side: MaterialStateProperty.all(
-                                BorderSide(
-                                  color:
-                                  _isNameValidate && _isPhoneNumberValidate
-                                      ? ColorsConstants.strokeColor
-                                      : ColorsConstants.primary,
-                                ),
-                              ), // 테두리 선 색상
-                              foregroundColor: MaterialStateProperty.all(
-                                _isNameValidate && _isPhoneNumberValidate
-                                    ? ColorsConstants.strokeColor
-                                    : ColorsConstants.primary,
-                              ), // 텍스트 색상
-                            ),
-                            child: Text(
-                              '인증번호\n전송',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      constraints: const BoxConstraints.expand(height: 30.0),
-                    ),
-                    BlocBuilder<ReservationFourthBloc, ReservationFourthState>(
-                      bloc: reservationFourthBloc,
-                      builder: (context, state) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              flex: 7,
-                              child: TextFormField(
-                                key: _authPhoneNumberKey,
-                                controller: _authNumberController,
-                                focusNode: _focusNodes[2],
-                                autovalidateMode: AutovalidateMode.always,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _isAuthCodeValidate =
-                                        value.isNotEmpty && value.length > 5;
-                                  });
-                                },
-                                validator: (value) {
-                                  if (_durationInSeconds == 0) {
-                                    return '인증번호를 재발급 받으세요..!';
-                                  }
-
-                                  final text = value;
-                                  if (text == null ||
-                                      text.isEmpty ||
-                                      text.length < 6) {
-                                    return '6자리 숫자 인증번호 입력';
-                                  }
-
-                                  return null;
-                                },
-                                maxLength: 6,
-                                inputFormatters: [
-                                  // 숫자만 자판만 허용(한글, 영어, 이모티콘 다 안됨)
-                                  FilteringTextInputFormatter.allow(
-                                      RegExp(r'[0-9]')),
-                                ],
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  suffixIcon: InkWell(
-                                    onTap: () => _authNumberController.clear(),
-                                    child: Icon(
-                                      Icons.cancel,
-                                      color: ColorsConstants.boldColor,
-                                      size: 20,
-                                    ),
-                                  ),
-                                  helperText: "인증 버튼을 눌러주세요!",
-                                  helperStyle: TextStyle(
-                                    color: ColorsConstants.strokeColor,
-                                  ),
-                                  prefix: _timer != null
-                                      ? Padding(
-                                    padding: const EdgeInsets.only(right: 10),
-                                    child: Text(
-                                      DateTimeUtils.formatDuration(
-                                        _durationInSeconds,
+                                        return null;
+                                      },
+                                      maxLength: 11,
+                                      inputFormatters: [
+                                        // 숫자만 자판만 허용(한글, 영어, 이모티콘 다 안됨)
+                                        FilteringTextInputFormatter.allow(
+                                          RegExp(r'[0-9]'),
+                                        ),
+                                      ],
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                        suffixIcon: InkWell(
+                                          onTap: () => _phoneController.clear(),
+                                          child: Icon(
+                                            Icons.cancel,
+                                            color: ColorsConstants.boldColor,
+                                            size: 20,
+                                          ),
+                                        ),
+                                        helperText: "10~11자 이내의 숫자",
+                                        helperStyle: TextStyle(
+                                          color: ColorsConstants.strokeColor,
+                                        ),
+                                        prefixIcon: Icon(Icons.phone_enabled),
+                                        prefixIconColor:
+                                            ColorsConstants.strokeColor,
+                                        iconColor: ColorsConstants.strokeColor,
+                                        hintText: '예약자 휴대폰 번호를 입력해주세요.',
+                                        hintStyle: TextStyle(
+                                          color: ColorsConstants.textHint,
+                                          fontSize: 15,
+                                        ),
+                                        labelText: '예약자 휴대폰 번호',
+                                        labelStyle: TextStyle(
+                                          color: ColorsConstants.strokeColor,
+                                          fontSize: 14,
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
+                                          borderSide: BorderSide(
+                                            color: ColorsConstants.primary,
+                                            width: 1,
+                                          ),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
+                                          borderSide: BorderSide(
+                                            color: ColorsConstants.primary,
+                                            width: 1,
+                                          ),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
+                                          borderSide: BorderSide(
+                                            color: ColorsConstants
+                                                .primaryButtonBackgroundDisabled,
+                                            width: 1,
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
+                                          borderSide: BorderSide(
+                                            color: ColorsConstants.strokeColor,
+                                            width: 1,
+                                          ),
+                                        ),
+                                        contentPadding:
+                                            EdgeInsets.symmetric(vertical: 10),
                                       ),
                                       style: TextStyle(
-                                        color: ColorsConstants.strokeColor,
-                                        fontSize: 14,
+                                        color: ColorsConstants.boldColor,
+                                        fontSize: 15,
                                       ),
                                     ),
-                                  )
-                                      : null,
-                                  iconColor: ColorsConstants.strokeColor,
-                                  label: Text(
-                                    '인증번호',
-                                    style: TextStyle(
-                                      color: ColorsConstants.strokeColor,
-                                      fontSize: 14,
-                                    ),
-                                    textAlign: TextAlign.center,
                                   ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                    borderSide: BorderSide(
-                                      color: ColorsConstants.primary,
-                                      width: 1,
+                                  Expanded(
+                                    flex: 1,
+                                    child: SizedBox(
+                                      width: 10,
                                     ),
                                   ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                    borderSide: BorderSide(
-                                      color: ColorsConstants.primary,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                    borderSide: BorderSide(
-                                      color: ColorsConstants
-                                          .primaryButtonBackgroundDisabled,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                    borderSide: BorderSide(
-                                      color: ColorsConstants.strokeColor,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  contentPadding: EdgeInsets.all(10),
-                                ),
-                                style: TextStyle(
-                                  color: ColorsConstants.boldColor,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: SizedBox(
-                                width: 10,
-                              ),
-                            ),
-                            Expanded(
-                              flex: 3,
-                              child: OutlinedButton(
-                                onPressed: () {
-                                  if (!state.isRequestSuccess) {
-                                    SnackBarUtils.showCustomSnackBar(
-                                      context,
-                                      "인증 번호를 발급받아 주세요.",
-                                    );
-                                  }
+                                  Expanded(
+                                    flex: 3,
+                                    child: OutlinedButton(
+                                      onPressed: () {
+                                        if (!_nameKey.currentState!.validate() ||
+                                            !_phoneNumberKey.currentState!
+                                                .validate()) {
+                                          if (!_nameKey.currentState!
+                                              .validate()) {
+                                            _onFocusOutInput(1);
+                                            _onFocusInput(context, 0);
+                                            return;
+                                          }
 
-                                  if (!_authPhoneNumberKey.currentState!
-                                      .validate()) {
-                                    _onFocusInput(context, 2);
-                                    return;
-                                  }
+                                          if (!_phoneNumberKey.currentState!
+                                              .validate()) {
+                                            _onFocusOutInput(0);
+                                            _onFocusInput(context, 1);
+                                            return;
+                                          }
+                                        }
 
-                                  reservationFourthBloc.add(
-                                    ReservationFourthRequestPhoneAuthCheck(
-                                      authCode: _authNumberController.text,
+                                        _stopTimer();
+
+                                        reservationFourthBloc.add(
+                                          ReservationFourthRequestPhoneAuthNumber(
+                                            name: _nameController.text,
+                                            phoneNumber: _phoneController.text,
+                                          ),
+                                        );
+                                      },
+                                      style: ButtonStyle(
+                                        side: MaterialStateProperty.all(
+                                          BorderSide(
+                                            color: _isNameValidate &&
+                                                    _isPhoneNumberValidate
+                                                ? ColorsConstants.strokeColor
+                                                : ColorsConstants.primary,
+                                          ),
+                                        ), // 테두리 선 색상
+                                        foregroundColor:
+                                            MaterialStateProperty.all(
+                                          _isNameValidate &&
+                                                  _isPhoneNumberValidate
+                                              ? ColorsConstants.strokeColor
+                                              : ColorsConstants.primary,
+                                        ), // 텍스트 색상
+                                      ),
+                                      child: Text(
+                                        '인증번호\n전송',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
-                                  );
-                                },
-                                style: ButtonStyle(
-                                  side: MaterialStateProperty.all(
-                                    BorderSide(
-                                      color: _durationInSeconds != 0 &&
-                                          _isAuthCodeValidate
-                                          ? ColorsConstants.strokeColor
-                                          : ColorsConstants.primary,
-                                    ),
-                                  ), // 테두리 선 색상
-                                  foregroundColor: MaterialStateProperty
-                                      .all(
-                                    _durationInSeconds != 0 &&
-                                        _isAuthCodeValidate
-                                        ? ColorsConstants.strokeColor
-                                        : ColorsConstants.primary,
-                                  ), // 텍스트 색상
-                                ),
-                                child: Text(
-                                  '인증',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                    BlocBuilder<ReservationFourthBloc, ReservationFourthState>(
-                      bloc: reservationFourthBloc,
-                      builder: (context, state) {
-                        if (state.isRequestSuccess && state.isCheckSuccess) {
-                          return Column(
-                            children: [
-                              Container(
-                                constraints: const BoxConstraints.expand(
-                                  height: 40,
-                                ),
-                              ),
-                              AnimatedTextKit(
-                                repeatForever: false,
-                                isRepeatingAnimation: false,
-                                animatedTexts: [
-                                  WavyAnimatedText(
-                                    "본인 인증에 성공하였습니다.",
-                                    textStyle: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                      color: ColorsConstants.strokeColor,
-                                    ),
-                                    speed: const Duration(milliseconds: 200),
-                                  ),
-                                  WavyAnimatedText(
-                                    "아래의 버튼을 클릭하면 예약이 완료됩니다!",
-                                    textStyle: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                      color: ColorsConstants.strokeColor,
-                                    ),
-                                    speed: const Duration(milliseconds: 200),
                                   ),
                                 ],
-                                onTap: () {
-                                  debugPrint("Tap Event");
-                                },
                               ),
-                            ],
+                            ),
                           );
-                        } else {
-                          return SizedBox();
-                        }
-                      },
-                    ),
-                  ],
+                        },
+                      ),
+                      Container(
+                        constraints: const BoxConstraints.expand(height: 30.0),
+                      ),
+                      BlocBuilder<ReservationFourthBloc, ReservationFourthState>(
+                        bloc: reservationFourthBloc,
+                        builder: (context, state) {
+                          final slideAnimation = Tween<Offset>(
+                            begin: Offset(1.0, 0.0),
+                            end: Offset(0.0, 0.0),
+                          ).animate(CurvedAnimation(
+                            parent: _authCodeAnimationController,
+                            curve: Curves.easeInOut,
+                          ));
+
+                          return AnimatedBuilder(
+                              animation: _authCodeAnimationController,
+                              builder: (context, child) {
+                                return Visibility(
+                                  visible: state.isRequestSuccess,
+                                  child: SlideTransition(
+                                    position: slideAnimation,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          flex: 7,
+                                          child: TextFormField(
+                                            key: _authPhoneNumberKey,
+                                            controller: _authNumberController,
+                                            focusNode: _focusNodes[2],
+                                            autovalidateMode:
+                                                AutovalidateMode.always,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                _isAuthCodeValidate =
+                                                    value.isNotEmpty &&
+                                                        value.length > 5;
+                                              });
+                                            },
+                                            validator: (value) {
+                                              if (_durationInSeconds == 0) {
+                                                return '인증번호를 재발급 받으세요..!';
+                                              }
+
+                                              final text = value;
+                                              if (text == null ||
+                                                  text.isEmpty ||
+                                                  text.length < 6) {
+                                                return '6자리 숫자 인증번호 입력';
+                                              }
+
+                                              return null;
+                                            },
+                                            maxLength: 6,
+                                            inputFormatters: [
+                                              // 숫자만 자판만 허용(한글, 영어, 이모티콘 다 안됨)
+                                              FilteringTextInputFormatter.allow(
+                                                  RegExp(r'[0-9]')),
+                                            ],
+                                            keyboardType: TextInputType.number,
+                                            decoration: InputDecoration(
+                                              suffixIcon: InkWell(
+                                                onTap: () =>
+                                                    _authNumberController.clear(),
+                                                child: Icon(
+                                                  Icons.cancel,
+                                                  color:
+                                                      ColorsConstants.boldColor,
+                                                  size: 20,
+                                                ),
+                                              ),
+                                              helperText: "인증 버튼을 눌러주세요!",
+                                              helperStyle: TextStyle(
+                                                color:
+                                                    ColorsConstants.strokeColor,
+                                              ),
+                                              prefix: _timer != null
+                                                  ? Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 10),
+                                                      child: Text(
+                                                        DateTimeUtils
+                                                            .formatDuration(
+                                                          _durationInSeconds,
+                                                        ),
+                                                        style: TextStyle(
+                                                          color: ColorsConstants
+                                                              .strokeColor,
+                                                          fontSize: 14,
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : null,
+                                              iconColor:
+                                                  ColorsConstants.strokeColor,
+                                              label: Text(
+                                                '인증번호',
+                                                style: TextStyle(
+                                                  color:
+                                                      ColorsConstants.strokeColor,
+                                                  fontSize: 14,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              focusedErrorBorder:
+                                                  OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10)),
+                                                borderSide: BorderSide(
+                                                  color: ColorsConstants.primary,
+                                                  width: 1,
+                                                ),
+                                              ),
+                                              errorBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10)),
+                                                borderSide: BorderSide(
+                                                  color: ColorsConstants.primary,
+                                                  width: 1,
+                                                ),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10)),
+                                                borderSide: BorderSide(
+                                                  color: ColorsConstants
+                                                      .primaryButtonBackgroundDisabled,
+                                                  width: 1,
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10)),
+                                                borderSide: BorderSide(
+                                                  color:
+                                                      ColorsConstants.strokeColor,
+                                                  width: 1,
+                                                ),
+                                              ),
+                                              contentPadding: EdgeInsets.all(10),
+                                            ),
+                                            style: TextStyle(
+                                              color: ColorsConstants.boldColor,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child: SizedBox(
+                                            width: 10,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child: OutlinedButton(
+                                            onPressed: () {
+                                              if (!state.isRequestSuccess) {
+                                                SnackBarUtils.showCustomSnackBar(
+                                                  context,
+                                                  "인증 번호를 발급받아 주세요.",
+                                                );
+                                              }
+
+                                              if (!_authPhoneNumberKey
+                                                  .currentState!
+                                                  .validate()) {
+                                                _onFocusInput(context, 2);
+                                                return;
+                                              }
+
+                                              reservationFourthBloc.add(
+                                                ReservationFourthRequestPhoneAuthCheck(
+                                                  authCode:
+                                                      _authNumberController.text,
+                                                ),
+                                              );
+                                            },
+                                            style: ButtonStyle(
+                                              side: MaterialStateProperty.all(
+                                                BorderSide(
+                                                  color:
+                                                      _durationInSeconds != 0 &&
+                                                              _isAuthCodeValidate
+                                                          ? ColorsConstants
+                                                              .strokeColor
+                                                          : ColorsConstants
+                                                              .primary,
+                                                ),
+                                              ),
+                                              // 테두리 선 색상
+                                              foregroundColor:
+                                                  MaterialStateProperty.all(
+                                                _durationInSeconds != 0 &&
+                                                        _isAuthCodeValidate
+                                                    ? ColorsConstants.strokeColor
+                                                    : ColorsConstants.primary,
+                                              ), // 텍스트 색상
+                                            ),
+                                            child: Text(
+                                              '인증',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              });
+                        },
+                      ),
+                      BlocBuilder<ReservationFourthBloc, ReservationFourthState>(
+                        bloc: reservationFourthBloc,
+                        builder: (context, state) {
+                          if (state.isRequestSuccess && state.isCheckSuccess) {
+                            return Column(
+                              children: [
+                                Container(
+                                  constraints: const BoxConstraints.expand(
+                                    height: 40,
+                                  ),
+                                ),
+                                AnimatedTextKit(
+                                  repeatForever: false,
+                                  isRepeatingAnimation: false,
+                                  animatedTexts: [
+                                    WavyAnimatedText(
+                                      "본인 인증에 성공하였습니다.",
+                                      textStyle: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                        color: ColorsConstants.strokeColor,
+                                      ),
+                                      speed: const Duration(milliseconds: 200),
+                                    ),
+                                    WavyAnimatedText(
+                                      "아래의 버튼을 클릭하면 예약이 완료됩니다!",
+                                      textStyle: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                        color: ColorsConstants.strokeColor,
+                                      ),
+                                      speed: const Duration(milliseconds: 200),
+                                    ),
+                                  ],
+                                  onTap: () {
+                                    debugPrint("Tap Event");
+                                  },
+                                ),
+                              ],
+                            );
+                          } else {
+                            return SizedBox();
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
