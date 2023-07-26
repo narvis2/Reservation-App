@@ -1,5 +1,12 @@
-
 class Constants {
+  static const List<String> homeTabCategoryList = [
+    "홈",
+    "예약",
+    "공지사항",
+    "알림",
+    "오시는길",
+  ];
+
   static final List<String> reservationProcessList = [
     '예약정보 입력',
     '좌석선택',
