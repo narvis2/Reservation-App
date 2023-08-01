@@ -1,4 +1,4 @@
-package com.thepan.reservation_app
+package com.thepan.woohwedahm
 
 import android.os.Bundle
 import io.flutter.embedding.android.FlutterActivity

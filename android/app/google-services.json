@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "40280189962",
+    "project_id": "reservation-a8257",
+    "storage_bucket": "reservation-a8257.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40280189962:android:b566b6265f637c73a4c3f3",
+        "android_client_info": {
+          "package_name": "com.thepan.woohwedahm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "40280189962-t70i76p2o4av7al2040h9vree9s3blo7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNADFro5E7-2X9NZ9Ch7DJi-jvD9GqPYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "40280189962-t70i76p2o4av7al2040h9vree9s3blo7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "40280189962-11c1eaqdubfmhvdv97bg7q67ie1ou5c9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.thepan.woohwedahm"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

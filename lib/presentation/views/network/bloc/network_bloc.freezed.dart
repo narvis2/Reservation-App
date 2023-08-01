@@ -123,15 +123,25 @@ class __$$NetworkNotifyEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$NetworkNotifyEvent implements NetworkNotifyEvent {
+class _$NetworkNotifyEvent
+    with DiagnosticableTreeMixin
+    implements NetworkNotifyEvent {
   const _$NetworkNotifyEvent({required this.isConnected});
 
   @override
   final bool isConnected;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'NetworkEvent.networkNotify(isConnected: $isConnected)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'NetworkEvent.networkNotify'))
+      ..add(DiagnosticsProperty('isConnected', isConnected));
   }
 
   @override
@@ -307,7 +317,7 @@ class __$$InitialCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$Initial implements Initial {
+class _$Initial with DiagnosticableTreeMixin implements Initial {
   const _$Initial(
       {this.networkStatus = NetworkStatus.initial, this.isConnected = false});
 
@@ -319,8 +329,17 @@ class _$Initial implements Initial {
   final bool isConnected;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'NetworkState(networkStatus: $networkStatus, isConnected: $isConnected)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'NetworkState'))
+      ..add(DiagnosticsProperty('networkStatus', networkStatus))
+      ..add(DiagnosticsProperty('isConnected', isConnected));
   }
 
   @override

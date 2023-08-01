@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,16 +6,22 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:reservation_app/presentation/config/router/app_router.dart';
 import 'package:reservation_app/presentation/config/themes/app_theme.dart';
+// import 'package:reservation_app/presentation/views/fcm/bloc/fcm_bloc.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
 import 'package:reservation_app/presentation/views/network/bloc/network_bloc.dart';
 
 import 'di/dependency_inection_graph.dart';
+import 'firebase_options.dart';
+import 'presentation/views/fcm/bloc/fcm_bloc.dart';
 import 'presentation/views/main/tabs/home/tabs/notice/bloc/content_notice_tab_bloc.dart';
 
 bool get isIOS => foundation.defaultTargetPlatform == TargetPlatform.iOS;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   await initializeDependencies();
 
@@ -30,7 +37,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -39,11 +45,14 @@ class MyApp extends StatelessWidget {
           BlocProvider<MainBloc>(
             create: (context) => locator<MainBloc>(),
           ),
-          BlocProvider<ContentNoticeTabBloc>(
-            create: (create) => locator<ContentNoticeTabBloc>(),
-          ),
           BlocProvider<NetworkBloc>(
             create: (create) => locator<NetworkBloc>(),
+          ),
+          BlocProvider<FcmBloc>(
+            create: (create) => locator<FcmBloc>()..add(FcmInit()),
+          ),
+          BlocProvider<ContentNoticeTabBloc>(
+            create: (create) => locator<ContentNoticeTabBloc>(),
           ),
         ],
         child: MaterialApp.router(
@@ -64,6 +73,7 @@ class MyApp extends StatelessWidget {
           routeInformationParser: appRouter.defaultRouteParser(),
           title: "우회담 예약 어플",
           theme: AppTheme.light,
-        ));
+        ),
+    );
   }
 }

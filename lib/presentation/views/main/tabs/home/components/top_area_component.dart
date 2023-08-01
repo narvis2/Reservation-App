@@ -62,45 +62,42 @@ class _TopAreaComponentState extends State<TopAreaComponent> {
 
               return Column(
                 children: [
-                  CarouselSlider(
-                    options: CarouselOptions(
-                      autoPlay: true,
-                      onPageChanged: (index, reason) {
-                        setState(
-                          () {
-                            currentIndex = index;
-                          },
-                        );
-                      },
-                    ),
-                    items: bannerImages
-                        .map(
-                          (item) => Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Card(
-                              margin: EdgeInsets.only(
-                                top: 10.0,
-                                bottom: 10.0,
+                  Expanded(
+                    child: CarouselSlider(
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        onPageChanged: (index, reason) {
+                          setState(
+                            () {
+                              currentIndex = index;
+                            },
+                          );
+                        },
+                      ),
+                      items: bannerImages
+                          .map(
+                            (item) => Card(
+                              margin: EdgeInsets.all(
+                                10.0
                               ),
                               elevation: 6.0,
                               shadowColor: ColorsConstants.divider,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0),
+                                borderRadius: BorderRadius.circular(15.0),
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.all(
-                                  Radius.circular(30.0),
+                                  Radius.circular(15.0),
                                 ),
                                 child: Image.network(
                                   Endpoints.baseImageUrl + item.images,
                                   fit: BoxFit.cover,
-                                  width: double.infinity,
                                 ),
                               ),
                             ),
-                          ),
-                        )
-                        .toList(),
+                          )
+                          .toList(),
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
