@@ -31,61 +31,55 @@ void main() async {
         debugPrint('💛 Naver ClientId Auth failed 👉 $error');
       });
 
-  final fcmRepository = FcmRepository();
-
-  runApp(MyApp(
-    fcmRepository: fcmRepository,
-  ));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required FcmRepository fcmRepository})
-      : _fcmRepository = fcmRepository;
-
-  final FcmRepository _fcmRepository;
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      // 여기에 등록하면 앱 전역에서 사용가능 SharedViewModel 이라고 생각하면 될듯
-      providers: [
-        BlocProvider<MainBloc>(
-          create: (context) => locator<MainBloc>(),
-        ),
-        BlocProvider<NetworkBloc>(
-          create: (create) => locator<NetworkBloc>(),
-        ),
-        RepositoryProvider.value(
-          value: _fcmRepository,
-          child: BlocProvider<FcmNotificationBloc>(
-            lazy: false,
-            create: (context) => FcmNotificationBloc(
-              context.read<FcmRepository>(),
-            ),
+    return RepositoryProvider.value(
+      value: locator<FcmRepository>(),
+      child: MultiBlocProvider(
+        // 여기에 등록하면 앱 전역에서 사용가능 SharedViewModel 이라고 생각하면 될듯
+        providers: [
+          BlocProvider<MainBloc>(
+            create: (context) => locator<MainBloc>(),
           ),
-        ),
-        BlocProvider<ContentNoticeTabBloc>(
-          create: (create) => locator<ContentNoticeTabBloc>(),
-        ),
-      ],
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: [
-          // 다국어 설정
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
+          BlocProvider<NetworkBloc>(
+            create: (create) => locator<NetworkBloc>(),
+          ),
+          BlocProvider<FcmNotificationBloc>(
+            lazy: false,
+            create: (context) =>
+                FcmNotificationBloc(
+                  context.read<FcmRepository>(),
+                ),
+          ),
+          BlocProvider<ContentNoticeTabBloc>(
+            create: (create) => locator<ContentNoticeTabBloc>(),
+          ),
         ],
-        locale: Locale('ko', 'KR'),
-        // 대한민국 언어 설정
-        supportedLocales: [
-          const Locale('en', 'US'), // English
-          const Locale('ko', 'KR'), // 대한민국 언어 설정
-        ],
-        routerDelegate: appRouter.delegate(),
-        routeInformationParser: appRouter.defaultRouteParser(),
-        title: "우회담 예약 어플",
-        theme: AppTheme.light,
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: [
+            // 다국어 설정
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          locale: Locale('ko', 'KR'),
+          // 대한민국 언어 설정
+          supportedLocales: [
+            const Locale('en', 'US'), // English
+            const Locale('ko', 'KR'), // 대한민국 언어 설정
+          ],
+          routerDelegate: appRouter.delegate(),
+          routeInformationParser: appRouter.defaultRouteParser(),
+          title: "우회담 예약 어플",
+          theme: AppTheme.light,
+        ),
       ),
     );
   }

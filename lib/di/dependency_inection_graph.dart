@@ -88,7 +88,7 @@ Future<void> initializeDependencies() async {
   locator.registerLazySingleton<SignRepository>(
     () => SignRepositoryImpl(locator<SignApiService>()),
   );
-  locator.registerFactory<FcmRepository>(
+  locator.registerLazySingleton<FcmRepository>(
     () => FcmRepository(),
   );
 

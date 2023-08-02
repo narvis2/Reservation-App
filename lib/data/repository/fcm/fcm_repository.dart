@@ -22,7 +22,6 @@ class FcmRepository {
   }
 
   Future<void> _initialize(Stream<RemoteMessage> onNotificationOpened) async {
-    debugPrint("🔔 FcmRepository _initialize Called 🔔");
     final permission = await _firebaseMessaging.requestPermission(
       badge: true,
       alert: true,
@@ -41,14 +40,11 @@ class FcmRepository {
 
       // 📌 Terminate 환경
       if (message != null) {
-        debugPrint("🔔 getInitialMessage > Terminate 👉 $message");
         _onMessageOpened(message, NotificationType.terminated);
       }
 
       // 📌 Background 환경
       onNotificationOpened.listen((event) {
-        debugPrint("🔔 onMessageOpenedApp > background notification 👉 ${event.notification}");
-        debugPrint("🔔 onMessageOpenedApp > background notification 👉 ${event.data}");
         _onMessageOpened(event, NotificationType.background);
       });
 
@@ -83,8 +79,6 @@ class FcmRepository {
 
   Stream<FcmNotificationModel> get onForegroundNotification {
     return _onForegroundNotification.mapNotNull((message) {
-      debugPrint("🔔 FirebaseMessaging.onMessage 👉 $message");
-
       final notification = message.notification;
 
       if (notification == null) {
