@@ -3,20 +3,24 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:reservation_app/di/prefs/shared_pref_module.dart';
 import 'package:reservation_app/domain/model/fcm/enum/notification_type.dart';
 import 'package:reservation_app/domain/model/fcm/fcm_notification_data_model.dart';
 import 'package:reservation_app/domain/model/fcm/fcm_notification_model.dart';
 import 'package:rxdart/rxdart.dart';
 
 class FcmRepository {
+  final SharedPreferenceModule _sharedPreferenceModule;
   final FirebaseMessaging _firebaseMessaging;
   final Stream<RemoteMessage> _onForegroundNotification;
-  final BehaviorSubject<FcmNotificationDataModel> _onNotificationOpenedController;
+  final BehaviorSubject<FcmNotificationDataModel>
+      _onNotificationOpenedController;
   final AndroidNotificationChannel _channel;
 
   final FlutterLocalNotificationsPlugin _localNotifications;
 
-  FcmRepository({
+  FcmRepository(
+    this._sharedPreferenceModule, {
     AndroidNotificationChannel? channel,
     FlutterLocalNotificationsPlugin? localNotification,
     FirebaseMessaging? firebaseMessaging,
@@ -91,8 +95,7 @@ class FcmRepository {
   }
 
   Future<void> _sendFcmToken(String fcmToken) {
-    // TODO:: Fcm Token 저장 API Call
-    return Future.sync(() => null);
+    return Future.sync(() => _sharedPreferenceModule.saveFcmToken(fcmToken));
   }
 
   /// Terminate, Background 에서 Push 알림을 Click 했을때 호출됨

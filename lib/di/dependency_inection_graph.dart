@@ -88,7 +88,7 @@ Future<void> initializeDependencies() async {
     () => SignRepositoryImpl(locator<SignApiService>()),
   );
   locator.registerLazySingleton<FcmRepository>(
-    () => FcmRepository(),
+    () => FcmRepository(locator<SharedPreferenceModule>()),
   );
 
   // 📌 UseCase
