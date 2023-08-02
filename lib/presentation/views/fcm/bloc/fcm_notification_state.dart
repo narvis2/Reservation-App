@@ -1,23 +1,23 @@
 part of 'fcm_notification_bloc.dart';
 
 class FcmNotificationState extends Equatable {
-  final FcmNotificationModel? fcmNotificationModel;
+  final FcmNotificationDataModel? fcmNotificationDataModel;
 
-  const FcmNotificationState({this.fcmNotificationModel});
+  const FcmNotificationState({this.fcmNotificationDataModel});
 
   const FcmNotificationState.initial() : this();
 
   FcmNotificationState copyWith({
-    FcmNotificationModel? fcmNotificationModel,
+    FcmNotificationDataModel? fcmNotificationDataModel,
   }) {
     return FcmNotificationState(
-      fcmNotificationModel: fcmNotificationModel ?? this.fcmNotificationModel,
+      fcmNotificationDataModel: fcmNotificationDataModel ?? this.fcmNotificationDataModel,
     );
   }
 
   @override
-  List<Object?> get props => [fcmNotificationModel];
+  List<Object?> get props => [fcmNotificationDataModel];
 
   @override
-  bool? get stringify => false;
+  bool? get stringify => true;
 }

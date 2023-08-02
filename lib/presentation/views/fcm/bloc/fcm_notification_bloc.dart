@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_app/data/repository/fcm/fcm_repository.dart';
+import 'package:reservation_app/domain/model/fcm/fcm_notification_data_model.dart';
 import 'package:reservation_app/domain/model/fcm/fcm_notification_model.dart';
 
 part 'fcm_notification_event.dart';
@@ -22,13 +23,21 @@ class FcmNotificationBloc
 
     _fcmRepository.onNotificationOpened.listen(
       (notification) {
-        add(_FcmNotificationOpenedEvent(fcmNotificationModel: notification));
+        add(
+          _FcmNotificationOpenedEvent(
+            fcmNotificationDataModel: notification,
+          ),
+        );
       },
     );
 
     _fcmRepository.onForegroundNotification.listen(
       (notification) {
-        add(_FcmNotificationForegroundReceivedEvent(fcmNotificationModel: notification));
+        add(
+          _FcmNotificationForegroundReceivedEvent(
+            fcmNotificationModel: notification,
+          ),
+        );
       },
     );
   }
@@ -38,7 +47,7 @@ class FcmNotificationBloc
     Emitter<FcmNotificationState> emit,
   ) {
     emit(
-      state.copyWith(fcmNotificationModel: event.fcmNotificationModel),
+      state.copyWith(fcmNotificationDataModel: event.fcmNotificationDataModel),
     );
   }
 
@@ -46,8 +55,6 @@ class FcmNotificationBloc
     _FcmNotificationForegroundReceivedEvent event,
     Emitter<FcmNotificationState> emit,
   ) {
-    emit(
-      state.copyWith(fcmNotificationModel: event.fcmNotificationModel),
-    );
+    _fcmRepository.showLocalNotification(event.fcmNotificationModel);
   }
 }

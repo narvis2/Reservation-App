@@ -22,7 +22,6 @@ import 'package:reservation_app/domain/usecase/reservation/get_tartget_date_rese
 import 'package:reservation_app/domain/usecase/reservation/request_create_reservation_use_case.dart';
 import 'package:reservation_app/domain/usecase/sign/get_auth_phone_number_check_use_case.dart';
 import 'package:reservation_app/domain/usecase/sign/get_auth_phone_number_use_case.dart';
-import 'package:reservation_app/presentation/views/fcm/bloc/fcm_bloc.dart';
 import 'package:reservation_app/presentation/views/fcm/bloc/fcm_notification_bloc.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/block/home_tab_bloc.dart';
@@ -124,7 +123,6 @@ Future<void> initializeDependencies() async {
   locator.registerLazySingleton(
     () => FcmNotificationBloc(locator<FcmRepository>()),
   );
-  locator.registerFactory(() => FcmBloc());
   locator.registerFactory(() => NetworkBloc());
   locator.registerFactory(
     () => HomeTabBloc(locator<GetAllBannerImageUseCase>()),

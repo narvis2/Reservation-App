@@ -87,16 +87,18 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         ),
         BlocListener<FcmNotificationBloc, FcmNotificationState>(
           listenWhen: (previous, current) {
-            return previous != current && current.fcmNotificationModel != null;
+            return previous != current && current.fcmNotificationDataModel != null;
           },
           listener: (context, state) {
-            final notification = state.fcmNotificationModel;
+            final notification = state.fcmNotificationDataModel;
             if (notification == null) return;
-
             if (notification.notificationType == NotificationType.foreground) {
-              // Foreground Notification 처리
+              /// Foreground 에서 Notification 을 Click 했을때 처리
+              /// TODO:: Notification Data 에 넘어오는 type 을 바탕으로 각 type 에 맞는 화면으로 이동
+
             } else {
-              // Background 및 Terminated Notification 처리
+              /// Background 및 Terminate 에서 Notification 을 Click 했을때 처리
+              /// TODO:: Notification Data 에 넘어오는 type 을 바탕으로 각 type 에 맞는 화면으로 이동
             }
           },
         ),

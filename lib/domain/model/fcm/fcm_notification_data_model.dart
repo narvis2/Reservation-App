@@ -1,27 +1,22 @@
+
 import 'package:equatable/equatable.dart';
 import 'package:reservation_app/domain/model/fcm/enum/notification_type.dart';
 
-class FcmNotificationModel extends Equatable {
-  final String title;
-  final String body;
+class FcmNotificationDataModel extends Equatable {
   final NotificationType notificationType;
   final Map<String, dynamic> data;
 
-  const FcmNotificationModel({
-    required this.title,
-    required this.body,
+  const FcmNotificationDataModel({
     required this.notificationType,
     required this.data,
   });
 
   @override
   List<Object?> get props => [
-        title,
-        body,
-        notificationType,
-        data,
-      ];
+    notificationType,
+    data,
+  ];
 
   @override
-  bool? get stringify => false;
+  bool? get stringify => true;
 }

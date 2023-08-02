@@ -5,12 +5,12 @@ abstract class FcmNotificationEvent extends Equatable {
 }
 
 class _FcmNotificationOpenedEvent extends FcmNotificationEvent {
-  final FcmNotificationModel fcmNotificationModel;
+  final FcmNotificationDataModel fcmNotificationDataModel;
 
-  const _FcmNotificationOpenedEvent({required this.fcmNotificationModel});
+  const _FcmNotificationOpenedEvent({required this.fcmNotificationDataModel});
 
   @override
-  List<Object?> get props => [fcmNotificationModel];
+  List<Object?> get props => [fcmNotificationDataModel];
 
   @override
   bool? get stringify => false;
