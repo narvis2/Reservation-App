@@ -5,6 +5,7 @@ import 'package:reservation_app/data/datasources/remote/notice/notice_api_servic
 import 'package:reservation_app/data/datasources/remote/reservation/reservation_api_service.dart';
 import 'package:reservation_app/data/datasources/remote/sign/sign_api_service.dart';
 import 'package:reservation_app/data/repository/banner/banner_repository_impl.dart';
+import 'package:reservation_app/data/repository/fcm/fcm_repository.dart';
 import 'package:reservation_app/data/repository/notice/notice_repository_impl.dart';
 import 'package:reservation_app/data/repository/reservation/reservation_repository_impl.dart';
 import 'package:reservation_app/data/repository/sign/sign_repository_impl.dart';
@@ -22,7 +23,7 @@ import 'package:reservation_app/domain/usecase/reservation/request_create_reserv
 import 'package:reservation_app/domain/usecase/sign/get_auth_phone_number_check_use_case.dart';
 import 'package:reservation_app/domain/usecase/sign/get_auth_phone_number_use_case.dart';
 import 'package:reservation_app/presentation/views/fcm/bloc/fcm_bloc.dart';
-// import 'package:reservation_app/presentation/views/fcm/bloc/fcm_bloc.dart';
+import 'package:reservation_app/presentation/views/fcm/bloc/fcm_notification_bloc.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/block/home_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/home/bloc/content_home_tab_bloc.dart';
@@ -87,6 +88,9 @@ Future<void> initializeDependencies() async {
   locator.registerLazySingleton<SignRepository>(
     () => SignRepositoryImpl(locator<SignApiService>()),
   );
+  locator.registerFactory<FcmRepository>(
+    () => FcmRepository(),
+  );
 
   // 📌 UseCase
   locator.registerLazySingleton<GetAllBannerImageUseCase>(
@@ -117,6 +121,9 @@ Future<void> initializeDependencies() async {
 
   // 📌 Block
   locator.registerFactory(() => MainBloc());
+  locator.registerLazySingleton(
+    () => FcmNotificationBloc(locator<FcmRepository>()),
+  );
   locator.registerFactory(() => FcmBloc());
   locator.registerFactory(() => NetworkBloc());
   locator.registerFactory(

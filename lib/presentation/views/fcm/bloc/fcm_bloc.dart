@@ -18,7 +18,7 @@ class FcmBloc extends Bloc<FcmEvent, FcmState> {
     on<FcmInit>((event, emit) => _initFCM(event, emit));
   }
 
-  Future<void> _initFCM(FcmEvent event, Emitter<FcmState> emitter) async {
+  Future<void> _initFCM(FcmInit event, Emitter<FcmState> emitter) async {
     debugPrint("📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌");
     FirebaseMessaging.onBackgroundMessage(_onBackgroundMessage);
 
