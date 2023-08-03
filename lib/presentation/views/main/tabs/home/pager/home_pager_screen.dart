@@ -55,7 +55,9 @@ class _HomePagerScreenState extends State<HomePagerScreen>
       _keys.add(GlobalKey());
     }
 
-    _controller = TabController(vsync: this, length: Constants.homeTabCategoryList.length);
+    _controller = TabController(
+        vsync: this, length: Constants.homeTabCategoryList.length,
+    );
     _controller.animation?.addListener(_handleTabAnimation);
     _controller.addListener(_handleTabChange);
 
@@ -125,17 +127,26 @@ class _HomePagerScreenState extends State<HomePagerScreen>
       ),
       child: Column(
         children: <Widget>[
+          Container(
+            constraints: const BoxConstraints.expand(height: 10.0),
+          ),
           SizedBox(
             height: 45.0,
             child: ListView.builder(
               physics: BouncingScrollPhysics(),
+              shrinkWrap: true,
               controller: _scrollController,
               scrollDirection: Axis.horizontal,
               itemCount: Constants.homeTabCategoryList.length,
               itemBuilder: (BuildContext context, int index) {
-                return Padding(
+                return Container(
                   key: _keys[index],
-                  padding: EdgeInsets.only(top: 10, left: 5, right: 5),
+                  padding: EdgeInsets.only(
+                    left: 5,
+                    right: index == Constants.homeTabCategoryList.length - 1
+                        ? 5
+                        : 0,
+                  ),
                   child: ButtonTheme(
                     child: AnimatedBuilder(
                       animation: _colorTweenBackgroundOn,
@@ -174,10 +185,8 @@ class _HomePagerScreenState extends State<HomePagerScreen>
               controller: _controller,
               children: <Widget>[
                 ContentHomeTabScreen(), // 홈
-                Center(child: Text("예약")),
-                ContentNoticeTabScreen(), // 공지사항
-                Center(child: Text("알림")),
-                ContentLocationTabScreen(), // 오시는 길
+                Center(child: Text("예약")), ContentNoticeTabScreen(), // 공지사항
+                Center(child: Text("알림")), ContentLocationTabScreen(), // 오시는 길
               ],
             ),
           ),
@@ -239,7 +248,9 @@ class _HomePagerScreenState extends State<HomePagerScreen>
 
       if (position > offset) offset = position;
     } else {
-      renderBox = _keys[Constants.homeTabCategoryList.length - 1].currentContext.findRenderObject();
+      renderBox = _keys[Constants.homeTabCategoryList.length - 1]
+          .currentContext
+          .findRenderObject();
       position = renderBox.localToGlobal(Offset.zero).dx;
       size = renderBox.size.width;
 
