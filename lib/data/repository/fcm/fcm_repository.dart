@@ -51,7 +51,7 @@ class FcmRepository {
 
     await _localNotifications.initialize(
       const InitializationSettings(
-        android: AndroidInitializationSettings("@mipmap/ic_launcher"),
+        android: AndroidInitializationSettings('@mipmap/ic_launcher'),
         iOS: DarwinInitializationSettings(
           requestAlertPermission: false,
           requestBadgePermission: false,
@@ -163,7 +163,7 @@ class FcmRepository {
       channelDescription: _channel.description,
       priority: Priority.max,
       importance: Importance.max,
-      icon: 'mipmap/launcher_icon',
+      icon: 'mipmap/ic_launcher',
     );
 
     final iosDetails = DarwinNotificationDetails(

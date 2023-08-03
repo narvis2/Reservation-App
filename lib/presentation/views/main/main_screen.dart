@@ -95,7 +95,6 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
             if (notification.notificationType == NotificationType.foreground) {
               /// Foreground 에서 Notification 을 Click 했을때 처리
               /// TODO:: Notification Data 에 넘어오는 type 을 바탕으로 각 type 에 맞는 화면으로 이동
-
             } else {
               /// Background 및 Terminate 에서 Notification 을 Click 했을때 처리
               /// TODO:: Notification Data 에 넘어오는 type 을 바탕으로 각 type 에 맞는 화면으로 이동
