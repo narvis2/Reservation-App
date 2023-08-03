@@ -8,6 +8,7 @@ import 'package:reservation_app/domain/model/notice/image/notice_image_model.dar
 import 'package:reservation_app/domain/model/notice/notice_model.dart';
 import 'package:reservation_app/presentation/config/router/app_router.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
+import 'package:reservation_app/presentation/utils/constants.dart';
 import 'package:reservation_app/presentation/views/common/network_error_widget.dart';
 import 'package:reservation_app/presentation/views/common/network_loading_widget.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/notice/bloc/content_notice_tab_bloc.dart';
@@ -86,10 +87,6 @@ class _ContentNoticeTabScreenState extends State<ContentNoticeTabScreen> {
     );
   }
 }
-
-//공지사항 contents 샘플
-const loremIpsum =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
 class CustomCard extends StatefulWidget {
   const CustomCard({Key? key, required this.notice}) : super(key: key);
@@ -254,7 +251,8 @@ class _CustomCardState extends State<CustomCard> {
           Padding(
               padding: EdgeInsets.all(10),
               child: Text(
-                loremIpsum,
+                // widget.notice.content
+                Constants.noticeContentSample,
                 softWrap: true,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 3,

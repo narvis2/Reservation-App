@@ -7,6 +7,7 @@ import 'package:reservation_app/data/utils/Endpoints.dart';
 import 'package:reservation_app/domain/model/notice/image/notice_image_model.dart';
 import 'package:reservation_app/domain/model/notice/notice_model.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
+import 'package:reservation_app/presentation/utils/constants.dart';
 
 @RoutePage()
 class NoticeDetailScreen extends StatefulWidget {
@@ -142,10 +143,9 @@ class _NoticeDetailScreenState extends State<NoticeDetailScreen> {
     }
 
     buildContent() {
-      const loremIpsum =
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
       return Text(
-        loremIpsum,
+        // widget.notice.content,
+        Constants.noticeContentSample,
         style: TextStyle(
           fontSize: 13,
           color: Colors.black,
