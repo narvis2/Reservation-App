@@ -79,7 +79,10 @@ Future<void> initializeDependencies() async {
     () => BannerRepositoryImpl(locator<BannerApiService>()),
   );
   locator.registerLazySingleton<ReservationRepository>(
-    () => ReservationRepositoryImpl(locator<ReservationApiService>()),
+    () => ReservationRepositoryImpl(
+      locator<ReservationApiService>(),
+      locator<SharedPreferenceModule>(),
+    ),
   );
   locator.registerLazySingleton<NoticeRepository>(
     () => NoticeRepositoryImpl(locator<NoticeApiService>()),

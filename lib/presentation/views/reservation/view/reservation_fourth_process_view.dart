@@ -508,6 +508,7 @@ class _ReservationFourthProcessViewState
                                               .validate()) {
                                             _onFocusOutInput(1);
                                             _onFocusInput(context, 0);
+                                            SnackBarUtils.showCustomSnackBar(context, "성함을 입력해주세요.");
                                             return;
                                           }
 
@@ -515,6 +516,7 @@ class _ReservationFourthProcessViewState
                                               .validate()) {
                                             _onFocusOutInput(0);
                                             _onFocusInput(context, 1);
+                                            SnackBarUtils.showCustomSnackBar(context, "전화번호를 입력해주세요.");
                                             return;
                                           }
                                         }
