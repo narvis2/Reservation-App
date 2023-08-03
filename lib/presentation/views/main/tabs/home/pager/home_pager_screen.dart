@@ -133,7 +133,7 @@ class _HomePagerScreenState extends State<HomePagerScreen>
           SizedBox(
             height: 45.0,
             child: ListView.builder(
-              physics: BouncingScrollPhysics(),
+              physics: RangeMaintainingScrollPhysics(),
               shrinkWrap: true,
               controller: _scrollController,
               scrollDirection: Axis.horizontal,
