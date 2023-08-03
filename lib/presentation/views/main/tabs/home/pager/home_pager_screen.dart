@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
+import 'package:reservation_app/presentation/utils/constants.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/home/content_home_tab_screen.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/location/content_location_tab_screen.dart';
@@ -34,8 +35,6 @@ class _HomePagerScreenState extends State<HomePagerScreen>
 
   double _prevAniValue = 0.0;
 
-  final List _icons = ["홈", "예약", "공지사항", "알림", "오시는길"];
-
   final Color _foregroundOn = Colors.white;
   final Color _foregroundOff = Colors.black;
 
@@ -52,11 +51,11 @@ class _HomePagerScreenState extends State<HomePagerScreen>
   void initState() {
     super.initState();
 
-    for (int index = 0; index < _icons.length; index++) {
+    for (int index = 0; index < Constants.homeTabCategoryList.length; index++) {
       _keys.add(GlobalKey());
     }
 
-    _controller = TabController(vsync: this, length: _icons.length);
+    _controller = TabController(vsync: this, length: Constants.homeTabCategoryList.length);
     _controller.animation?.addListener(_handleTabAnimation);
     _controller.addListener(_handleTabChange);
 
@@ -94,6 +93,9 @@ class _HomePagerScreenState extends State<HomePagerScreen>
   @override
   void dispose() {
     _controller.dispose();
+    _scrollController.dispose();
+    _animationControllerOn.dispose();
+    _animationControllerOff.dispose();
     super.dispose();
   }
 
@@ -129,7 +131,7 @@ class _HomePagerScreenState extends State<HomePagerScreen>
               physics: BouncingScrollPhysics(),
               controller: _scrollController,
               scrollDirection: Axis.horizontal,
-              itemCount: _icons.length,
+              itemCount: Constants.homeTabCategoryList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                   key: _keys[index],
@@ -153,7 +155,7 @@ class _HomePagerScreenState extends State<HomePagerScreen>
                           });
                         },
                         child: Text(
-                          _icons[index],
+                          Constants.homeTabCategoryList[index],
                           style: TextStyle(
                             color: _getForegroundColor(index),
                             fontSize: 16,
@@ -167,7 +169,7 @@ class _HomePagerScreenState extends State<HomePagerScreen>
               },
             ),
           ),
-          Flexible(
+          Expanded(
             child: TabBarView(
               controller: _controller,
               children: <Widget>[
@@ -237,7 +239,7 @@ class _HomePagerScreenState extends State<HomePagerScreen>
 
       if (position > offset) offset = position;
     } else {
-      renderBox = _keys[_icons.length - 1].currentContext.findRenderObject();
+      renderBox = _keys[Constants.homeTabCategoryList.length - 1].currentContext.findRenderObject();
       position = renderBox.localToGlobal(Offset.zero).dx;
       size = renderBox.size.width;
 

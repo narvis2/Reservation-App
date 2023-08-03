@@ -101,7 +101,7 @@ class DialogUtils {
     required String message,
     bool enableCancelBtn = false,
     bool enableAutoCancel = true,
-    void Function()? onConfirmClick
+    void Function()? onConfirmClick,
   }) {
     showDialog(
       context: context,
@@ -218,6 +218,41 @@ class DialogUtils {
         );
       },
       barrierDismissible: enableAutoCancel,
+    );
+  }
+
+  static showNetworkErrorDialog({
+    required BuildContext context,
+  }) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Lottie.asset(
+                'assets/lottie/no_wifi_animation.json',
+                animate: true,
+                width: 150,
+                height: 150,
+                repeat: true,
+              ),
+              Text(
+                "네트워크 상태를 확인해주세요.",
+                style: TextStyle(
+                  color: ColorsConstants.background,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        );
+      },
+      barrierDismissible: false,
     );
   }
 }
