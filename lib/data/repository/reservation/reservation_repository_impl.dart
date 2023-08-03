@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:reservation_app/data/datasources/remote/reservation/reservation_api_service.dart';
 import 'package:reservation_app/data/model/reservation/reservation_create_request.dart';
 import 'package:reservation_app/data/model/reservation/reservation_target_date_response.dart';
+import 'package:reservation_app/di/prefs/shared_pref_module.dart';
 import 'package:reservation_app/domain/model/base/data_state.dart';
 import 'package:reservation_app/domain/model/reservation/enum/part_time.dart';
 import 'package:reservation_app/domain/model/reservation/part_time_seat_list.dart';
@@ -16,8 +17,12 @@ import '../../../domain/repository/reservation/reservation_repository.dart';
 
 class ReservationRepositoryImpl implements ReservationRepository {
   final ReservationApiService _reservationApiService;
+  final SharedPreferenceModule _pref;
 
-  ReservationRepositoryImpl(this._reservationApiService);
+  ReservationRepositoryImpl(
+    this._reservationApiService,
+    this._pref,
+  );
 
   @override
   Future<DataState<List<ReservationTargetDateModel>>> getTargetDateReservation(
@@ -135,8 +140,10 @@ class ReservationRepositoryImpl implements ReservationRepository {
     ReservationCreateRequestModel request,
   ) async {
     try {
+      final String? fcmToken = await _pref.fcmToken;
+
       final response = await _reservationApiService.requestCreateReservation(
-        _createMapper(request),
+        _createMapper(request, fcmToken),
       );
 
       if (response.success && response.code == 200) {
@@ -202,6 +209,7 @@ class ReservationRepositoryImpl implements ReservationRepository {
 
   ReservationCreateRequest _createMapper(
     ReservationCreateRequestModel model,
+    String? fcmToken,
   ) {
     return ReservationCreateRequest(
       name: model.name,
@@ -215,6 +223,7 @@ class ReservationRepositoryImpl implements ReservationRepository {
       isTermAllAgree: model.isTermAllAgree,
       isUserValidation: model.isUserValidation,
       seat: model.seat,
+      fcmToken: fcmToken,
     );
   }
 

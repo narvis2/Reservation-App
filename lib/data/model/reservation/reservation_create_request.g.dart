@@ -19,6 +19,7 @@ ReservationCreateRequest _$ReservationCreateRequestFromJson(
       seat: (json['seat'] as List<dynamic>)
           .map((e) => $enumDecode(_$SeatTypeEnumMap, e))
           .toList(),
+      fcmToken: json['fcmToken'] as String?,
     );
 
 Map<String, dynamic> _$ReservationCreateRequestToJson(
@@ -32,6 +33,7 @@ Map<String, dynamic> _$ReservationCreateRequestToJson(
       'isTermAllAgree': instance.isTermAllAgree,
       'isUserValidation': instance.isUserValidation,
       'seat': instance.seat.map((e) => _$SeatTypeEnumMap[e]!).toList(),
+      'fcmToken': instance.fcmToken,
     };
 
 const _$PartTimeEnumMap = {

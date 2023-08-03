@@ -15,6 +15,7 @@ class ReservationCreateRequest extends Equatable {
   final bool isTermAllAgree;
   final bool isUserValidation;
   final List<SeatType> seat;
+  final String? fcmToken;
 
   const ReservationCreateRequest({
     required this.name,
@@ -25,6 +26,7 @@ class ReservationCreateRequest extends Equatable {
     required this.isTermAllAgree,
     required this.isUserValidation,
     required this.seat,
+    this.fcmToken,
   });
 
   factory ReservationCreateRequest.fromJson(Map<String, dynamic> json) =>
@@ -41,6 +43,7 @@ class ReservationCreateRequest extends Equatable {
         timeType,
         isTermAllAgree,
         seat,
+        fcmToken,
       ];
 
   @override
