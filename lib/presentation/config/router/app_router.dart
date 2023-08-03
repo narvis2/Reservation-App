@@ -1,4 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:reservation_app/domain/model/notice/notice_model.dart';
+import 'package:reservation_app/presentation/views/notice/notice_detail_screen.dart';
 
 import '../../views/main/main_screen.dart';
 import '../../views/notice/notice_screen.dart';
@@ -25,6 +27,12 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: NoticeRoute.page,
+          guards: [
+            DuplicateGuard(),
+          ],
+        ),
+        AutoRoute(
+          page: NoticeDetailRoute.page,
           guards: [
             DuplicateGuard(),
           ],

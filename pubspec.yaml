@@ -70,6 +70,10 @@ dependencies:
     sdk: flutter
   flutter_rounded_date_picker: ^3.0.4
 
+  expandable: ^5.0.1
+  photo_view: ^0.14.0
+  custom_pop_up_menu: ^1.2.4
+
   # Web View 띄우기
   url_launcher: ^6.1.11
 
