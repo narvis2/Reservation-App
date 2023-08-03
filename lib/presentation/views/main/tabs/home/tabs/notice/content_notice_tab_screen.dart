@@ -15,10 +15,10 @@ import 'package:reservation_app/presentation/views/main/tabs/home/tabs/notice/bl
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/notice/component/gallery_item_thumbnail.dart';
 
 class ItemModel {
-  String title;
-  IconData icon;
+  final String title;
+  final IconData icon;
 
-  ItemModel(this.title, this.icon);
+  ItemModel({required this.title, required this.icon});
 }
 
 class ContentNoticeTabScreen extends StatefulWidget {
@@ -100,16 +100,21 @@ class _CustomCardState extends State<CustomCard> {
   CustomPopupMenuController popupController = CustomPopupMenuController();
 
   List<ItemModel> menuItems = [
-    ItemModel("펼치기", Icons.open_in_browser_rounded),
-    ItemModel("상세보기", Icons.developer_board_rounded),
-    ItemModel("수정", Icons.auto_fix_high_rounded),
+    ItemModel(title: "펼치기", icon: Icons.open_in_browser_rounded),
+    ItemModel(title: "상세보기", icon: Icons.developer_board_rounded),
+    ItemModel(title: "수정", icon: Icons.auto_fix_high_rounded),
   ];
 
   @override
   Widget build(BuildContext context) {
     buildPressMenu(
-        BuildContext context, CustomPopupMenuController popupController) {
-      var expandController = ExpandableController.of(context, required: true)!;
+      BuildContext context,
+      CustomPopupMenuController popupController,
+    ) {
+      final ExpandableController? expandController = ExpandableController.of(
+        context,
+        required: true,
+      );
 
       return ClipRRect(
         borderRadius: BorderRadius.circular(5),
@@ -129,7 +134,7 @@ class _CustomCardState extends State<CustomCard> {
                     child: InkWell(
                       onTap: () {
                         if (index == 0) {
-                          expandController.toggle();
+                          expandController?.toggle();
                         } else if (index == 1) {
                           AutoRouter.of(context)
                               .push(NoticeDetailRoute(notice: widget.notice));
@@ -252,18 +257,17 @@ class _CustomCardState extends State<CustomCard> {
               padding: EdgeInsets.all(10),
               child: Text(
                 // widget.notice.content
-                Constants.noticeContentSample,
-                softWrap: true,
+                Constants.noticeContentSample, softWrap: true,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 3,
               )),
           Builder(builder: (context) {
-            var controller = ExpandableController.of(context, required: true)!;
+            final ExpandableController? controller = ExpandableController.of(context, required: true);
 
             return Center(
               child: IconButton(
                 onPressed: () {
-                  controller.toggle();
+                  controller?.toggle();
                 },
                 icon: Icon(Icons.arrow_drop_up),
                 iconSize: 30,
