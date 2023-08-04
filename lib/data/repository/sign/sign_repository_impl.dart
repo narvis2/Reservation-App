@@ -5,16 +5,18 @@ import 'package:reservation_app/data/mapper/object_mapper.dart';
 import 'package:reservation_app/data/model/sign/phone_auth_check_request.dart';
 import 'package:reservation_app/data/model/sign/phone_auth_request.dart';
 import 'package:reservation_app/data/model/sign/sign_in_response.dart';
+import 'package:reservation_app/data/model/sign/sign_out_request.dart';
+import 'package:reservation_app/di/prefs/shared_pref_module.dart';
 import 'package:reservation_app/domain/model/base/data_state.dart';
 import 'package:reservation_app/domain/model/sign/sign_in_request_model.dart';
 import 'package:reservation_app/domain/model/sign/sign_in_response_model.dart';
-import 'package:reservation_app/domain/model/sign/sign_out_request_model.dart';
 import 'package:reservation_app/domain/repository/sign/sign_repository.dart';
 
 class SignRepositoryImpl implements SignRepository {
   final SignApiService _signApiService;
+  final SharedPreferenceModule _pref;
 
-  SignRepositoryImpl(this._signApiService);
+  SignRepositoryImpl(this._signApiService, this._pref);
 
   @override
   Future<DataState<SignInResponseModel>> requestSignIn(
@@ -39,10 +41,12 @@ class SignRepositoryImpl implements SignRepository {
   }
 
   @override
-  Future<DataState<bool>> requestSignOut(SignOutRequestModel request) async {
+  Future<DataState<bool>> requestSignOut() async {
     try {
+      final String? accessToken = await _pref.accessToken;
+
       final response = await _signApiService.requestSignOut(
-        request.toSignOutRequest(),
+        SignOutRequest(accessToken: accessToken),
       );
 
       if (response.success && response.code == 200) {

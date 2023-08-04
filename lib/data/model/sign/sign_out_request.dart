@@ -6,9 +6,9 @@ part 'sign_out_request.g.dart';
 
 @JsonSerializable()
 class SignOutRequest extends Equatable {
-  final String accessToken;
+  final String? accessToken;
 
-  SignOutRequest({required this.accessToken});
+  SignOutRequest({this.accessToken});
 
   factory SignOutRequest.fromJson(Map<String, dynamic> json) =>
       _$SignOutRequestFromJson(json);
