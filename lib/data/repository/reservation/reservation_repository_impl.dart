@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
-import 'package:reservation_app/data/datasources/remote/reservation/reservation_api_service.dart';
+import 'package:reservation_app/data/datasource/remote_data_source.dart';
 import 'package:reservation_app/data/model/reservation/reservation_create_request.dart';
 import 'package:reservation_app/data/model/reservation/reservation_target_date_response.dart';
 import 'package:reservation_app/di/prefs/shared_pref_module.dart';
@@ -16,11 +16,11 @@ import 'package:reservation_app/domain/model/seat/enum/seat_type.dart';
 import '../../../domain/repository/reservation/reservation_repository.dart';
 
 class ReservationRepositoryImpl implements ReservationRepository {
-  final ReservationApiService _reservationApiService;
+  final RemoteDataSource _remoteDataSource;
   final SharedPreferenceModule _pref;
 
   ReservationRepositoryImpl(
-    this._reservationApiService,
+    this._remoteDataSource,
     this._pref,
   );
 
@@ -28,7 +28,7 @@ class ReservationRepositoryImpl implements ReservationRepository {
   Future<DataState<List<ReservationTargetDateModel>>> getTargetDateReservation(
       DateTime date) async {
     try {
-      final response = await _reservationApiService
+      final response = await _remoteDataSource
           .getTargetDateReservation(_dateTimeToString(date));
       final List<ReservationTargetDateResponse>? responseData = response.data;
 
@@ -89,7 +89,7 @@ class ReservationRepositoryImpl implements ReservationRepository {
   ) async {
     try {
       final response =
-          await _reservationApiService.getTargetPartTimeDateReservation(
+          await _remoteDataSource.getTargetPartTimeDateReservation(
         partTime,
         _dateTimeToStringWithPartTime(
           date,
@@ -142,7 +142,7 @@ class ReservationRepositoryImpl implements ReservationRepository {
     try {
       final String? fcmToken = await _pref.fcmToken;
 
-      final response = await _reservationApiService.requestCreateReservation(
+      final response = await _remoteDataSource.requestCreateReservation(
         _createMapper(request, fcmToken),
       );
 

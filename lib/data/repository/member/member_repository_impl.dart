@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:reservation_app/data/datasources/remote/member/member_api_service.dart';
+import 'package:reservation_app/data/datasource/remote_data_source.dart';
 import 'package:reservation_app/data/mapper/object_mapper.dart';
 import 'package:reservation_app/data/model/member/member_info_response.dart';
 import 'package:reservation_app/data/model/member/member_update_fcm_token_request.dart';
@@ -10,18 +10,18 @@ import 'package:reservation_app/domain/model/member/member_model.dart';
 import 'package:reservation_app/domain/repository/member/member_repository.dart';
 
 class MemberRepositoryImpl implements MemberRepository {
-  final MemberApiService _memberApiService;
+  final RemoteDataSource _remoteDataSource;
   final SharedPreferenceModule _pref;
 
   MemberRepositoryImpl(
-    this._memberApiService,
+    this._remoteDataSource,
     this._pref,
   );
 
   @override
   Future<DataState<MemberModel>> getMyUserInfo() async {
     try {
-      final response = await _memberApiService.requestMemberInfo();
+      final response = await _remoteDataSource.requestMemberInfo();
       final MemberInfoResponse? resultData = response.data;
 
       if (response.success && resultData != null) {
@@ -41,7 +41,7 @@ class MemberRepositoryImpl implements MemberRepository {
     try {
       final String? fcmToken = await _pref.fcmToken;
 
-      final response = await _memberApiService.requestMemberUpdateFcmToken(
+      final response = await _remoteDataSource.requestMemberUpdateFcmToken(
         MemberUpdateFcmTokenRequest(fcmToken: fcmToken),
       );
 

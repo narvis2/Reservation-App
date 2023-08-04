@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:reservation_app/data/common/response/response_list_base.dart';
+import 'package:reservation_app/domain/model/banner/banner_image_model.dart';
 import 'package:retrofit/retrofit.dart';
-
-import '../../../../domain/model/banner/banner_image_model.dart';
-import '../../../common/response/response_list_base.dart';
 
 // part 'banner_api_service.g.dart';
 part 'banner_api_service.g.dart';
