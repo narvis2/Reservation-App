@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_app/domain/model/fcm/enum/notification_type.dart';
 import 'package:reservation_app/presentation/utils/dialog_utils.dart';
 import 'package:reservation_app/presentation/views/fcm/bloc/fcm_notification_bloc.dart';
-import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
+import 'package:reservation_app/presentation/views/main/bloc/main_bloc.dart';
 import 'package:reservation_app/presentation/views/main/components/bottom_tab_bar_component.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/home_tab_screen.dart';
 import 'package:reservation_app/presentation/views/main/tabs/profile/search_tab_screen.dart';
@@ -23,7 +23,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
-  late final MainBloc _mainBlock;
+  late final MainBloc _mainBloc;
   late final NetworkBloc _networkBloc;
 
   late final TabController _tabController;
@@ -32,7 +32,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _mainBlock = BlocProvider.of<MainBloc>(context);
+    _mainBloc = BlocProvider.of<MainBloc>(context);
     _networkBloc = BlocProvider.of<NetworkBloc>(context);
 
     _tabController = TabController(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
-import 'package:reservation_app/di/dependency_inection_graph.dart';
+import 'package:reservation_app/di/dependency_injection_graph.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/snack_bar_utils.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/location/bloc/content_location_tab_bloc.dart';

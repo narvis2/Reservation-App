@@ -6,12 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:reservation_app/domain/model/notice/notice_model.dart';
 import 'package:reservation_app/presentation/config/router/app_router.dart';
+import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/views/common/network_error_widget.dart';
 import 'package:reservation_app/presentation/views/common/network_loading_widget.dart';
+import 'package:reservation_app/presentation/views/main/bloc/main_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/notice/bloc/content_notice_tab_bloc.dart';
 
-import '../../../../utils/color_constants.dart';
-import '../../block/main_bloc.dart';
 import 'components/content_area_component.dart';
 import 'components/top_area_component.dart';
 
@@ -25,7 +25,7 @@ class HomeTabScreen extends StatefulWidget {
 class _HomeTabScreenState extends State<HomeTabScreen> {
   @override
   Widget build(BuildContext context) {
-    final mainBlock = BlocProvider.of<MainBloc>(context);
+    final mainBloc = BlocProvider.of<MainBloc>(context);
     final contentNoticeTabBloc = BlocProvider.of<ContentNoticeTabBloc>(context)
       ..add(
         ContentNoticeTabNoticeListEvent(),
@@ -59,7 +59,8 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                       style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: ColorsConstants.splashText),
+                          color: ColorsConstants.splashText,
+                      ),
                       child: AnimatedTextKit(
                         animatedTexts: noticeList
                             .map((e) => WavyAnimatedText(e.title.toString()))
@@ -115,7 +116,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
         ),
       ),
       floatingActionButton: BlocBuilder<MainBloc, MainState>(
-        bloc: mainBlock,
+        bloc: mainBloc,
         builder: (context, state) {
           if (state is HomeTabCurrentPositionState) {
             if (state.currentPosition == 0 || state.currentPosition == 1) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-import 'package:reservation_app/di/dependency_inection_graph.dart';
+import 'package:reservation_app/di/dependency_injection_graph.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/views/common/network_error_widget.dart';
 import 'package:reservation_app/presentation/views/common/network_loading_widget.dart';
