@@ -1,16 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:reservation_app/data/datasources/remote/banner/banner_api_service.dart';
-import 'package:reservation_app/data/datasources/remote/member/member_api_service.dart';
-import 'package:reservation_app/data/datasources/remote/notice/notice_api_service.dart';
-import 'package:reservation_app/data/datasources/remote/reservation/reservation_api_service.dart';
-import 'package:reservation_app/data/datasources/remote/sign/sign_api_service.dart';
+import 'package:reservation_app/data/api/banner/banner_api_service.dart';
+import 'package:reservation_app/data/api/member/member_api_service.dart';
+import 'package:reservation_app/data/api/notice/notice_api_service.dart';
+import 'package:reservation_app/data/api/reservation/reservation_api_service.dart';
+import 'package:reservation_app/data/api/sign/sign_api_service.dart';
+import 'package:reservation_app/data/datasource/impl/remote_data_source_impl.dart';
+import 'package:reservation_app/data/datasource/remote_data_source.dart';
 import 'package:reservation_app/data/repository/banner/banner_repository_impl.dart';
 import 'package:reservation_app/data/repository/fcm/fcm_repository.dart';
 import 'package:reservation_app/data/repository/member/member_repository_impl.dart';
 import 'package:reservation_app/data/repository/notice/notice_repository_impl.dart';
 import 'package:reservation_app/data/repository/reservation/reservation_repository_impl.dart';
 import 'package:reservation_app/data/repository/sign/sign_repository_impl.dart';
+import 'package:reservation_app/di/local/local_module.dart';
 import 'package:reservation_app/di/network/network_module.dart';
 import 'package:reservation_app/di/prefs/shared_pref_module.dart';
 import 'package:reservation_app/domain/repository/banner/banner_repository.dart';
@@ -43,12 +46,10 @@ import 'package:reservation_app/presentation/views/reservation/bloc/second/reser
 import 'package:reservation_app/presentation/views/reservation/bloc/third/reservation_third_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'local/local_module.dart';
-
 final locator = GetIt.instance;
 
 Future<void> initializeDependencies() async {
-  // 📌 SharedPreferences Single Token 등록
+  // 📌 SharedPreferences Singleton 등록
   locator.registerSingletonAsync<SharedPreferences>(
     () => LocalModule.provideSharedPreferences(),
   );
@@ -67,7 +68,7 @@ Future<void> initializeDependencies() async {
     () => NetworkModule.provideDio(locator<SharedPreferenceModule>()),
   );
 
-  // 📌 datasource
+  // 📌 Api Service
   locator.registerLazySingleton<BannerApiService>(
     () => BannerApiService(locator<Dio>()),
   );
@@ -84,22 +85,33 @@ Future<void> initializeDependencies() async {
     () => MemberApiService(locator<Dio>()),
   );
 
+  // 📌 DataSource
+  locator.registerLazySingleton<RemoteDataSource>(
+    () => RemoteDataSourceImpl(
+      locator<BannerApiService>(),
+      locator<MemberApiService>(),
+      locator<NoticeApiService>(),
+      locator<ReservationApiService>(),
+      locator<SignApiService>(),
+    ),
+  );
+
   // 📌 Repository
   locator.registerLazySingleton<BannerRepository>(
-    () => BannerRepositoryImpl(locator<BannerApiService>()),
+    () => BannerRepositoryImpl(locator<RemoteDataSource>()),
   );
   locator.registerLazySingleton<ReservationRepository>(
     () => ReservationRepositoryImpl(
-      locator<ReservationApiService>(),
+      locator<RemoteDataSource>(),
       locator<SharedPreferenceModule>(),
     ),
   );
   locator.registerLazySingleton<NoticeRepository>(
-    () => NoticeRepositoryImpl(locator<NoticeApiService>()),
+    () => NoticeRepositoryImpl(locator<RemoteDataSource>()),
   );
   locator.registerLazySingleton<SignRepository>(
     () => SignRepositoryImpl(
-      locator<SignApiService>(),
+      locator<RemoteDataSource>(),
       locator<SharedPreferenceModule>(),
     ),
   );
@@ -108,7 +120,7 @@ Future<void> initializeDependencies() async {
   );
   locator.registerLazySingleton<MemberRepository>(
     () => MemberRepositoryImpl(
-      locator<MemberApiService>(),
+      locator<RemoteDataSource>(),
       locator<SharedPreferenceModule>(),
     ),
   );

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:reservation_app/data/datasources/remote/sign/sign_api_service.dart';
+import 'package:reservation_app/data/datasource/remote_data_source.dart';
 import 'package:reservation_app/data/mapper/object_mapper.dart';
 import 'package:reservation_app/data/model/sign/phone_auth_check_request.dart';
 import 'package:reservation_app/data/model/sign/phone_auth_request.dart';
@@ -11,17 +11,17 @@ import 'package:reservation_app/domain/model/sign/sign_in_request_model.dart';
 import 'package:reservation_app/domain/repository/sign/sign_repository.dart';
 
 class SignRepositoryImpl implements SignRepository {
-  final SignApiService _signApiService;
+  final RemoteDataSource _remoteDataSource;
   final SharedPreferenceModule _pref;
 
-  SignRepositoryImpl(this._signApiService, this._pref);
+  SignRepositoryImpl(this._remoteDataSource, this._pref);
 
   @override
   Future<DataState<bool>> requestSignIn(
     SignInRequestModel request,
   ) async {
     try {
-      final response = await _signApiService.requestSignIn(
+      final response = await _remoteDataSource.requestSignIn(
         request.toSignInRequest(),
       );
       final SignInResponse? resultData = response.data;
@@ -43,7 +43,7 @@ class SignRepositoryImpl implements SignRepository {
   @override
   Future<DataState<bool>> requestSignOut() async {
     try {
-      final response = await _signApiService.requestSignOut();
+      final response = await _remoteDataSource.requestSignOut();
 
       if (response.success && response.code == 200) {
         _pref.clear();
@@ -64,7 +64,7 @@ class SignRepositoryImpl implements SignRepository {
     PhoneAuthRequest request,
   ) async {
     try {
-      final response = await _signApiService.requestAuthPhoneNumber(request);
+      final response = await _remoteDataSource.requestAuthPhoneNumber(request);
 
       if (response.success && response.code == 200) {
         return DataSuccess(
@@ -84,7 +84,7 @@ class SignRepositoryImpl implements SignRepository {
     PhoneAuthCheckRequest request,
   ) async {
     try {
-      final response = await _signApiService.requestAuthPhoneNumberCheck(
+      final response = await _remoteDataSource.requestAuthPhoneNumberCheck(
         request,
       );
 

@@ -1,12 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:reservation_app/data/common/response/response_base.dart';
+import 'package:reservation_app/data/common/response/response_list_base.dart';
 import 'package:reservation_app/data/model/reservation/reservation_create_request.dart';
 import 'package:reservation_app/data/model/reservation/reservation_target_date_response.dart';
 import 'package:reservation_app/domain/model/reservation/enum/part_time.dart';
 import 'package:reservation_app/domain/model/seat/enum/seat_type.dart';
 import 'package:retrofit/http.dart';
-
-import '../../../common/response/response_list_base.dart';
 
 part 'reservation_api_service.g.dart';
 
