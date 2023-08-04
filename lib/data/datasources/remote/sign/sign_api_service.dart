@@ -4,7 +4,6 @@ import 'package:reservation_app/data/model/sign/phone_auth_check_request.dart';
 import 'package:reservation_app/data/model/sign/phone_auth_request.dart';
 import 'package:reservation_app/data/model/sign/sign_in_request.dart';
 import 'package:reservation_app/data/model/sign/sign_in_response.dart';
-import 'package:reservation_app/data/model/sign/sign_out_request.dart';
 import 'package:retrofit/http.dart';
 
 part 'sign_api_service.g.dart';
@@ -19,9 +18,7 @@ abstract class SignApiService {
   );
 
   @POST("/sign/signOut")
-  Future<BaseResponse> requestSignOut(
-    @Body() SignOutRequest request,
-  );
+  Future<BaseResponse> requestSignOut();
 
   @POST("/sign/phone")
   Future<BaseResponse> requestAuthPhoneNumber(
