@@ -9,7 +9,6 @@ import 'package:reservation_app/data/model/sign/sign_out_request.dart';
 import 'package:reservation_app/di/prefs/shared_pref_module.dart';
 import 'package:reservation_app/domain/model/base/data_state.dart';
 import 'package:reservation_app/domain/model/sign/sign_in_request_model.dart';
-import 'package:reservation_app/domain/model/sign/sign_in_response_model.dart';
 import 'package:reservation_app/domain/repository/sign/sign_repository.dart';
 
 class SignRepositoryImpl implements SignRepository {
@@ -19,7 +18,7 @@ class SignRepositoryImpl implements SignRepository {
   SignRepositoryImpl(this._signApiService, this._pref);
 
   @override
-  Future<DataState<SignInResponseModel>> requestSignIn(
+  Future<DataState<bool>> requestSignIn(
     SignInRequestModel request,
   ) async {
     try {
@@ -30,7 +29,9 @@ class SignRepositoryImpl implements SignRepository {
 
       if (response.success && resultData != null) {
         debugPrint("⭐️ [/sign/signIn] API 호출성공 👉 $resultData");
-        return DataSuccess(resultData.toSignInResponseModel());
+        _pref.saveFcmToken(resultData.token);
+        _pref.saveRefreshToken(resultData.refreshToken);
+        return DataSuccess(true);
       }
 
       return DataNetworkError(response.resultMsg);
