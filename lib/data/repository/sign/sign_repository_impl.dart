@@ -51,6 +51,7 @@ class SignRepositoryImpl implements SignRepository {
       );
 
       if (response.success && response.code == 200) {
+        _pref.clear();
         return DataSuccess(
           response.resultMsg != null && response.resultMsg == "응답 성공",
         );
