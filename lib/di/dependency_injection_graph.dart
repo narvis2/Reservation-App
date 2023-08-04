@@ -30,8 +30,8 @@ import 'package:reservation_app/domain/usecase/sign/get_auth_phone_number_use_ca
 import 'package:reservation_app/domain/usecase/sign/request_sign_in_use_case.dart';
 import 'package:reservation_app/domain/usecase/sign/request_sign_out_use_case.dart';
 import 'package:reservation_app/presentation/views/fcm/bloc/fcm_notification_bloc.dart';
-import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
-import 'package:reservation_app/presentation/views/main/tabs/home/block/home_tab_bloc.dart';
+import 'package:reservation_app/presentation/views/main/bloc/main_bloc.dart';
+import 'package:reservation_app/presentation/views/main/tabs/home/bloc/home_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/home/bloc/content_home_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/location/bloc/content_location_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/notice/bloc/content_notice_tab_bloc.dart';
@@ -152,7 +152,7 @@ Future<void> initializeDependencies() async {
     () => RequestSignOutUseCase(locator<SignRepository>()),
   );
 
-  // 📌 Block
+  // 📌 Bloc
   locator.registerFactory(() => MainBloc());
   locator.registerLazySingleton(
     () => FcmNotificationBloc(locator<FcmRepository>()),

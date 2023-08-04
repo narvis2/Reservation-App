@@ -2,12 +2,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_app/data/utils/Endpoints.dart';
+import 'package:reservation_app/di/dependency_injection_graph.dart';
+import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/views/common/network_error_widget.dart';
 import 'package:reservation_app/presentation/views/common/network_loading_widget.dart';
+import 'package:reservation_app/presentation/views/main/tabs/home/bloc/home_tab_bloc.dart';
 
-import '../../../../../../di/dependency_inection_graph.dart';
-import '../../../../../utils/color_constants.dart';
-import '../block/home_tab_bloc.dart';
 
 class TopAreaComponent extends StatefulWidget {
   final double maxHeight;

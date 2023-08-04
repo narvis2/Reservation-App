@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:reservation_app/data/utils/Endpoints.dart';
 import 'package:reservation_app/di/prefs/shared_pref_module.dart';
 
@@ -13,25 +14,33 @@ abstract class NetworkModule {
       ..options.receiveTimeout =
           const Duration(milliseconds: Endpoints.receiveTimeout)
       ..options.headers = {'Content-Type': 'application/json; charset=utf-8'}
-      ..interceptors.add(LogInterceptor(
-        request: true,
-        responseBody: true,
-        requestBody: true,
-        requestHeader: true,
-      ))
-      ..interceptors.add(InterceptorsWrapper(onRequest:
-          (RequestOptions options, RequestInterceptorHandler handler) async {
-        var accessToken = await pref.accessToken;
+      ..interceptors.add(
+        LogInterceptor(
+          request: true,
+          responseBody: true,
+          requestBody: true,
+          requestHeader: true,
+        ),
+      )
+      ..interceptors.add(
+        InterceptorsWrapper(
+          onRequest: (
+            RequestOptions options,
+            RequestInterceptorHandler handler,
+          ) async {
+            final String? accessToken = await pref.accessToken;
 
-        if (accessToken != null) {
-          options.headers
-              .putIfAbsent('Authorization', () => "Bearer $accessToken");
-        } else {
-          print("🙀 Access Token is Null 🙀");
-        }
+            if (accessToken != null) {
+              options.headers
+                  .putIfAbsent('Authorization', () => "Bearer $accessToken");
+            } else {
+              debugPrint("🙀 Access Token is Null 🙀");
+            }
 
-        return handler.next(options);
-      }));
+            return handler.next(options);
+          },
+        ),
+      );
 
     return dio;
   }

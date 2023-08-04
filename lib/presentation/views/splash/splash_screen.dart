@@ -4,7 +4,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:reservation_app/di/dependency_inection_graph.dart';
+import 'package:reservation_app/di/dependency_injection_graph.dart';
 import 'package:reservation_app/presentation/config/router/app_router.dart';
 
 import '../../../di/prefs/shared_pref_module.dart';

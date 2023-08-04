@@ -8,10 +8,10 @@ import 'package:reservation_app/data/repository/fcm/fcm_repository.dart';
 import 'package:reservation_app/presentation/config/router/app_router.dart';
 import 'package:reservation_app/presentation/config/themes/app_theme.dart';
 import 'package:reservation_app/presentation/views/fcm/bloc/fcm_notification_bloc.dart';
-import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
+import 'package:reservation_app/presentation/views/main/bloc/main_bloc.dart';
 import 'package:reservation_app/presentation/views/network/bloc/network_bloc.dart';
 
-import 'di/dependency_inection_graph.dart';
+import 'di/dependency_injection_graph.dart';
 import 'firebase_options.dart';
 import 'presentation/views/main/tabs/home/tabs/notice/bloc/content_notice_tab_bloc.dart';
 
