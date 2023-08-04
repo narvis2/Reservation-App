@@ -1,27 +1,34 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:reservation_app/data/datasources/remote/banner/banner_api_service.dart';
+import 'package:reservation_app/data/datasources/remote/member/member_api_service.dart';
 import 'package:reservation_app/data/datasources/remote/notice/notice_api_service.dart';
 import 'package:reservation_app/data/datasources/remote/reservation/reservation_api_service.dart';
 import 'package:reservation_app/data/datasources/remote/sign/sign_api_service.dart';
 import 'package:reservation_app/data/repository/banner/banner_repository_impl.dart';
 import 'package:reservation_app/data/repository/fcm/fcm_repository.dart';
+import 'package:reservation_app/data/repository/member/member_repository_impl.dart';
 import 'package:reservation_app/data/repository/notice/notice_repository_impl.dart';
 import 'package:reservation_app/data/repository/reservation/reservation_repository_impl.dart';
 import 'package:reservation_app/data/repository/sign/sign_repository_impl.dart';
 import 'package:reservation_app/di/network/network_module.dart';
 import 'package:reservation_app/di/prefs/shared_pref_module.dart';
 import 'package:reservation_app/domain/repository/banner/banner_repository.dart';
+import 'package:reservation_app/domain/repository/member/member_repository.dart';
 import 'package:reservation_app/domain/repository/notice/notice_repository.dart';
 import 'package:reservation_app/domain/repository/reservation/reservation_repository.dart';
 import 'package:reservation_app/domain/repository/sign/sign_repository.dart';
 import 'package:reservation_app/domain/usecase/banner/get_all_banner_image_use_case.dart';
+import 'package:reservation_app/domain/usecase/member/get_my_user_info_use_case.dart';
+import 'package:reservation_app/domain/usecase/member/request_update_fcm_token_use_case.dart';
 import 'package:reservation_app/domain/usecase/notice/get_all_notice_list_use_case.dart';
 import 'package:reservation_app/domain/usecase/reservation/get_reservation_target_part_time_use_case.dart';
 import 'package:reservation_app/domain/usecase/reservation/get_tartget_date_reservation_use_case.dart';
 import 'package:reservation_app/domain/usecase/reservation/request_create_reservation_use_case.dart';
 import 'package:reservation_app/domain/usecase/sign/get_auth_phone_number_check_use_case.dart';
 import 'package:reservation_app/domain/usecase/sign/get_auth_phone_number_use_case.dart';
+import 'package:reservation_app/domain/usecase/sign/request_sign_in_use_case.dart';
+import 'package:reservation_app/domain/usecase/sign/request_sign_out_use_case.dart';
 import 'package:reservation_app/presentation/views/fcm/bloc/fcm_notification_bloc.dart';
 import 'package:reservation_app/presentation/views/main/block/main_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/block/home_tab_bloc.dart';
@@ -73,6 +80,9 @@ Future<void> initializeDependencies() async {
   locator.registerLazySingleton<SignApiService>(
     () => SignApiService(locator<Dio>()),
   );
+  locator.registerLazySingleton<MemberApiService>(
+    () => MemberApiService(locator<Dio>()),
+  );
 
   // 📌 Repository
   locator.registerLazySingleton<BannerRepository>(
@@ -88,10 +98,19 @@ Future<void> initializeDependencies() async {
     () => NoticeRepositoryImpl(locator<NoticeApiService>()),
   );
   locator.registerLazySingleton<SignRepository>(
-    () => SignRepositoryImpl(locator<SignApiService>()),
+    () => SignRepositoryImpl(
+      locator<SignApiService>(),
+      locator<SharedPreferenceModule>(),
+    ),
   );
   locator.registerLazySingleton<FcmRepository>(
     () => FcmRepository(locator<SharedPreferenceModule>()),
+  );
+  locator.registerLazySingleton<MemberRepository>(
+    () => MemberRepositoryImpl(
+      locator<MemberApiService>(),
+      locator<SharedPreferenceModule>(),
+    ),
   );
 
   // 📌 UseCase
@@ -119,6 +138,18 @@ Future<void> initializeDependencies() async {
     () => RequestCreateReservationUseCase(
       locator<ReservationRepository>(),
     ),
+  );
+  locator.registerLazySingleton<GetMyUserInfoUseCase>(
+    () => GetMyUserInfoUseCase(locator<MemberRepository>()),
+  );
+  locator.registerLazySingleton<RequestUpdateFcmTokenUseCase>(
+    () => RequestUpdateFcmTokenUseCase(locator<MemberRepository>()),
+  );
+  locator.registerLazySingleton<RequestSignInUseCase>(
+    () => RequestSignInUseCase(locator<SignRepository>()),
+  );
+  locator.registerLazySingleton<RequestSignOutUseCase>(
+    () => RequestSignOutUseCase(locator<SignRepository>()),
   );
 
   // 📌 Block
