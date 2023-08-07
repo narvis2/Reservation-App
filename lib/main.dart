@@ -7,9 +7,12 @@ import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:reservation_app/data/repository/fcm/fcm_repository.dart';
 import 'package:reservation_app/presentation/config/router/app_router.dart';
 import 'package:reservation_app/presentation/config/themes/app_theme.dart';
+import 'package:reservation_app/presentation/views/app/bloc/app_info_bloc.dart';
 import 'package:reservation_app/presentation/views/fcm/bloc/fcm_notification_bloc.dart';
 import 'package:reservation_app/presentation/views/main/bloc/main_bloc.dart';
 import 'package:reservation_app/presentation/views/network/bloc/network_bloc.dart';
+import 'package:reservation_app/presentation/views/sign/bloc/sign_bloc.dart';
+import 'package:reservation_app/presentation/views/user/bloc/user_info_bloc.dart';
 
 import 'di/dependency_injection_graph.dart';
 import 'firebase_options.dart';
@@ -52,10 +55,14 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<FcmNotificationBloc>(
             lazy: false,
-            create: (context) =>
-                FcmNotificationBloc(
-                  context.read<FcmRepository>(),
-                ),
+            create: (context) => FcmNotificationBloc(
+              context.read<FcmRepository>(),
+            ),
+          ),
+          BlocProvider(create: (context) => locator<AppInfoBloc>()),
+          BlocProvider(create: (context) => locator<UserInfoBloc>()),
+          BlocProvider(
+            create: (context) => locator<SignBloc>(),
           ),
           BlocProvider<ContentNoticeTabBloc>(
             create: (create) => locator<ContentNoticeTabBloc>(),
