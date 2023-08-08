@@ -240,14 +240,16 @@ class DialogUtils {
                 height: 150,
                 repeat: true,
               ),
-              Text(
-                "네트워크 상태를 확인해주세요.",
+              DefaultTextStyle(
                 style: TextStyle(
                   color: ColorsConstants.background,
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
+                child: Text(
+                  "네트워크 상태를 확인해주세요.",
+                ),
               ),
             ],
           ),
@@ -271,9 +273,7 @@ class DialogUtils {
         Animation<double> animation,
         Animation<double> secondaryAnimation,
       ) {
-        return SignInSignUpScreen(
-          buildContext: buildContext
-        );
+        return SignInSignUpScreen(buildContext: buildContext);
       },
     );
   }
