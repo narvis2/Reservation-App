@@ -57,6 +57,9 @@ class SharedPreferenceModule {
   Future<void> saveUserEmail(String email) =>
       pref.setString(_USER_EMAIL, email);
 
+  Future<void> clearUserEmail() =>
+      pref.remove(_USER_EMAIL);
+
   Future<String?> get userEmail async {
     return pref.getString(_USER_EMAIL);
   }

@@ -269,11 +269,11 @@ class DialogUtils {
       barrierColor: ColorsConstants.dialogBackground,
       transitionDuration: const Duration(milliseconds: 300),
       pageBuilder: (
-        BuildContext buildContext,
+        BuildContext context,
         Animation<double> animation,
         Animation<double> secondaryAnimation,
       ) {
-        return SignInSignUpScreen(buildContext: buildContext);
+        return SignInSignUpScreen(buildContext: context);
       },
     );
   }

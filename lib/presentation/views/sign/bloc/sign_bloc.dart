@@ -110,10 +110,6 @@ class SignBloc extends Bloc<SignEvent, SignState> {
   ) async {
     emit(state.copyWith(signInStatus: SignInStatus.loading));
 
-    if (state.isAutoLogin || state.isSavedId) {
-      await _pref.saveUserEmail(event.id);
-    }
-
     final response = await _requestSignInUseCase.invoke(
       SignInRequestModel(
         email: event.id,
@@ -121,8 +117,16 @@ class SignBloc extends Bloc<SignEvent, SignState> {
       ),
     );
 
-    if (response is DataSuccess) {
+    if (response is DataSuccess<bool>) {
       final result = response.data ?? false;
+
+      if (result) {
+        if ((state.isAutoLogin || state.isSavedId)) {
+          await _pref.saveUserEmail(event.id);
+        } else if ((!state.isSavedId && state.savedEmail != null)) {
+          await _pref.clearUserEmail();
+        }
+      }
 
       emit(
         state.copyWith(
