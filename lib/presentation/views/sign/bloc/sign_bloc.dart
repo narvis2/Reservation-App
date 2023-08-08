@@ -4,8 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:reservation_app/di/prefs/shared_pref_module.dart';
+import 'package:reservation_app/domain/model/base/data_state.dart';
+import 'package:reservation_app/domain/model/sign/sign_in_request_model.dart';
 import 'package:reservation_app/domain/usecase/sign/request_sign_in_use_case.dart';
 import 'package:reservation_app/domain/usecase/sign/request_sign_out_use_case.dart';
+import 'package:reservation_app/presentation/utils/constants.dart';
 
 part 'sign_bloc.freezed.dart';
 
@@ -47,6 +50,7 @@ class SignBloc extends Bloc<SignEvent, SignState> {
     final bool isAutoLogin = await _pref.isAutoLogin;
     final bool isEnablePush = await _pref.isEnablePush;
     bool isSavedId = await _pref.isSavedId;
+    final String? savedEmail = await _pref.userEmail;
 
     if (isAutoLogin && !isSavedId) {
       await _pref.saveIsSavedId(true);
@@ -58,6 +62,7 @@ class SignBloc extends Bloc<SignEvent, SignState> {
         isAutoLogin: isAutoLogin,
         isEnablePush: isEnablePush,
         isSavedId: isSavedId,
+        savedEmail: savedEmail,
       ),
     );
   }
@@ -99,11 +104,53 @@ class SignBloc extends Bloc<SignEvent, SignState> {
     emit(state.copyWith(isSavedId: !isSavedId));
   }
 
-  void _onSignInClick(
+  FutureOr<void> _onSignInClick(
     SignOnSignInClickEvent event,
     Emitter<SignState> emit,
-  ) {
-    debugPrint("📍 onSignInClick email 👉 ${event.id}");
-    debugPrint("📍 onSignInClick password 👉 ${event.password}");
+  ) async {
+    emit(state.copyWith(signInStatus: SignInStatus.loading));
+
+    if (state.isAutoLogin || state.isSavedId) {
+      await _pref.saveUserEmail(event.id);
+    }
+
+    final response = await _requestSignInUseCase.invoke(
+      SignInRequestModel(
+        email: event.id,
+        password: event.password,
+      ),
+    );
+
+    if (response is DataSuccess) {
+      final result = response.data ?? false;
+
+      emit(
+        state.copyWith(
+          signInStatus: result ? SignInStatus.success : SignInStatus.error,
+          errorMessage: result ? null : Constants.networkError,
+        ),
+      );
+    } else if (response is DataError) {
+      emit(
+        state.copyWith(
+          signInStatus: SignInStatus.error,
+          errorMessage: Constants.dataError,
+        ),
+      );
+    } else if (response is DataNetworkError) {
+      emit(
+        state.copyWith(
+          signInStatus: SignInStatus.error,
+          errorMessage: response.message,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          signInStatus: SignInStatus.error,
+          errorMessage: Constants.dataError,
+        ),
+      );
+    }
   }
 }

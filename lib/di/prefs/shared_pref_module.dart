@@ -8,10 +8,12 @@ class SharedPreferenceModule {
   static const String _IS_AUTO_LOGIN = "IS_AUTO_LOGIN";
   static const String _IS_SAVED_ID = "IS_SAVED_ID";
   static const String _IS_ENABLE_PUSH = "IS_ENABLE_PUSH";
+  static const String _USER_EMAIL = "USER_EMAIL";
 
   SharedPreferenceModule(this.pref);
 
-  Future<void> saveJWTToken(String jwtToken) => pref.setString(_JWT_TOKEN, jwtToken);
+  Future<void> saveJWTToken(String jwtToken) =>
+      pref.setString(_JWT_TOKEN, jwtToken);
 
   Future<String?> get accessToken async {
     return pref.getString(_JWT_TOKEN);
@@ -24,7 +26,8 @@ class SharedPreferenceModule {
     return pref.getString(_REFRESH_TOKEN);
   }
 
-  Future<void> saveFcmToken(String fcmToken) => pref.setString(_FCM_TOKEN, fcmToken);
+  Future<void> saveFcmToken(String fcmToken) =>
+      pref.setString(_FCM_TOKEN, fcmToken);
 
   Future<String?> get fcmToken async {
     return pref.getString(_FCM_TOKEN);
@@ -49,6 +52,13 @@ class SharedPreferenceModule {
 
   Future<bool> get isEnablePush async {
     return pref.getBool(_IS_ENABLE_PUSH) ?? false;
+  }
+
+  Future<void> saveUserEmail(String email) =>
+      pref.setString(_USER_EMAIL, email);
+
+  Future<String?> get userEmail async {
+    return pref.getString(_USER_EMAIL);
   }
 
   void clear() => pref.clear();

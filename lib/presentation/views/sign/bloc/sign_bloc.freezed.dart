@@ -109,12 +109,18 @@ class __$$SignInitEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SignInitEvent implements SignInitEvent {
+class _$SignInitEvent with DiagnosticableTreeMixin implements SignInitEvent {
   const _$SignInitEvent();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'SignEvent.init()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'SignEvent.init'));
   }
 
   @override
@@ -229,12 +235,20 @@ class __$$SignIsAutoLoginEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SignIsAutoLoginEvent implements SignIsAutoLoginEvent {
+class _$SignIsAutoLoginEvent
+    with DiagnosticableTreeMixin
+    implements SignIsAutoLoginEvent {
   const _$SignIsAutoLoginEvent();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'SignEvent.setIsAutoLogin()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'SignEvent.setIsAutoLogin'));
   }
 
   @override
@@ -349,12 +363,20 @@ class __$$SignIsEnablePushEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SignIsEnablePushEvent implements SignIsEnablePushEvent {
+class _$SignIsEnablePushEvent
+    with DiagnosticableTreeMixin
+    implements SignIsEnablePushEvent {
   const _$SignIsEnablePushEvent();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'SignEvent.setIsEnablePush()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'SignEvent.setIsEnablePush'));
   }
 
   @override
@@ -469,12 +491,20 @@ class __$$SignIsSavedIdEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SignIsSavedIdEvent implements SignIsSavedIdEvent {
+class _$SignIsSavedIdEvent
+    with DiagnosticableTreeMixin
+    implements SignIsSavedIdEvent {
   const _$SignIsSavedIdEvent();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'SignEvent.setIsSavedId()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'SignEvent.setIsSavedId'));
   }
 
   @override
@@ -609,7 +639,9 @@ class __$$SignOnSignInClickEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SignOnSignInClickEvent implements SignOnSignInClickEvent {
+class _$SignOnSignInClickEvent
+    with DiagnosticableTreeMixin
+    implements SignOnSignInClickEvent {
   const _$SignOnSignInClickEvent({required this.id, required this.password});
 
   @override
@@ -618,8 +650,17 @@ class _$SignOnSignInClickEvent implements SignOnSignInClickEvent {
   final String password;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'SignEvent.onSignClick(id: $id, password: $password)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'SignEvent.onSignClick'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('password', password));
   }
 
   @override
@@ -737,9 +778,12 @@ abstract class SignOnSignInClickEvent implements SignEvent {
 
 /// @nodoc
 mixin _$SignState {
+  SignInStatus get signInStatus => throw _privateConstructorUsedError;
   bool get isAutoLogin => throw _privateConstructorUsedError;
   bool get isEnablePush => throw _privateConstructorUsedError;
   bool get isSavedId => throw _privateConstructorUsedError;
+  String? get savedEmail => throw _privateConstructorUsedError;
+  String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SignStateCopyWith<SignState> get copyWith =>
@@ -751,7 +795,13 @@ abstract class $SignStateCopyWith<$Res> {
   factory $SignStateCopyWith(SignState value, $Res Function(SignState) then) =
       _$SignStateCopyWithImpl<$Res, SignState>;
   @useResult
-  $Res call({bool isAutoLogin, bool isEnablePush, bool isSavedId});
+  $Res call(
+      {SignInStatus signInStatus,
+      bool isAutoLogin,
+      bool isEnablePush,
+      bool isSavedId,
+      String? savedEmail,
+      String? errorMessage});
 }
 
 /// @nodoc
@@ -767,11 +817,18 @@ class _$SignStateCopyWithImpl<$Res, $Val extends SignState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? signInStatus = null,
     Object? isAutoLogin = null,
     Object? isEnablePush = null,
     Object? isSavedId = null,
+    Object? savedEmail = freezed,
+    Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
+      signInStatus: null == signInStatus
+          ? _value.signInStatus
+          : signInStatus // ignore: cast_nullable_to_non_nullable
+              as SignInStatus,
       isAutoLogin: null == isAutoLogin
           ? _value.isAutoLogin
           : isAutoLogin // ignore: cast_nullable_to_non_nullable
@@ -784,6 +841,14 @@ class _$SignStateCopyWithImpl<$Res, $Val extends SignState>
           ? _value.isSavedId
           : isSavedId // ignore: cast_nullable_to_non_nullable
               as bool,
+      savedEmail: freezed == savedEmail
+          ? _value.savedEmail
+          : savedEmail // ignore: cast_nullable_to_non_nullable
+              as String?,
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -794,7 +859,13 @@ abstract class _$$InitialCopyWith<$Res> implements $SignStateCopyWith<$Res> {
       __$$InitialCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isAutoLogin, bool isEnablePush, bool isSavedId});
+  $Res call(
+      {SignInStatus signInStatus,
+      bool isAutoLogin,
+      bool isEnablePush,
+      bool isSavedId,
+      String? savedEmail,
+      String? errorMessage});
 }
 
 /// @nodoc
@@ -807,11 +878,18 @@ class __$$InitialCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? signInStatus = null,
     Object? isAutoLogin = null,
     Object? isEnablePush = null,
     Object? isSavedId = null,
+    Object? savedEmail = freezed,
+    Object? errorMessage = freezed,
   }) {
     return _then(_$Initial(
+      signInStatus: null == signInStatus
+          ? _value.signInStatus
+          : signInStatus // ignore: cast_nullable_to_non_nullable
+              as SignInStatus,
       isAutoLogin: null == isAutoLogin
           ? _value.isAutoLogin
           : isAutoLogin // ignore: cast_nullable_to_non_nullable
@@ -824,18 +902,32 @@ class __$$InitialCopyWithImpl<$Res>
           ? _value.isSavedId
           : isSavedId // ignore: cast_nullable_to_non_nullable
               as bool,
+      savedEmail: freezed == savedEmail
+          ? _value.savedEmail
+          : savedEmail // ignore: cast_nullable_to_non_nullable
+              as String?,
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$Initial implements Initial {
+class _$Initial with DiagnosticableTreeMixin implements Initial {
   const _$Initial(
-      {this.isAutoLogin = false,
+      {this.signInStatus = SignInStatus.initial,
+      this.isAutoLogin = false,
       this.isEnablePush = false,
-      this.isSavedId = false});
+      this.isSavedId = false,
+      this.savedEmail = null,
+      this.errorMessage = null});
 
+  @override
+  @JsonKey()
+  final SignInStatus signInStatus;
   @override
   @JsonKey()
   final bool isAutoLogin;
@@ -845,10 +937,29 @@ class _$Initial implements Initial {
   @override
   @JsonKey()
   final bool isSavedId;
+  @override
+  @JsonKey()
+  final String? savedEmail;
+  @override
+  @JsonKey()
+  final String? errorMessage;
 
   @override
-  String toString() {
-    return 'SignState(isAutoLogin: $isAutoLogin, isEnablePush: $isEnablePush, isSavedId: $isSavedId)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'SignState(signInStatus: $signInStatus, isAutoLogin: $isAutoLogin, isEnablePush: $isEnablePush, isSavedId: $isSavedId, savedEmail: $savedEmail, errorMessage: $errorMessage)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'SignState'))
+      ..add(DiagnosticsProperty('signInStatus', signInStatus))
+      ..add(DiagnosticsProperty('isAutoLogin', isAutoLogin))
+      ..add(DiagnosticsProperty('isEnablePush', isEnablePush))
+      ..add(DiagnosticsProperty('isSavedId', isSavedId))
+      ..add(DiagnosticsProperty('savedEmail', savedEmail))
+      ..add(DiagnosticsProperty('errorMessage', errorMessage));
   }
 
   @override
@@ -856,17 +967,23 @@ class _$Initial implements Initial {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$Initial &&
+            (identical(other.signInStatus, signInStatus) ||
+                other.signInStatus == signInStatus) &&
             (identical(other.isAutoLogin, isAutoLogin) ||
                 other.isAutoLogin == isAutoLogin) &&
             (identical(other.isEnablePush, isEnablePush) ||
                 other.isEnablePush == isEnablePush) &&
             (identical(other.isSavedId, isSavedId) ||
-                other.isSavedId == isSavedId));
+                other.isSavedId == isSavedId) &&
+            (identical(other.savedEmail, savedEmail) ||
+                other.savedEmail == savedEmail) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, isAutoLogin, isEnablePush, isSavedId);
+  int get hashCode => Object.hash(runtimeType, signInStatus, isAutoLogin,
+      isEnablePush, isSavedId, savedEmail, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -877,16 +994,25 @@ class _$Initial implements Initial {
 
 abstract class Initial implements SignState {
   const factory Initial(
-      {final bool isAutoLogin,
+      {final SignInStatus signInStatus,
+      final bool isAutoLogin,
       final bool isEnablePush,
-      final bool isSavedId}) = _$Initial;
+      final bool isSavedId,
+      final String? savedEmail,
+      final String? errorMessage}) = _$Initial;
 
+  @override
+  SignInStatus get signInStatus;
   @override
   bool get isAutoLogin;
   @override
   bool get isEnablePush;
   @override
   bool get isSavedId;
+  @override
+  String? get savedEmail;
+  @override
+  String? get errorMessage;
   @override
   @JsonKey(ignore: true)
   _$$InitialCopyWith<_$Initial> get copyWith =>

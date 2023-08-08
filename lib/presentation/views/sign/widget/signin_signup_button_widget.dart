@@ -3,11 +3,13 @@ import 'package:reservation_app/presentation/utils/color_constants.dart';
 
 class SignInSignUpButtonWidget extends StatelessWidget {
   final String title;
+  final bool isValid;
   final void Function() onClickSignIn;
 
   const SignInSignUpButtonWidget({
     Key? key,
     required this.title,
+    required this.isValid,
     required this.onClickSignIn,
   }) : super(key: key);
 
@@ -15,7 +17,7 @@ class SignInSignUpButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.only(left: 20, right: 20, bottom: 30),
+      padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
       child: ElevatedButton(
         onPressed: onClickSignIn,
         style: ButtonStyle(
@@ -27,13 +29,13 @@ class SignInSignUpButtonWidget extends StatelessWidget {
             ),
           ),
           backgroundColor: MaterialStateProperty.all<Color>(
-            ColorsConstants.strokeColor,
+            isValid ? ColorsConstants.strokeColor : ColorsConstants.primaryButtonBackgroundDisabled,
           ),
         ),
         child: Text(
           "로그인",
           style: TextStyle(
-            color: ColorsConstants.background,
+            color: isValid ? ColorsConstants.background : ColorsConstants.boldColor,
             fontSize: 14,
             fontWeight: FontWeight.bold,
           ),
