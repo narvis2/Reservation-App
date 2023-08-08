@@ -11,40 +11,40 @@ class SharedPreferenceModule {
 
   SharedPreferenceModule(this.pref);
 
-  void saveJWTToken(String jwtToken) => pref.setString(_JWT_TOKEN, jwtToken);
+  Future<void> saveJWTToken(String jwtToken) => pref.setString(_JWT_TOKEN, jwtToken);
 
   Future<String?> get accessToken async {
     return pref.getString(_JWT_TOKEN);
   }
 
-  void saveRefreshToken(String refreshToken) =>
+  Future<void> saveRefreshToken(String refreshToken) =>
       pref.setString(_REFRESH_TOKEN, refreshToken);
 
   Future<String?> get refreshToken async {
     return pref.getString(_REFRESH_TOKEN);
   }
 
-  void saveFcmToken(String fcmToken) => pref.setString(_FCM_TOKEN, fcmToken);
+  Future<void> saveFcmToken(String fcmToken) => pref.setString(_FCM_TOKEN, fcmToken);
 
   Future<String?> get fcmToken async {
     return pref.getString(_FCM_TOKEN);
   }
 
-  void saveIsAutoLogin(bool autoLogin) =>
+  Future<void> saveIsAutoLogin(bool autoLogin) =>
       pref.setBool(_IS_AUTO_LOGIN, autoLogin);
 
   Future<bool> get isAutoLogin async {
     return pref.getBool(_IS_AUTO_LOGIN) ?? false;
   }
 
-  void saveIsSavedId(bool savedId) =>
+  Future<void> saveIsSavedId(bool savedId) =>
       pref.setBool(_IS_SAVED_ID, savedId);
 
   Future<bool> get isSavedId async {
     return pref.getBool(_IS_SAVED_ID) ?? false;
   }
 
-  void saveIsEnablePush(bool enablePush) =>
+  Future<void> saveIsEnablePush(bool enablePush) =>
       pref.setBool(_IS_ENABLE_PUSH, enablePush);
 
   Future<bool> get isEnablePush async {

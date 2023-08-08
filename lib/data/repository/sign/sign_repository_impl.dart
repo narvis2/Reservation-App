@@ -28,8 +28,8 @@ class SignRepositoryImpl implements SignRepository {
 
       if (response.success && resultData != null) {
         debugPrint("⭐️ [/sign/signIn] API 호출성공 👉 $resultData");
-        _pref.saveFcmToken(resultData.token);
-        _pref.saveRefreshToken(resultData.refreshToken);
+        await _pref.saveJWTToken(resultData.token);
+        await _pref.saveRefreshToken(resultData.refreshToken);
         return DataSuccess(true);
       }
 
