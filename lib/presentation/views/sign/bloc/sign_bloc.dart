@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:reservation_app/di/prefs/shared_pref_module.dart';
-import 'package:reservation_app/domain/model/sign/sign_in_request_model.dart';
 import 'package:reservation_app/domain/usecase/sign/request_sign_in_use_case.dart';
 import 'package:reservation_app/domain/usecase/sign/request_sign_out_use_case.dart';
 
@@ -47,7 +46,12 @@ class SignBloc extends Bloc<SignEvent, SignState> {
   ) async {
     final bool isAutoLogin = await _pref.isAutoLogin;
     final bool isEnablePush = await _pref.isEnablePush;
-    final bool isSavedId = await _pref.isSavedId;
+    bool isSavedId = await _pref.isSavedId;
+
+    if (isAutoLogin && !isSavedId) {
+      await _pref.saveIsSavedId(true);
+      isSavedId = true;
+    }
 
     emit(
       state.copyWith(
@@ -58,33 +62,40 @@ class SignBloc extends Bloc<SignEvent, SignState> {
     );
   }
 
-  void _setIsAutoLogin(
+  FutureOr<void> _setIsAutoLogin(
     SignIsAutoLoginEvent event,
     Emitter<SignState> emit,
-  ) {
-    final isAutoLogin = state.isAutoLogin;
+  ) async {
+    final isAutoLogin = !state.isAutoLogin;
 
-    _pref.saveIsAutoLogin(!isAutoLogin);
-    emit(state.copyWith(isAutoLogin: !isAutoLogin));
+    if (isAutoLogin && !state.isSavedId) {
+      await _pref.saveIsSavedId(true);
+      emit(state.copyWith(isSavedId: true));
+    }
+
+    await _pref.saveIsAutoLogin(isAutoLogin);
+    emit(state.copyWith(isAutoLogin: isAutoLogin));
   }
 
-  void _setIsEnablePush(
+  FutureOr<void> _setIsEnablePush(
     SignIsEnablePushEvent event,
     Emitter<SignState> emit,
-  ) {
+  ) async {
     final isEnablePush = state.isEnablePush;
 
-    _pref.saveIsEnablePush(!isEnablePush);
+    await _pref.saveIsEnablePush(!isEnablePush);
     emit(state.copyWith(isEnablePush: !isEnablePush));
   }
 
-  void _setIsSavedId(
+  FutureOr<void> _setIsSavedId(
     SignIsSavedIdEvent event,
     Emitter<SignState> emit,
-  ) {
+  ) async {
+    if (state.isAutoLogin) return;
+
     final isSavedId = state.isSavedId;
 
-    _pref.saveIsSavedId(!isSavedId);
+    await _pref.saveIsSavedId(!isSavedId);
     emit(state.copyWith(isSavedId: !isSavedId));
   }
 

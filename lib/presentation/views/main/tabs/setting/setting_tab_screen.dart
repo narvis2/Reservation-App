@@ -24,7 +24,7 @@ class _SettingTabScreenState extends State<SettingTabScreen> {
   void initState() {
     super.initState();
     _userInfoBloc = BlocProvider.of<UserInfoBloc>(context);
-    _signBloc = BlocProvider.of<SignBloc>(context);
+    _signBloc = BlocProvider.of<SignBloc>(context)..add(SignInitEvent());
   }
 
   @override
