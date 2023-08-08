@@ -6,6 +6,7 @@ class SharedPreferenceModule {
   static const String _REFRESH_TOKEN = "REFRESH_TOKEN";
   static const String _FCM_TOKEN = "FCM_TOKEN";
   static const String _IS_AUTO_LOGIN = "IS_AUTO_LOGIN";
+  static const String _IS_SAVED_ID = "IS_SAVED_ID";
   static const String _IS_ENABLE_PUSH = "IS_ENABLE_PUSH";
 
   SharedPreferenceModule(this.pref);
@@ -34,6 +35,13 @@ class SharedPreferenceModule {
 
   Future<bool> get isAutoLogin async {
     return pref.getBool(_IS_AUTO_LOGIN) ?? false;
+  }
+
+  void saveIsSavedId(bool savedId) =>
+      pref.setBool(_IS_SAVED_ID, savedId);
+
+  Future<bool> get isSavedId async {
+    return pref.getBool(_IS_SAVED_ID) ?? false;
   }
 
   void saveIsEnablePush(bool enablePush) =>

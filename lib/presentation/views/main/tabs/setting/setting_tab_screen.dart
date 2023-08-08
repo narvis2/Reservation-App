@@ -52,21 +52,6 @@ class _SettingTabScreenState extends State<SettingTabScreen> {
                 onTap: () {
                   DialogUtils.showSignInSignUpDialog(
                     context: context,
-                    isSavedId: false,
-                    isAutoLogin: false,
-                    onToggleSavedId: () {},
-                    onToggleAutoLogin: () {},
-                    onIdSubmitted: (value) {},
-                    onPwSubmitted: (value) {},
-                    onChangeId: (value) {},
-                    onChangePw: (value) {},
-                    onValidChangeId: (value) {
-                      return null;
-                    },
-                    onValidChangePw: (value) {
-                      return null;
-                    },
-                    onClickSignIn: () {},
                   );
                 },
                 child: Container(
@@ -82,8 +67,8 @@ class _SettingTabScreenState extends State<SettingTabScreen> {
                 height: 1,
               ),
               SettingCategoryTitleWidget(title: "앱 설정"),
-              BlocSelector<UserInfoBloc, UserInfoState, bool>(
-                bloc: _userInfoBloc,
+              BlocSelector<SignBloc, SignState, bool>(
+                bloc: _signBloc,
                 selector: (state) {
                   return state.isAutoLogin;
                 },
@@ -92,11 +77,7 @@ class _SettingTabScreenState extends State<SettingTabScreen> {
                     isEnable: state,
                     title: "자동로그인",
                     onChange: (enable) {
-                      _userInfoBloc.add(
-                        UserInfoIsAutoLoginEvent(
-                          isAutoLogin: enable,
-                        ),
-                      );
+                      _signBloc.add(SignIsAutoLoginEvent());
                     },
                   );
                 },
@@ -107,7 +88,8 @@ class _SettingTabScreenState extends State<SettingTabScreen> {
                 indent: 20,
                 endIndent: 20,
               ),
-              BlocSelector<UserInfoBloc, UserInfoState, bool>(
+              BlocSelector<SignBloc, SignState, bool>(
+                bloc: _signBloc,
                 selector: (state) {
                   return state.isEnablePush;
                 },
@@ -116,11 +98,7 @@ class _SettingTabScreenState extends State<SettingTabScreen> {
                     isEnable: state,
                     title: "Push 알림 (예약 안내﹒각종 이벤트)",
                     onChange: (enable) {
-                      _userInfoBloc.add(
-                        UserInfoIsEnablePushEvent(
-                          isEnablePush: enable,
-                        ),
-                      );
+                      _signBloc.add(SignIsEnablePushEvent());
                     },
                   );
                 },

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
 
 class SignInSignUpInputWidget extends StatelessWidget {
-  final GlobalKey<FormFieldState<dynamic>> inputKey;
   final TextEditingController textController;
   final String helperText;
   final String hintText;
@@ -14,7 +13,6 @@ class SignInSignUpInputWidget extends StatelessWidget {
 
   SignInSignUpInputWidget({
     Key? key,
-    required this.inputKey,
     required this.textController,
     required this.helperText,
     required this.hintText,
@@ -30,7 +28,6 @@ class SignInSignUpInputWidget extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: TextFormField(
-        key: inputKey,
         controller: textController,
         autovalidateMode: AutovalidateMode.always,
         textInputAction: TextInputAction.done,

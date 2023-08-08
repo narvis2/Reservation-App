@@ -17,7 +17,7 @@ class SignInSignUpButtonWidget extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.only(left: 20, right: 20, bottom: 30),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onClickSignIn,
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(

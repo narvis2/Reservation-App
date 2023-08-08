@@ -171,6 +171,7 @@ Future<void> initializeDependencies() async {
   locator.registerFactory(() => MainBloc());
   locator.registerFactory(
     () => SignBloc(
+      locator<SharedPreferenceModule>(),
       locator<RequestSignInUseCase>(),
       locator<RequestSignOutUseCase>(),
     ),

@@ -259,27 +259,7 @@ class DialogUtils {
 
   static showSignInSignUpDialog({
     required BuildContext context,
-    required bool isSavedId,
-    required bool isAutoLogin,
-    required void Function() onToggleSavedId,
-    required void Function() onToggleAutoLogin,
-    required void Function(String value) onIdSubmitted, // id input 입력창 확인 클릭
-    required void Function(String value) onPwSubmitted, // pw input 입력창 확인 클릭
-    required void Function(String value) onChangeId, // id 변경 Callback
-    required void Function(String value) onChangePw, // pw 변경 Callback
-    required String? Function(String? value)
-        onValidChangeId, // id Validation 변경 Callback
-    required String? Function(String? value)
-        onValidChangePw, // pw Validation 변경 Callback
-    required void Function() onClickSignIn, // 로그인 클릭
-    void Function()? onClickSignUp, // 회원가입 아직 기능 없음
   }) async {
-    final idKey = GlobalKey<FormFieldState>();
-    final pwKey = GlobalKey<FormFieldState>();
-
-    final idController = TextEditingController();
-    final pwController = TextEditingController();
-
     await showGeneralDialog(
       barrierDismissible: true,
       context: context,
@@ -292,23 +272,7 @@ class DialogUtils {
         Animation<double> secondaryAnimation,
       ) {
         return SignInSignUpScreen(
-          buildContext: buildContext,
-          isSavedId: isSavedId,
-          isAutoLogin: isAutoLogin,
-          idKey: idKey,
-          pwKey: pwKey,
-          idController: idController,
-          pwController: pwController,
-          onToggleSavedId: onToggleSavedId,
-          onToggleAutoLogin: onToggleAutoLogin,
-          onIdSubmitted: onIdSubmitted,
-          onPwSubmitted: onPwSubmitted,
-          onChangeId: onChangeId,
-          onChangePw: onChangePw,
-          onValidChangeId: onValidChangeId,
-          onValidChangePw: onValidChangePw,
-          onClickSignIn: onClickSignIn,
-          onClickSignUp: onClickSignUp,
+          buildContext: buildContext
         );
       },
     );

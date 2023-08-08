@@ -1,57 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
+import 'package:reservation_app/presentation/views/sign/bloc/sign_bloc.dart';
 import 'package:reservation_app/presentation/views/sign/widget/signin_signup_button_widget.dart';
 import 'package:reservation_app/presentation/views/sign/widget/signin_signup_input_widget.dart';
 import 'package:reservation_app/presentation/views/sign/widget/signin_signup_title_area_widget.dart';
 import 'package:reservation_app/presentation/views/sign/widget/signin_signup_toggle_button_widget.dart';
 
-class SignInSignUpScreen extends StatelessWidget {
+class SignInSignUpScreen extends StatefulWidget {
   final BuildContext buildContext;
-
-  final bool isSavedId;
-  final bool isAutoLogin;
-
-  final GlobalKey<FormFieldState<dynamic>> idKey;
-  final GlobalKey<FormFieldState<dynamic>> pwKey;
-
-  final TextEditingController idController;
-  final TextEditingController pwController;
-
-  final void Function() onToggleSavedId;
-  final void Function() onToggleAutoLogin;
-
-  final void Function(String value) onIdSubmitted;
-  final void Function(String value) onPwSubmitted;
-
-  final void Function(String value) onChangeId;
-  final void Function(String value) onChangePw;
-
-  final String? Function(String? value) onValidChangeId;
-  final String? Function(String? value) onValidChangePw;
-
-  final void Function() onClickSignIn;
-  final void Function()? onClickSignUp;
 
   const SignInSignUpScreen({
     Key? key,
     required this.buildContext,
-    required this.isSavedId,
-    required this.isAutoLogin,
-    required this.idKey,
-    required this.pwKey,
-    required this.idController,
-    required this.pwController,
-    required this.onToggleSavedId,
-    required this.onToggleAutoLogin,
-    required this.onIdSubmitted,
-    required this.onPwSubmitted,
-    required this.onChangeId,
-    required this.onChangePw,
-    required this.onValidChangeId,
-    required this.onValidChangePw,
-    required this.onClickSignIn,
-    this.onClickSignUp,
   }) : super(key: key);
+
+  @override
+  State<SignInSignUpScreen> createState() => _SignInSignUpScreenState();
+}
+
+class _SignInSignUpScreenState extends State<SignInSignUpScreen> {
+  late final SignBloc _signBloc;
+
+  final TextEditingController idController = TextEditingController();
+  final TextEditingController pwController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _signBloc = BlocProvider.of<SignBloc>(context)..add(SignInitEvent());
+  }
+
+  @override
+  void dispose() {
+    idController.dispose();
+    pwController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,47 +63,65 @@ class SignInSignUpScreen extends StatelessWidget {
                         constraints: const BoxConstraints.expand(height: 30.0),
                       ),
                       SignInSignUpInputWidget(
-                        inputKey: idKey,
                         textController: idController,
                         helperText: "이메일 형식으로 입력해주세요.",
                         hintText: '이메일을 입력해주세요.',
                         labelText: "이메일",
                         iconData: Icons.email_outlined,
-                        onSubmitted: onIdSubmitted,
-                        onChange: onChangeId,
-                        onValidChange: onValidChangeId,
+                        onSubmitted: (value) {},
+                        onChange: (value) {},
+                        onValidChange: (value) {
+                          return null;
+                        },
                       ),
                       Container(
                         constraints: const BoxConstraints.expand(height: 30.0),
                       ),
                       SignInSignUpInputWidget(
-                        inputKey: pwKey,
                         textController: pwController,
                         helperText: "비밀번호 입력",
                         hintText: '비밀번호를 입력해주세요.',
                         labelText: "비밀번호",
                         iconData: Icons.lock,
-                        onSubmitted: onPwSubmitted,
-                        onChange: onChangePw,
-                        onValidChange: onValidChangePw,
+                        onSubmitted: (value) {},
+                        onChange: (value) {},
+                        onValidChange: (value) {
+                          return null;
+                        },
                       ),
                       Container(
                         constraints: const BoxConstraints.expand(height: 30.0),
                       ),
                       Row(
                         children: [
-                          SignInSignUpToggleButtonWidget(
-                            isChecked: isSavedId,
-                            title: '아이디 저장',
-                            onClickEvent: () {
-
+                          BlocSelector<SignBloc, SignState, bool>(
+                            bloc: _signBloc,
+                            selector: (state) {
+                              return state.isSavedId;
+                            },
+                            builder: (context, state) {
+                              return SignInSignUpToggleButtonWidget(
+                                isChecked: state,
+                                title: '아이디 저장',
+                                onClickEvent: () {
+                                  _signBloc.add(SignIsSavedIdEvent());
+                                },
+                              );
                             },
                           ),
-                          SignInSignUpToggleButtonWidget(
-                            isChecked: isAutoLogin,
-                            title: '자동 로그인',
-                            onClickEvent: () {
-
+                          BlocSelector<SignBloc, SignState, bool>(
+                            bloc: _signBloc,
+                            selector: (state) {
+                              return state.isAutoLogin;
+                            },
+                            builder: (context, state) {
+                              return SignInSignUpToggleButtonWidget(
+                                isChecked: state,
+                                title: '자동 로그인',
+                                onClickEvent: () {
+                                  _signBloc.add(SignIsAutoLoginEvent());
+                                },
+                              );
                             },
                           ),
                         ],
@@ -128,7 +131,14 @@ class SignInSignUpScreen extends StatelessWidget {
                       ),
                       SignInSignUpButtonWidget(
                         title: "로그인",
-                        onClickSignIn: onClickSignIn,
+                        onClickSignIn: () {
+                          _signBloc.add(
+                            SignOnSignInClickEvent(
+                              id: idController.text,
+                              password: pwController.text,
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -144,7 +154,7 @@ class SignInSignUpScreen extends StatelessWidget {
                   ),
                   color: ColorsConstants.background,
                   onPressed: () {
-                    Navigator.of(buildContext).pop();
+                    Navigator.of(widget.buildContext).pop();
                   },
                 ),
               ),
