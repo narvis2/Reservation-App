@@ -36,7 +36,16 @@ class SignRepositoryImpl implements SignRepository {
       return DataNetworkError(response.resultMsg);
     } on DioException catch (error) {
       debugPrint("🌹 [/sign/signIn] API DioException 👉 ${error.message}");
-      return error.toState();
+      final Map<String, dynamic>? responseErrorData = error.response?.data;
+
+      if (responseErrorData != null) {
+        final String? resultMsg = responseErrorData['resultMsg'];
+        if (resultMsg != null) {
+          return DataNetworkError(resultMsg);
+        }
+      }
+
+      return DataError(error);
     }
   }
 
@@ -55,7 +64,16 @@ class SignRepositoryImpl implements SignRepository {
       return DataNetworkError(response.resultMsg);
     } on DioException catch (error) {
       debugPrint("🌹 [/sign/signOut] API DioException 👉 ${error.message}");
-      return error.toState();
+      final Map<String, dynamic>? responseErrorData = error.response?.data;
+
+      if (responseErrorData != null) {
+        final String? resultMsg = responseErrorData['resultMsg'];
+        if (resultMsg != null) {
+          return DataNetworkError(resultMsg);
+        }
+      }
+
+      return DataError(error);
     }
   }
 
