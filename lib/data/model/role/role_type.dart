@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 enum RoleType {
   @JsonValue('ROLE_ALLOW')
   arrow, // 허용 유저
-  @JsonValue('ROLE_ALLOW')
+  @JsonValue('ROLE_NOT_ALLOW')
   notAllow, // 비허용 유저
   @JsonValue('ROLE_STOP')
   stop, // 정지
@@ -13,5 +13,5 @@ enum RoleType {
   @JsonValue('ROLE_ADMIN')
   admin, // 관리자
   @JsonValue('ROLE_MASTER')
-  master // 마스터
+  master, // 마스터
 }

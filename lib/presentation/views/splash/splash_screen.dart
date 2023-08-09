@@ -36,15 +36,17 @@ class _SplashScreenState extends State<SplashScreen> {
     _appInfoBloc = BlocProvider.of<AppInfoBloc>(context)
       ..add(AppInfoGetEvent());
 
-    _userInfoBloc = BlocProvider.of<UserInfoBloc>(context)
-      ..add(UserInfoInitEvent());
+    _userInfoBloc = BlocProvider.of<UserInfoBloc>(context);
 
-    String? accessToken = await pref.accessToken;
+    final String? accessToken = await pref.accessToken;
+    final bool isAutoLogin = await pref.isAutoLogin;
 
     if (!mounted) return;
-    debugPrint("token 👉 $accessToken");
+    debugPrint("🔑 accessToken 👉 $accessToken");
 
-    if (accessToken != null) {
+    if (accessToken != null && isAutoLogin) {
+      debugPrint("⭐️⭐️⭐️ 자동로그인 ⭐️⭐⭐️️");
+      _userInfoBloc.add(UserInfoUpdateFcmTokenEvent());
       AutoRouter.of(context).replace(const MainRoute());
     } else {
       AutoRouter.of(context).replace(const MainRoute());

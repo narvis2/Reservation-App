@@ -12,6 +12,7 @@ import 'package:reservation_app/presentation/views/sign/widget/signin_signup_but
 import 'package:reservation_app/presentation/views/sign/widget/signin_signup_input_widget.dart';
 import 'package:reservation_app/presentation/views/sign/widget/signin_signup_title_area_widget.dart';
 import 'package:reservation_app/presentation/views/sign/widget/signin_signup_toggle_button_widget.dart';
+import 'package:reservation_app/presentation/views/user/bloc/user_info_bloc.dart';
 
 class SignInSignUpScreen extends StatefulWidget {
   final BuildContext buildContext;
@@ -27,6 +28,7 @@ class SignInSignUpScreen extends StatefulWidget {
 
 class _SignInSignUpScreenState extends State<SignInSignUpScreen> {
   late final SignBloc _signBloc;
+  late final UserInfoBloc _userInfoBloc;
 
   final _formKey = GlobalKey<FormState>();
   final _idKey = GlobalKey<FormFieldState>();
@@ -44,9 +46,11 @@ class _SignInSignUpScreenState extends State<SignInSignUpScreen> {
   void initState() {
     super.initState();
     _signBloc = BlocProvider.of<SignBloc>(context)..add(SignInitEvent());
+    _userInfoBloc = BlocProvider.of<UserInfoBloc>(context);
 
     _signBloc.state.savedEmail?.let((email) {
       idController.text = email;
+      _isIdValidate = true;
     });
   }
 
@@ -80,7 +84,8 @@ class _SignInSignUpScreenState extends State<SignInSignUpScreen> {
   Widget build(BuildContext context) {
     return BlocListener<SignBloc, SignState>(
       listenWhen: (previous, current) {
-        return previous != current && previous.signInStatus != current.signInStatus;
+        return previous != current &&
+            previous.signInStatus != current.signInStatus;
       },
       listener: (context, state) {
         if (state.signInStatus == SignInStatus.loading) {
@@ -88,6 +93,7 @@ class _SignInSignUpScreenState extends State<SignInSignUpScreen> {
         } else if (state.signInStatus == SignInStatus.success) {
           Navigator.of(context).pop();
           SnackBarUtils.showCustomSnackBar(widget.buildContext, "로그인 되셨습니다.");
+          _userInfoBloc.add(UserInfoUpdateFcmTokenEvent());
           Navigator.of(widget.buildContext).pop();
         } else if (state.signInStatus == SignInStatus.error) {
           Navigator.of(context).pop();
@@ -141,8 +147,11 @@ class _SignInSignUpScreenState extends State<SignInSignUpScreen> {
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
-                                    color: state.signInStatus == SignInStatus.error &&
-                                        errorMsg != null ? ColorsConstants.primary : ColorsConstants.boldColor,
+                                    color: state.signInStatus ==
+                                                SignInStatus.error &&
+                                            errorMsg != null
+                                        ? ColorsConstants.primary
+                                        : ColorsConstants.boldColor,
                                   ),
                                 );
                               },

@@ -182,7 +182,11 @@ Future<void> initializeDependencies() async {
   );
   locator.registerFactory(() => NetworkBloc());
   locator.registerFactory(
-    () => UserInfoBloc(locator<SharedPreferenceModule>()),
+    () => UserInfoBloc(
+      locator<SharedPreferenceModule>(),
+      locator<GetMyUserInfoUseCase>(),
+      locator<RequestUpdateFcmTokenUseCase>(),
+    ),
   );
   locator.registerFactory(
     () => HomeTabBloc(locator<GetAllBannerImageUseCase>()),

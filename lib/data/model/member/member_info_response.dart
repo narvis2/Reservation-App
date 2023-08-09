@@ -9,13 +9,13 @@ class MemberInfoResponse extends Equatable {
   final int id;
   final String email;
   final String phoneNumber;
-  final RoleType roleType;
+  final RoleType role;
 
   MemberInfoResponse({
     required this.id,
     required this.email,
     required this.phoneNumber,
-    required this.roleType,
+    required this.role,
   });
 
   factory MemberInfoResponse.fromJson(Map<String, dynamic> json) => _$MemberInfoResponseFromJson(json);
@@ -27,6 +27,6 @@ class MemberInfoResponse extends Equatable {
         id,
         email,
         phoneNumber,
-        roleType,
+        role,
       ];
 }

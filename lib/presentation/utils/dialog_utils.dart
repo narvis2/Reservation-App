@@ -9,6 +9,7 @@ class DialogUtils {
     showDialog(
       context: context,
       barrierDismissible: false,
+      useRootNavigator: false,
       builder: (context) => Center(
         child: Lottie.asset(
           'assets/lottie/loading_animation.json',
