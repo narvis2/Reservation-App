@@ -8,14 +8,18 @@ part 'member_info_response.g.dart';
 class MemberInfoResponse extends Equatable {
   final int id;
   final String email;
+  final String name;
   final String phoneNumber;
   final RoleType role;
+  final bool isEnablePush;
 
   MemberInfoResponse({
     required this.id,
     required this.email,
+    required this.name,
     required this.phoneNumber,
     required this.role,
+    required this.isEnablePush,
   });
 
   factory MemberInfoResponse.fromJson(Map<String, dynamic> json) => _$MemberInfoResponseFromJson(json);
@@ -28,5 +32,7 @@ class MemberInfoResponse extends Equatable {
         email,
         phoneNumber,
         role,
+        name,
+        isEnablePush,
       ];
 }

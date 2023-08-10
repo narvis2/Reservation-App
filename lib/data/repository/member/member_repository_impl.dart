@@ -25,6 +25,7 @@ class MemberRepositoryImpl implements MemberRepository {
       final MemberInfoResponse? resultData = response.data;
 
       if (response.success && resultData != null) {
+        await _pref.saveIsEnablePush(resultData.isEnablePush);
         debugPrint("📌 getMyUserInfo 원본 데이터 👉 $resultData");
         return DataSuccess(resultData.toMemberModel());
       }
