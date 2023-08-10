@@ -45,13 +45,19 @@ class ProfileWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    info?.email ?? '',
-                    style: TextStyle(
-                      color: ColorsConstants.boldColor,
-                      fontSize: 14,
-                      letterSpacing: -0.02,
-                    ),
+                  BorderTextWidget(
+                    texts: [
+                      [
+                      (info?.name ?? ''),
+                        true
+                      ],
+                      "(${info?.email ?? ''})",
+                    ],
+                    normalColors: ColorsConstants.divider,
+                    bolderColors: ColorsConstants.boldColor,
+                    normalFontSize: 14,
+                    bolderFontSize: 14,
+                    bolderFontWeight: FontWeight.w600,
                   ),
                   BorderTextWidget(
                     texts: [

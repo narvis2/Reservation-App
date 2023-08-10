@@ -16,6 +16,7 @@ import 'package:reservation_app/presentation/views/main/tabs/home/home_tab_scree
 import 'package:reservation_app/presentation/views/main/tabs/profile/search_tab_screen.dart';
 import 'package:reservation_app/presentation/views/main/tabs/setting/setting_tab_screen.dart';
 import 'package:reservation_app/presentation/views/network/bloc/network_bloc.dart';
+import 'package:reservation_app/presentation/views/sign/bloc/sign_bloc.dart';
 import 'package:reservation_app/presentation/views/user/bloc/user_info_bloc.dart';
 
 @RoutePage()
@@ -30,6 +31,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   late final MainBloc _mainBloc;
   late final NetworkBloc _networkBloc;
   late final UserInfoBloc _userInfoBloc;
+  late final SignBloc _signBloc;
 
   late final NavigatorState _navigator;
 
@@ -42,6 +44,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     _mainBloc = BlocProvider.of<MainBloc>(context);
     _networkBloc = BlocProvider.of<NetworkBloc>(context);
     _userInfoBloc = BlocProvider.of<UserInfoBloc>(context);
+    _signBloc = BlocProvider.of<SignBloc>(context);
 
     _navigator = Navigator.of(context);
 
@@ -128,6 +131,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               DialogUtils.showLoadingDialog(context);
             } else if (state.userInfoStatus == UserInfoStatus.success) {
               popBackStack();
+              _signBloc.add(SignInitEvent());
             } else if (state.userInfoStatus == UserInfoStatus.error) {
               popBackStack();
               state.errorMsg?.let((text) {

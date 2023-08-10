@@ -131,18 +131,28 @@ class _SettingTabScreenState extends State<SettingTabScreen> {
                   indent: 20,
                   endIndent: 20,
                 ),
-                BlocSelector<SignBloc, SignState, bool>(
-                  bloc: _signBloc,
+                BlocSelector<UserInfoBloc, UserInfoState, MemberModel?>(
                   selector: (state) {
-                    return state.isEnablePush;
+                    return state.memberModel;
                   },
                   builder: (context, state) {
-                    return AppSettingContentWidget(
-                      isEnable: state,
-                      title: "Push 알림 (예약 안내﹒각종 이벤트)",
-                      onChange: (enable) {
-                        _signBloc.add(SignIsEnablePushEvent());
-                      },
+                    return Visibility(
+                      visible: state != null,
+                      child: BlocSelector<SignBloc, SignState, bool>(
+                        bloc: _signBloc,
+                        selector: (state) {
+                          return state.isEnablePush;
+                        },
+                        builder: (context, state) {
+                          return AppSettingContentWidget(
+                            isEnable: state,
+                            title: "Push 알림 (예약 안내﹒각종 이벤트)",
+                            onChange: (enable) {
+                              _signBloc.add(SignIsEnablePushEvent());
+                            },
+                          );
+                        },
+                      ),
                     );
                   },
                 ),

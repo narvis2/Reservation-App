@@ -9,6 +9,9 @@ extension MemberInfoResponseExtension on MemberInfoResponse {
       id: id,
       email: email,
       role: role.name,
+      name: name,
+      isEnablePush: isEnablePush,
+      phoneNumber: phoneNumber,
     );
   }
 }
