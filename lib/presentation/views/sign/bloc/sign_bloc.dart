@@ -41,6 +41,10 @@ class SignBloc extends Bloc<SignEvent, SignState> {
     on<SignOnSignInClickEvent>(
       (event, emit) => _onSignInClick(event, emit),
     );
+
+    on<SignOnSignOutClickEvent>(
+      (event, emit) => _onSignOutClick(event, emit),
+    );
   }
 
   FutureOr<void> _setInitState(
@@ -153,6 +157,47 @@ class SignBloc extends Bloc<SignEvent, SignState> {
         state.copyWith(
           signInStatus: SignInStatus.error,
           errorMessage: Constants.dataError,
+        ),
+      );
+    }
+  }
+
+  FutureOr<void> _onSignOutClick(
+    SignOnSignOutClickEvent event,
+    Emitter<SignState> emit,
+  ) async {
+    emit(state.copyWith(signOutStatus: SignOutState.loading));
+
+    final response = await _requestSignOutUseCase.invoke();
+
+    if (response is DataSuccess<bool>) {
+      final result = response.data ?? false;
+
+      emit(
+        state.copyWith(
+          signOutStatus: result ? SignOutState.success : SignOutState.error,
+          signOutErrorMsg: result ? null : Constants.networkError,
+        ),
+      );
+    } else if (response is DataError) {
+      emit(
+        state.copyWith(
+          signOutStatus: SignOutState.error,
+          signOutErrorMsg: Constants.dataError,
+        ),
+      );
+    } else if (response is DataNetworkError) {
+      emit(
+        state.copyWith(
+          signOutStatus: SignOutState.error,
+          signOutErrorMsg: response.message,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          signOutStatus: SignOutState.error,
+          signOutErrorMsg: Constants.dataError,
         ),
       );
     }

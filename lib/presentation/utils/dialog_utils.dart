@@ -164,6 +164,7 @@ class DialogUtils {
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  margin: EdgeInsets.only(bottom: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [

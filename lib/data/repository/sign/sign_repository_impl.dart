@@ -55,7 +55,13 @@ class SignRepositoryImpl implements SignRepository {
       final response = await _remoteDataSource.requestSignOut();
 
       if (response.success && response.code == 200) {
-        _pref.clear();
+        await Future.wait([
+          _pref.clearJWTToken(),
+          _pref.clearRefreshToken(),
+          _pref.clearIsAutoLogin(),
+          _pref.clearEnablePush(),
+        ]);
+
         return DataSuccess(
           response.resultMsg != null && response.resultMsg == "응답 성공",
         );

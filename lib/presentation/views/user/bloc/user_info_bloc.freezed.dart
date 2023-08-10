@@ -18,18 +18,21 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$UserInfoEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() init,
     required TResult Function() get,
     required TResult Function() updateFcm,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
     TResult? Function()? get,
     TResult? Function()? updateFcm,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
     TResult Function()? get,
     TResult Function()? updateFcm,
     required TResult orElse(),
@@ -37,18 +40,21 @@ mixin _$UserInfoEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(UserInfoInitEvent value) init,
     required TResult Function(UserInfoGetEvent value) get,
     required TResult Function(UserInfoUpdateFcmTokenEvent value) updateFcm,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(UserInfoInitEvent value)? init,
     TResult? Function(UserInfoGetEvent value)? get,
     TResult? Function(UserInfoUpdateFcmTokenEvent value)? updateFcm,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(UserInfoInitEvent value)? init,
     TResult Function(UserInfoGetEvent value)? get,
     TResult Function(UserInfoUpdateFcmTokenEvent value)? updateFcm,
     required TResult orElse(),
@@ -72,6 +78,114 @@ class _$UserInfoEventCopyWithImpl<$Res, $Val extends UserInfoEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$UserInfoInitEventCopyWith<$Res> {
+  factory _$$UserInfoInitEventCopyWith(
+          _$UserInfoInitEvent value, $Res Function(_$UserInfoInitEvent) then) =
+      __$$UserInfoInitEventCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$UserInfoInitEventCopyWithImpl<$Res>
+    extends _$UserInfoEventCopyWithImpl<$Res, _$UserInfoInitEvent>
+    implements _$$UserInfoInitEventCopyWith<$Res> {
+  __$$UserInfoInitEventCopyWithImpl(
+      _$UserInfoInitEvent _value, $Res Function(_$UserInfoInitEvent) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$UserInfoInitEvent implements UserInfoInitEvent {
+  const _$UserInfoInitEvent();
+
+  @override
+  String toString() {
+    return 'UserInfoEvent.init()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$UserInfoInitEvent);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() get,
+    required TResult Function() updateFcm,
+  }) {
+    return init();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function()? get,
+    TResult? Function()? updateFcm,
+  }) {
+    return init?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? get,
+    TResult Function()? updateFcm,
+    required TResult orElse(),
+  }) {
+    if (init != null) {
+      return init();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(UserInfoInitEvent value) init,
+    required TResult Function(UserInfoGetEvent value) get,
+    required TResult Function(UserInfoUpdateFcmTokenEvent value) updateFcm,
+  }) {
+    return init(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(UserInfoInitEvent value)? init,
+    TResult? Function(UserInfoGetEvent value)? get,
+    TResult? Function(UserInfoUpdateFcmTokenEvent value)? updateFcm,
+  }) {
+    return init?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(UserInfoInitEvent value)? init,
+    TResult Function(UserInfoGetEvent value)? get,
+    TResult Function(UserInfoUpdateFcmTokenEvent value)? updateFcm,
+    required TResult orElse(),
+  }) {
+    if (init != null) {
+      return init(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UserInfoInitEvent implements UserInfoEvent {
+  const factory UserInfoInitEvent() = _$UserInfoInitEvent;
 }
 
 /// @nodoc
@@ -112,6 +226,7 @@ class _$UserInfoGetEvent implements UserInfoGetEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() init,
     required TResult Function() get,
     required TResult Function() updateFcm,
   }) {
@@ -121,6 +236,7 @@ class _$UserInfoGetEvent implements UserInfoGetEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
     TResult? Function()? get,
     TResult? Function()? updateFcm,
   }) {
@@ -130,6 +246,7 @@ class _$UserInfoGetEvent implements UserInfoGetEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
     TResult Function()? get,
     TResult Function()? updateFcm,
     required TResult orElse(),
@@ -143,6 +260,7 @@ class _$UserInfoGetEvent implements UserInfoGetEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(UserInfoInitEvent value) init,
     required TResult Function(UserInfoGetEvent value) get,
     required TResult Function(UserInfoUpdateFcmTokenEvent value) updateFcm,
   }) {
@@ -152,6 +270,7 @@ class _$UserInfoGetEvent implements UserInfoGetEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(UserInfoInitEvent value)? init,
     TResult? Function(UserInfoGetEvent value)? get,
     TResult? Function(UserInfoUpdateFcmTokenEvent value)? updateFcm,
   }) {
@@ -161,6 +280,7 @@ class _$UserInfoGetEvent implements UserInfoGetEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(UserInfoInitEvent value)? init,
     TResult Function(UserInfoGetEvent value)? get,
     TResult Function(UserInfoUpdateFcmTokenEvent value)? updateFcm,
     required TResult orElse(),
@@ -217,6 +337,7 @@ class _$UserInfoUpdateFcmTokenEvent implements UserInfoUpdateFcmTokenEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() init,
     required TResult Function() get,
     required TResult Function() updateFcm,
   }) {
@@ -226,6 +347,7 @@ class _$UserInfoUpdateFcmTokenEvent implements UserInfoUpdateFcmTokenEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
     TResult? Function()? get,
     TResult? Function()? updateFcm,
   }) {
@@ -235,6 +357,7 @@ class _$UserInfoUpdateFcmTokenEvent implements UserInfoUpdateFcmTokenEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
     TResult Function()? get,
     TResult Function()? updateFcm,
     required TResult orElse(),
@@ -248,6 +371,7 @@ class _$UserInfoUpdateFcmTokenEvent implements UserInfoUpdateFcmTokenEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(UserInfoInitEvent value) init,
     required TResult Function(UserInfoGetEvent value) get,
     required TResult Function(UserInfoUpdateFcmTokenEvent value) updateFcm,
   }) {
@@ -257,6 +381,7 @@ class _$UserInfoUpdateFcmTokenEvent implements UserInfoUpdateFcmTokenEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(UserInfoInitEvent value)? init,
     TResult? Function(UserInfoGetEvent value)? get,
     TResult? Function(UserInfoUpdateFcmTokenEvent value)? updateFcm,
   }) {
@@ -266,6 +391,7 @@ class _$UserInfoUpdateFcmTokenEvent implements UserInfoUpdateFcmTokenEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(UserInfoInitEvent value)? init,
     TResult Function(UserInfoGetEvent value)? get,
     TResult Function(UserInfoUpdateFcmTokenEvent value)? updateFcm,
     required TResult orElse(),

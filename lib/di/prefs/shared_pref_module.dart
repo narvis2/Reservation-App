@@ -15,12 +15,18 @@ class SharedPreferenceModule {
   Future<void> saveJWTToken(String jwtToken) =>
       pref.setString(_JWT_TOKEN, jwtToken);
 
+  Future<void> clearJWTToken() =>
+      pref.remove(_JWT_TOKEN);
+
   Future<String?> get accessToken async {
     return pref.getString(_JWT_TOKEN);
   }
 
   Future<void> saveRefreshToken(String refreshToken) =>
       pref.setString(_REFRESH_TOKEN, refreshToken);
+
+  Future<void> clearRefreshToken() =>
+      pref.remove(_REFRESH_TOKEN);
 
   Future<String?> get refreshToken async {
     return pref.getString(_REFRESH_TOKEN);
@@ -36,6 +42,9 @@ class SharedPreferenceModule {
   Future<void> saveIsAutoLogin(bool autoLogin) =>
       pref.setBool(_IS_AUTO_LOGIN, autoLogin);
 
+  Future<void> clearIsAutoLogin() =>
+      pref.remove(_IS_AUTO_LOGIN);
+
   Future<bool> get isAutoLogin async {
     return pref.getBool(_IS_AUTO_LOGIN) ?? false;
   }
@@ -43,12 +52,18 @@ class SharedPreferenceModule {
   Future<void> saveIsSavedId(bool savedId) =>
       pref.setBool(_IS_SAVED_ID, savedId);
 
+  Future<void> clearIsSavedId() =>
+      pref.remove(_IS_SAVED_ID);
+
   Future<bool> get isSavedId async {
     return pref.getBool(_IS_SAVED_ID) ?? false;
   }
 
   Future<void> saveIsEnablePush(bool enablePush) =>
       pref.setBool(_IS_ENABLE_PUSH, enablePush);
+
+  Future<void> clearEnablePush() =>
+      pref.remove(_IS_ENABLE_PUSH);
 
   Future<bool> get isEnablePush async {
     return pref.getBool(_IS_ENABLE_PUSH) ?? false;
@@ -64,5 +79,5 @@ class SharedPreferenceModule {
     return pref.getString(_USER_EMAIL);
   }
 
-  void clear() => pref.clear();
+  Future<bool> clear() => pref.clear();
 }

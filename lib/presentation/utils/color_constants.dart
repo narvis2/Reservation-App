@@ -37,6 +37,7 @@ class ColorsConstants {
   static const Color primaryButtonBackgroundDisabled = Color(0xFFAAAAAA);
   static const Color strokeGray = Color(0xFFD7D7D7);
   static const Color rightActionButton = Color(0xFFA5A5A5);
+  static const Color clown = Color(0xFFFFF3B4);
 
   // Others Widgets
   static const Color card = Color(0x20FFFFFF);

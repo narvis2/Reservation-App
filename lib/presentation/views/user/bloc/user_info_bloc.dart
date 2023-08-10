@@ -25,9 +25,23 @@ class UserInfoBloc extends Bloc<UserInfoEvent, UserInfoState> {
     this._getMyUserInfoUseCase,
     this._updateFcmTokenUseCase,
   ) : super(UserInfoState()) {
+    on<UserInfoInitEvent>((event, emit) => _initUserInfo(event, emit));
     on<UserInfoGetEvent>((event, emit) => _setUserInfo(event, emit));
     on<UserInfoUpdateFcmTokenEvent>(
       (event, emit) => _updateFcmTokenToServer(event, emit),
+    );
+  }
+
+  void _initUserInfo(
+    UserInfoInitEvent event,
+    Emitter<UserInfoState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        userInfoStatus: UserInfoStatus.initial,
+        memberModel: null,
+        errorMsg: null,
+      ),
     );
   }
 

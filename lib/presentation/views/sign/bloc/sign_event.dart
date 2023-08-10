@@ -14,4 +14,6 @@ class SignEvent with _$SignEvent {
     required String id,
     required String password,
   }) = SignOnSignInClickEvent;
+
+  const factory SignEvent.onSignOutClick() = SignOnSignOutClickEvent;
 }
