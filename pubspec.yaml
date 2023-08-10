@@ -70,6 +70,7 @@ dependencies:
   flutter_naver_map: ^1.0.2
   timelines: ^0.1.0
   flutter_speed_dial: ^7.0.0
+  animated_toggle_switch: ^0.7.0
 
   flutter_localizations:
     sdk: flutter
@@ -97,6 +98,9 @@ dependencies:
 
   # Notification
   flutter_local_notifications: ^15.1.0+1
+
+  # Device 정보
+  package_info_plus: ^4.1.0
 
 dev_dependencies:
   flutter_test:

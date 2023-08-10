@@ -36,10 +36,14 @@ class ColorsConstants {
   static const Color primaryButtonText = Color(0xffed5463);
   static const Color primaryButtonBackgroundDisabled = Color(0xFFAAAAAA);
   static const Color strokeGray = Color(0xFFD7D7D7);
+  static const Color rightActionButton = Color(0xFFA5A5A5);
+  static const Color clown = Color(0xFFFFF3B4);
 
   // Others Widgets
   static const Color card = Color(0x20FFFFFF);
   static const Color divider = Color(0xFF333333);
+  static const Color thinDivider = Color(0xFFE6E6E6);
+  static const Color settingDivider = Color(0xFFF1F2F6);
   static const Color boldColor = Color(0xFF000000);
   static const Color error = Color(0xfffe0012);
   static const Color success = Color(0xFF04FD7F);
@@ -56,4 +60,7 @@ class ColorsConstants {
   static const Color calendarPickerColor = Color(0xFF6A92B4);
   static const Color calendarSideColor = Color(0xFF7C9BB4);
   static const Color calendarCurrentColor = Color(0xFFE8CCB4);
+
+  // Dialog
+  static const Color dialogBackground = Color(0x55000000);
 }

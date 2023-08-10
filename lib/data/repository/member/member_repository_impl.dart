@@ -32,7 +32,16 @@ class MemberRepositoryImpl implements MemberRepository {
       return DataNetworkError(response.resultMsg);
     } on DioException catch (error) {
       debugPrint("🌹 [/member] DioException 👉 ${error.message}");
-      return error.toState();
+      final Map<String, dynamic>? responseErrorData = error.response?.data;
+
+      if (responseErrorData != null) {
+        final String? resultMsg = responseErrorData['resultMsg'];
+        if (resultMsg != null) {
+          return DataNetworkError(resultMsg);
+        }
+      }
+
+      return DataError(error);
     }
   }
 
@@ -54,7 +63,16 @@ class MemberRepositoryImpl implements MemberRepository {
       return DataNetworkError(response.resultMsg);
     } on DioException catch (error) {
       debugPrint("🌹 [/member/fcm-token] DioException 👉 ${error.message}");
-      return error.toState();
+      final Map<String, dynamic>? responseErrorData = error.response?.data;
+
+      if (responseErrorData != null) {
+        final String? resultMsg = responseErrorData['resultMsg'];
+        if (resultMsg != null) {
+          return DataNetworkError(resultMsg);
+        }
+      }
+
+      return DataError(error);
     }
   }
 }

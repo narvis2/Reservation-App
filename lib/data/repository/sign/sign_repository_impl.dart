@@ -28,15 +28,24 @@ class SignRepositoryImpl implements SignRepository {
 
       if (response.success && resultData != null) {
         debugPrint("⭐️ [/sign/signIn] API 호출성공 👉 $resultData");
-        _pref.saveFcmToken(resultData.token);
-        _pref.saveRefreshToken(resultData.refreshToken);
+        await _pref.saveJWTToken(resultData.token);
+        await _pref.saveRefreshToken(resultData.refreshToken);
         return DataSuccess(true);
       }
 
       return DataNetworkError(response.resultMsg);
     } on DioException catch (error) {
       debugPrint("🌹 [/sign/signIn] API DioException 👉 ${error.message}");
-      return error.toState();
+      final Map<String, dynamic>? responseErrorData = error.response?.data;
+
+      if (responseErrorData != null) {
+        final String? resultMsg = responseErrorData['resultMsg'];
+        if (resultMsg != null) {
+          return DataNetworkError(resultMsg);
+        }
+      }
+
+      return DataError(error);
     }
   }
 
@@ -46,7 +55,13 @@ class SignRepositoryImpl implements SignRepository {
       final response = await _remoteDataSource.requestSignOut();
 
       if (response.success && response.code == 200) {
-        _pref.clear();
+        await Future.wait([
+          _pref.clearJWTToken(),
+          _pref.clearRefreshToken(),
+          _pref.clearIsAutoLogin(),
+          _pref.clearEnablePush(),
+        ]);
+
         return DataSuccess(
           response.resultMsg != null && response.resultMsg == "응답 성공",
         );
@@ -55,7 +70,16 @@ class SignRepositoryImpl implements SignRepository {
       return DataNetworkError(response.resultMsg);
     } on DioException catch (error) {
       debugPrint("🌹 [/sign/signOut] API DioException 👉 ${error.message}");
-      return error.toState();
+      final Map<String, dynamic>? responseErrorData = error.response?.data;
+
+      if (responseErrorData != null) {
+        final String? resultMsg = responseErrorData['resultMsg'];
+        if (resultMsg != null) {
+          return DataNetworkError(resultMsg);
+        }
+      }
+
+      return DataError(error);
     }
   }
 

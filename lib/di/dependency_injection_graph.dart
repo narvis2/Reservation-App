@@ -32,6 +32,7 @@ import 'package:reservation_app/domain/usecase/sign/get_auth_phone_number_check_
 import 'package:reservation_app/domain/usecase/sign/get_auth_phone_number_use_case.dart';
 import 'package:reservation_app/domain/usecase/sign/request_sign_in_use_case.dart';
 import 'package:reservation_app/domain/usecase/sign/request_sign_out_use_case.dart';
+import 'package:reservation_app/presentation/views/app/bloc/app_info_bloc.dart';
 import 'package:reservation_app/presentation/views/fcm/bloc/fcm_notification_bloc.dart';
 import 'package:reservation_app/presentation/views/main/bloc/main_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/bloc/home_tab_bloc.dart';
@@ -44,6 +45,8 @@ import 'package:reservation_app/presentation/views/reservation/bloc/fourth/reser
 import 'package:reservation_app/presentation/views/reservation/bloc/reservation_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/second/reservation_second_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/third/reservation_third_bloc.dart';
+import 'package:reservation_app/presentation/views/sign/bloc/sign_bloc.dart';
+import 'package:reservation_app/presentation/views/user/bloc/user_info_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final locator = GetIt.instance;
@@ -166,10 +169,25 @@ Future<void> initializeDependencies() async {
 
   // 📌 Bloc
   locator.registerFactory(() => MainBloc());
+  locator.registerFactory(
+    () => SignBloc(
+      locator<SharedPreferenceModule>(),
+      locator<RequestSignInUseCase>(),
+      locator<RequestSignOutUseCase>(),
+    ),
+  );
+  locator.registerLazySingleton(() => AppInfoBloc());
   locator.registerLazySingleton(
     () => FcmNotificationBloc(locator<FcmRepository>()),
   );
   locator.registerFactory(() => NetworkBloc());
+  locator.registerFactory(
+    () => UserInfoBloc(
+      locator<SharedPreferenceModule>(),
+      locator<GetMyUserInfoUseCase>(),
+      locator<RequestUpdateFcmTokenUseCase>(),
+    ),
+  );
   locator.registerFactory(
     () => HomeTabBloc(locator<GetAllBannerImageUseCase>()),
   );

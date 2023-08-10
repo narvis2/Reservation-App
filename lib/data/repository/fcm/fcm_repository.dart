@@ -87,15 +87,15 @@ class FcmRepository {
         _onMessageOpened(event, NotificationType.background);
       });
 
-      _firebaseMessaging.onTokenRefresh.listen((token) {
+      _firebaseMessaging.onTokenRefresh.listen((token) async {
         debugPrint("🔔 Firebase Cloud Message Refresh Token 👉 $token");
-        _sendFcmToken(token);
+        await _sendFcmToken(token);
       });
     }
   }
 
   Future<void> _sendFcmToken(String fcmToken) {
-    return Future.sync(() => _sharedPreferenceModule.saveFcmToken(fcmToken));
+    return _sharedPreferenceModule.saveFcmToken(fcmToken);
   }
 
   /// Terminate, Background 에서 Push 알림을 Click 했을때 호출됨

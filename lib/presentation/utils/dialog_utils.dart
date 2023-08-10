@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
+import 'package:reservation_app/presentation/views/sign/signin_signup_screen.dart';
 
 class DialogUtils {
   static showLoadingDialog(BuildContext context) {
     showDialog(
       context: context,
       barrierDismissible: false,
+      useRootNavigator: false,
       builder: (context) => Center(
         child: Lottie.asset(
           'assets/lottie/loading_animation.json',
@@ -162,6 +164,7 @@ class DialogUtils {
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  margin: EdgeInsets.only(bottom: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -239,20 +242,41 @@ class DialogUtils {
                 height: 150,
                 repeat: true,
               ),
-              Text(
-                "네트워크 상태를 확인해주세요.",
+              DefaultTextStyle(
                 style: TextStyle(
                   color: ColorsConstants.background,
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
+                child: Text(
+                  "네트워크 상태를 확인해주세요.",
+                ),
               ),
             ],
           ),
         );
       },
       barrierDismissible: false,
+    );
+  }
+
+  static showSignInSignUpDialog({
+    required BuildContext context,
+  }) async {
+    await showGeneralDialog(
+      barrierDismissible: true,
+      context: context,
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      barrierColor: ColorsConstants.dialogBackground,
+      transitionDuration: const Duration(milliseconds: 300),
+      pageBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+      ) {
+        return SignInSignUpScreen(buildContext: context);
+      },
     );
   }
 }

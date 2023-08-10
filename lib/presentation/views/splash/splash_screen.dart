@@ -4,8 +4,11 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_app/di/dependency_injection_graph.dart';
 import 'package:reservation_app/presentation/config/router/app_router.dart';
+import 'package:reservation_app/presentation/views/app/bloc/app_info_bloc.dart';
+import 'package:reservation_app/presentation/views/user/bloc/user_info_bloc.dart';
 
 import '../../../di/prefs/shared_pref_module.dart';
 
@@ -18,6 +21,9 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  late final AppInfoBloc _appInfoBloc;
+  late final UserInfoBloc _userInfoBloc;
+
   // di 를 이용해서 가져오기
   final SharedPreferenceModule pref = locator.get();
 
@@ -27,12 +33,20 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigate() async {
-    String? accessToken = await pref.accessToken;
+    _appInfoBloc = BlocProvider.of<AppInfoBloc>(context)
+      ..add(AppInfoGetEvent());
+
+    _userInfoBloc = BlocProvider.of<UserInfoBloc>(context);
+
+    final String? accessToken = await pref.accessToken;
+    final bool isAutoLogin = await pref.isAutoLogin;
 
     if (!mounted) return;
-    debugPrint("token 👉 $accessToken");
+    debugPrint("🔑 accessToken 👉 $accessToken");
 
-    if (accessToken != null) {
+    if (accessToken != null && isAutoLogin) {
+      debugPrint("⭐️⭐️⭐️ 자동로그인 ⭐️⭐⭐️️");
+      _userInfoBloc.add(UserInfoUpdateFcmTokenEvent());
       AutoRouter.of(context).replace(const MainRoute());
     } else {
       AutoRouter.of(context).replace(const MainRoute());
@@ -42,13 +56,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    FirebaseMessaging.instance.requestPermission(
-      badge: true,
-      alert: true,
-      sound: true,
-    ).then((value) => {
-      startSplash()
-    });
+    FirebaseMessaging.instance
+        .requestPermission(
+          badge: true,
+          alert: true,
+          sound: true,
+        )
+        .then((value) => {startSplash()});
   }
 
   @override
