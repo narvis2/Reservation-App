@@ -13,7 +13,7 @@ import 'package:reservation_app/presentation/views/fcm/bloc/fcm_notification_blo
 import 'package:reservation_app/presentation/views/main/bloc/main_bloc.dart';
 import 'package:reservation_app/presentation/views/main/components/bottom_tab_bar_component.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/home_tab_screen.dart';
-import 'package:reservation_app/presentation/views/main/tabs/profile/search_tab_screen.dart';
+import 'package:reservation_app/presentation/views/main/tabs/search/search_tab_screen.dart';
 import 'package:reservation_app/presentation/views/main/tabs/setting/setting_tab_screen.dart';
 import 'package:reservation_app/presentation/views/network/bloc/network_bloc.dart';
 import 'package:reservation_app/presentation/views/sign/bloc/sign_bloc.dart';
