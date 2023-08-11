@@ -104,6 +104,10 @@ class SignBloc extends Bloc<SignEvent, SignState> {
 
     final isSavedId = state.isSavedId;
 
+    if (state.isSavedId) {
+      await _pref.clearUserEmail();
+    }
+
     await _pref.saveIsSavedId(!isSavedId);
     emit(state.copyWith(isSavedId: !isSavedId));
   }
