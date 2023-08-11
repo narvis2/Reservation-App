@@ -73,7 +73,7 @@ class _ReservationApiService implements ReservationApiService {
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = BaseListResponse<SeatType>.fromJson(
       _result.data!,
-      (json) => SeatTypeExtension.fromJson(json.toString()),
+          (json) => SeatTypeExtension.fromJson(json.toString()),
     );
     return value;
   }
@@ -101,6 +101,34 @@ class _ReservationApiService implements ReservationApiService {
     final value = BaseResponse<dynamic>.fromJson(
       _result.data!,
       (json) => json as dynamic,
+    );
+    return value;
+  }
+
+  @override
+  Future<BaseListResponse<ReservationNonAuthResponse>>
+      getNonAuthReservationList() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseListResponse<ReservationNonAuthResponse>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/reservation',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BaseListResponse<ReservationNonAuthResponse>.fromJson(
+      _result.data!,
+      (json) =>
+          ReservationNonAuthResponse.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

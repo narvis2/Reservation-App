@@ -9,6 +9,7 @@ import 'package:reservation_app/data/datasource/remote_data_source.dart';
 import 'package:reservation_app/data/model/member/member_info_response.dart';
 import 'package:reservation_app/data/model/member/member_update_fcm_token_request.dart';
 import 'package:reservation_app/data/model/reservation/reservation_create_request.dart';
+import 'package:reservation_app/data/model/reservation/reservation_non_auth_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_target_date_response.dart';
 import 'package:reservation_app/data/model/sign/phone_auth_check_request.dart';
 import 'package:reservation_app/data/model/sign/phone_auth_request.dart';
@@ -80,6 +81,11 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     ReservationCreateRequest request,
   ) {
     return _reservationApiService.requestCreateReservation(request);
+  }
+
+  @override
+  Future<BaseListResponse<ReservationNonAuthResponse>> getNonAuthReservationList() {
+    return _reservationApiService.getNonAuthReservationList();
   }
 
   @override
