@@ -46,13 +46,14 @@ class ReservationCheckBloc
     ReservationCheckInitEvent event,
     Emitter<ReservationCheckState> emit,
   ) {
-    if (state.offset > 0) {
-      emit(state.copyWith(offset: 0));
-    }
-
-    if (state.totalCount > 0) {
-      emit(state.copyWith(totalCount: 0));
-    }
+    emit(
+      state.copyWith(
+        offset: 0,
+        totalCount: 0,
+        reservationList: [],
+        hasNext: false,
+      ),
+    );
 
     if (state.reservationFilterType != ReservationFilterType.all) {
       emit(state.copyWith(reservationFilterType: ReservationFilterType.all));
