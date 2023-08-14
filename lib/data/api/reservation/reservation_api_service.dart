@@ -34,7 +34,7 @@ abstract class ReservationApiService {
     @Body() ReservationCreateRequest request,
   );
 
-  @GET("/reservation")
+  @GET("/reservation/non-auth")
   Future<BaseListResponse<ReservationNonAuthResponse>>
       getNonAuthReservationList();
 }

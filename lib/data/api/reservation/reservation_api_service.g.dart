@@ -73,7 +73,7 @@ class _ReservationApiService implements ReservationApiService {
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = BaseListResponse<SeatType>.fromJson(
       _result.data!,
-          (json) => SeatTypeExtension.fromJson(json.toString()),
+      (json) => SeatTypeExtension.fromJson(json.toString()), // ignore: retrofit_generate_extension_method
     );
     return value;
   }
@@ -120,7 +120,7 @@ class _ReservationApiService implements ReservationApiService {
     )
             .compose(
               _dio.options,
-              '/reservation',
+              '/reservation/non-auth',
               queryParameters: queryParameters,
               data: _data,
             )
