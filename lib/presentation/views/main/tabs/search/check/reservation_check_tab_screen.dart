@@ -33,6 +33,14 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
   }
 
   void _onScroll() {
+    if (_scrollController.position.pixels < 10) {
+      setState(() {
+        _isScrollToBottom = false;
+      });
+
+      return;
+    }
+
     if (_scrollController.position.userScrollDirection == ScrollDirection.forward) {
       setState(() {
         _isScrollToBottom = true;
@@ -63,7 +71,11 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
       0,
       duration: Duration(milliseconds: 500),
       curve: Curves.easeInOut,
-    );
+    ).then((value)  {
+      setState(() {
+        _isScrollToBottom = false;
+      });
+    });
   }
 
   @override

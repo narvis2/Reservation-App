@@ -36,10 +36,12 @@ class ReservationCheckBloc
       ),
     );
 
-    on<ReservationCheckLoadNextDataEvent>((event, emit) => _loadNextData(
-          event,
-          emit,
-        ));
+    on<ReservationCheckLoadNextDataEvent>(
+      (event, emit) => _loadNextData(
+        event,
+        emit,
+      ),
+    );
   }
 
   void _requestInit(

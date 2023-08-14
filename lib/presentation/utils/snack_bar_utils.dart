@@ -18,6 +18,11 @@ class SnackBarUtils {
           ),
           duration: const Duration(seconds: 2),
           behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.only(
+            bottom: 40,
+            left: 20,
+            right: 20,
+          ),
         ),
       );
   }
