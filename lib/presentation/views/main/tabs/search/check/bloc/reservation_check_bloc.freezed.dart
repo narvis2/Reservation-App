@@ -22,6 +22,7 @@ mixin _$ReservationCheckEvent {
     required TResult Function(
             int page, int limit, ReservationFilterType filterType)
         filterList,
+    required TResult Function() loadNextData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -29,6 +30,7 @@ mixin _$ReservationCheckEvent {
     TResult? Function()? init,
     TResult? Function(int page, int limit, ReservationFilterType filterType)?
         filterList,
+    TResult? Function()? loadNextData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -36,6 +38,7 @@ mixin _$ReservationCheckEvent {
     TResult Function()? init,
     TResult Function(int page, int limit, ReservationFilterType filterType)?
         filterList,
+    TResult Function()? loadNextData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -43,18 +46,22 @@ mixin _$ReservationCheckEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(ReservationCheckInitEvent value) init,
     required TResult Function(ReservationCheckFilterListEvent value) filterList,
+    required TResult Function(ReservationCheckLoadNextDataEvent value)
+        loadNextData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ReservationCheckInitEvent value)? init,
     TResult? Function(ReservationCheckFilterListEvent value)? filterList,
+    TResult? Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ReservationCheckInitEvent value)? init,
     TResult Function(ReservationCheckFilterListEvent value)? filterList,
+    TResult Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -124,6 +131,7 @@ class _$ReservationCheckInitEvent implements ReservationCheckInitEvent {
     required TResult Function(
             int page, int limit, ReservationFilterType filterType)
         filterList,
+    required TResult Function() loadNextData,
   }) {
     return init();
   }
@@ -134,6 +142,7 @@ class _$ReservationCheckInitEvent implements ReservationCheckInitEvent {
     TResult? Function()? init,
     TResult? Function(int page, int limit, ReservationFilterType filterType)?
         filterList,
+    TResult? Function()? loadNextData,
   }) {
     return init?.call();
   }
@@ -144,6 +153,7 @@ class _$ReservationCheckInitEvent implements ReservationCheckInitEvent {
     TResult Function()? init,
     TResult Function(int page, int limit, ReservationFilterType filterType)?
         filterList,
+    TResult Function()? loadNextData,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -157,6 +167,8 @@ class _$ReservationCheckInitEvent implements ReservationCheckInitEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(ReservationCheckInitEvent value) init,
     required TResult Function(ReservationCheckFilterListEvent value) filterList,
+    required TResult Function(ReservationCheckLoadNextDataEvent value)
+        loadNextData,
   }) {
     return init(this);
   }
@@ -166,6 +178,7 @@ class _$ReservationCheckInitEvent implements ReservationCheckInitEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ReservationCheckInitEvent value)? init,
     TResult? Function(ReservationCheckFilterListEvent value)? filterList,
+    TResult? Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
   }) {
     return init?.call(this);
   }
@@ -175,6 +188,7 @@ class _$ReservationCheckInitEvent implements ReservationCheckInitEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ReservationCheckInitEvent value)? init,
     TResult Function(ReservationCheckFilterListEvent value)? filterList,
+    TResult Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -279,6 +293,7 @@ class _$ReservationCheckFilterListEvent
     required TResult Function(
             int page, int limit, ReservationFilterType filterType)
         filterList,
+    required TResult Function() loadNextData,
   }) {
     return filterList(page, limit, filterType);
   }
@@ -289,6 +304,7 @@ class _$ReservationCheckFilterListEvent
     TResult? Function()? init,
     TResult? Function(int page, int limit, ReservationFilterType filterType)?
         filterList,
+    TResult? Function()? loadNextData,
   }) {
     return filterList?.call(page, limit, filterType);
   }
@@ -299,6 +315,7 @@ class _$ReservationCheckFilterListEvent
     TResult Function()? init,
     TResult Function(int page, int limit, ReservationFilterType filterType)?
         filterList,
+    TResult Function()? loadNextData,
     required TResult orElse(),
   }) {
     if (filterList != null) {
@@ -312,6 +329,8 @@ class _$ReservationCheckFilterListEvent
   TResult map<TResult extends Object?>({
     required TResult Function(ReservationCheckInitEvent value) init,
     required TResult Function(ReservationCheckFilterListEvent value) filterList,
+    required TResult Function(ReservationCheckLoadNextDataEvent value)
+        loadNextData,
   }) {
     return filterList(this);
   }
@@ -321,6 +340,7 @@ class _$ReservationCheckFilterListEvent
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ReservationCheckInitEvent value)? init,
     TResult? Function(ReservationCheckFilterListEvent value)? filterList,
+    TResult? Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
   }) {
     return filterList?.call(this);
   }
@@ -330,6 +350,7 @@ class _$ReservationCheckFilterListEvent
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ReservationCheckInitEvent value)? init,
     TResult Function(ReservationCheckFilterListEvent value)? filterList,
+    TResult Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
     required TResult orElse(),
   }) {
     if (filterList != null) {
@@ -356,12 +377,135 @@ abstract class ReservationCheckFilterListEvent
 }
 
 /// @nodoc
+abstract class _$$ReservationCheckLoadNextDataEventCopyWith<$Res> {
+  factory _$$ReservationCheckLoadNextDataEventCopyWith(
+          _$ReservationCheckLoadNextDataEvent value,
+          $Res Function(_$ReservationCheckLoadNextDataEvent) then) =
+      __$$ReservationCheckLoadNextDataEventCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ReservationCheckLoadNextDataEventCopyWithImpl<$Res>
+    extends _$ReservationCheckEventCopyWithImpl<$Res,
+        _$ReservationCheckLoadNextDataEvent>
+    implements _$$ReservationCheckLoadNextDataEventCopyWith<$Res> {
+  __$$ReservationCheckLoadNextDataEventCopyWithImpl(
+      _$ReservationCheckLoadNextDataEvent _value,
+      $Res Function(_$ReservationCheckLoadNextDataEvent) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$ReservationCheckLoadNextDataEvent
+    implements ReservationCheckLoadNextDataEvent {
+  const _$ReservationCheckLoadNextDataEvent();
+
+  @override
+  String toString() {
+    return 'ReservationCheckEvent.loadNextData()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ReservationCheckLoadNextDataEvent);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function(
+            int page, int limit, ReservationFilterType filterType)
+        filterList,
+    required TResult Function() loadNextData,
+  }) {
+    return loadNextData();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function(int page, int limit, ReservationFilterType filterType)?
+        filterList,
+    TResult? Function()? loadNextData,
+  }) {
+    return loadNextData?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function(int page, int limit, ReservationFilterType filterType)?
+        filterList,
+    TResult Function()? loadNextData,
+    required TResult orElse(),
+  }) {
+    if (loadNextData != null) {
+      return loadNextData();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ReservationCheckInitEvent value) init,
+    required TResult Function(ReservationCheckFilterListEvent value) filterList,
+    required TResult Function(ReservationCheckLoadNextDataEvent value)
+        loadNextData,
+  }) {
+    return loadNextData(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ReservationCheckInitEvent value)? init,
+    TResult? Function(ReservationCheckFilterListEvent value)? filterList,
+    TResult? Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
+  }) {
+    return loadNextData?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ReservationCheckInitEvent value)? init,
+    TResult Function(ReservationCheckFilterListEvent value)? filterList,
+    TResult Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
+    required TResult orElse(),
+  }) {
+    if (loadNextData != null) {
+      return loadNextData(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ReservationCheckLoadNextDataEvent
+    implements ReservationCheckEvent {
+  const factory ReservationCheckLoadNextDataEvent() =
+      _$ReservationCheckLoadNextDataEvent;
+}
+
+/// @nodoc
 mixin _$ReservationCheckState {
   ReservationFilterListStatus get filterListStatus =>
       throw _privateConstructorUsedError;
-  ReservationFilterListModel? get reservationFilterListData =>
+  List<ReservationFilterModel> get reservationList =>
       throw _privateConstructorUsedError;
   String? get filterListErrorMsg => throw _privateConstructorUsedError;
+  bool get hasNext => throw _privateConstructorUsedError;
+  int get totalCount => throw _privateConstructorUsedError;
+  int get offset => throw _privateConstructorUsedError;
   ReservationFilterType get reservationFilterType =>
       throw _privateConstructorUsedError;
 
@@ -378,11 +522,12 @@ abstract class $ReservationCheckStateCopyWith<$Res> {
   @useResult
   $Res call(
       {ReservationFilterListStatus filterListStatus,
-      ReservationFilterListModel? reservationFilterListData,
+      List<ReservationFilterModel> reservationList,
       String? filterListErrorMsg,
+      bool hasNext,
+      int totalCount,
+      int offset,
       ReservationFilterType reservationFilterType});
-
-  $ReservationFilterListModelCopyWith<$Res>? get reservationFilterListData;
 }
 
 /// @nodoc
@@ -400,8 +545,11 @@ class _$ReservationCheckStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? filterListStatus = null,
-    Object? reservationFilterListData = freezed,
+    Object? reservationList = null,
     Object? filterListErrorMsg = freezed,
+    Object? hasNext = null,
+    Object? totalCount = null,
+    Object? offset = null,
     Object? reservationFilterType = null,
   }) {
     return _then(_value.copyWith(
@@ -409,32 +557,31 @@ class _$ReservationCheckStateCopyWithImpl<$Res,
           ? _value.filterListStatus
           : filterListStatus // ignore: cast_nullable_to_non_nullable
               as ReservationFilterListStatus,
-      reservationFilterListData: freezed == reservationFilterListData
-          ? _value.reservationFilterListData
-          : reservationFilterListData // ignore: cast_nullable_to_non_nullable
-              as ReservationFilterListModel?,
+      reservationList: null == reservationList
+          ? _value.reservationList
+          : reservationList // ignore: cast_nullable_to_non_nullable
+              as List<ReservationFilterModel>,
       filterListErrorMsg: freezed == filterListErrorMsg
           ? _value.filterListErrorMsg
           : filterListErrorMsg // ignore: cast_nullable_to_non_nullable
               as String?,
+      hasNext: null == hasNext
+          ? _value.hasNext
+          : hasNext // ignore: cast_nullable_to_non_nullable
+              as bool,
+      totalCount: null == totalCount
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      offset: null == offset
+          ? _value.offset
+          : offset // ignore: cast_nullable_to_non_nullable
+              as int,
       reservationFilterType: null == reservationFilterType
           ? _value.reservationFilterType
           : reservationFilterType // ignore: cast_nullable_to_non_nullable
               as ReservationFilterType,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ReservationFilterListModelCopyWith<$Res>? get reservationFilterListData {
-    if (_value.reservationFilterListData == null) {
-      return null;
-    }
-
-    return $ReservationFilterListModelCopyWith<$Res>(
-        _value.reservationFilterListData!, (value) {
-      return _then(_value.copyWith(reservationFilterListData: value) as $Val);
-    });
   }
 }
 
@@ -447,12 +594,12 @@ abstract class _$$InitialCopyWith<$Res>
   @useResult
   $Res call(
       {ReservationFilterListStatus filterListStatus,
-      ReservationFilterListModel? reservationFilterListData,
+      List<ReservationFilterModel> reservationList,
       String? filterListErrorMsg,
+      bool hasNext,
+      int totalCount,
+      int offset,
       ReservationFilterType reservationFilterType});
-
-  @override
-  $ReservationFilterListModelCopyWith<$Res>? get reservationFilterListData;
 }
 
 /// @nodoc
@@ -466,8 +613,11 @@ class __$$InitialCopyWithImpl<$Res>
   @override
   $Res call({
     Object? filterListStatus = null,
-    Object? reservationFilterListData = freezed,
+    Object? reservationList = null,
     Object? filterListErrorMsg = freezed,
+    Object? hasNext = null,
+    Object? totalCount = null,
+    Object? offset = null,
     Object? reservationFilterType = null,
   }) {
     return _then(_$Initial(
@@ -475,14 +625,26 @@ class __$$InitialCopyWithImpl<$Res>
           ? _value.filterListStatus
           : filterListStatus // ignore: cast_nullable_to_non_nullable
               as ReservationFilterListStatus,
-      reservationFilterListData: freezed == reservationFilterListData
-          ? _value.reservationFilterListData
-          : reservationFilterListData // ignore: cast_nullable_to_non_nullable
-              as ReservationFilterListModel?,
+      reservationList: null == reservationList
+          ? _value._reservationList
+          : reservationList // ignore: cast_nullable_to_non_nullable
+              as List<ReservationFilterModel>,
       filterListErrorMsg: freezed == filterListErrorMsg
           ? _value.filterListErrorMsg
           : filterListErrorMsg // ignore: cast_nullable_to_non_nullable
               as String?,
+      hasNext: null == hasNext
+          ? _value.hasNext
+          : hasNext // ignore: cast_nullable_to_non_nullable
+              as bool,
+      totalCount: null == totalCount
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      offset: null == offset
+          ? _value.offset
+          : offset // ignore: cast_nullable_to_non_nullable
+              as int,
       reservationFilterType: null == reservationFilterType
           ? _value.reservationFilterType
           : reservationFilterType // ignore: cast_nullable_to_non_nullable
@@ -496,26 +658,45 @@ class __$$InitialCopyWithImpl<$Res>
 class _$Initial implements Initial {
   const _$Initial(
       {this.filterListStatus = ReservationFilterListStatus.initial,
-      this.reservationFilterListData = null,
+      final List<ReservationFilterModel> reservationList = const [],
       this.filterListErrorMsg = null,
-      this.reservationFilterType = ReservationFilterType.all});
+      this.hasNext = false,
+      this.totalCount = 0,
+      this.offset = 0,
+      this.reservationFilterType = ReservationFilterType.all})
+      : _reservationList = reservationList;
 
   @override
   @JsonKey()
   final ReservationFilterListStatus filterListStatus;
+  final List<ReservationFilterModel> _reservationList;
   @override
   @JsonKey()
-  final ReservationFilterListModel? reservationFilterListData;
+  List<ReservationFilterModel> get reservationList {
+    if (_reservationList is EqualUnmodifiableListView) return _reservationList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_reservationList);
+  }
+
   @override
   @JsonKey()
   final String? filterListErrorMsg;
+  @override
+  @JsonKey()
+  final bool hasNext;
+  @override
+  @JsonKey()
+  final int totalCount;
+  @override
+  @JsonKey()
+  final int offset;
   @override
   @JsonKey()
   final ReservationFilterType reservationFilterType;
 
   @override
   String toString() {
-    return 'ReservationCheckState(filterListStatus: $filterListStatus, reservationFilterListData: $reservationFilterListData, filterListErrorMsg: $filterListErrorMsg, reservationFilterType: $reservationFilterType)';
+    return 'ReservationCheckState(filterListStatus: $filterListStatus, reservationList: $reservationList, filterListErrorMsg: $filterListErrorMsg, hasNext: $hasNext, totalCount: $totalCount, offset: $offset, reservationFilterType: $reservationFilterType)';
   }
 
   @override
@@ -525,18 +706,28 @@ class _$Initial implements Initial {
             other is _$Initial &&
             (identical(other.filterListStatus, filterListStatus) ||
                 other.filterListStatus == filterListStatus) &&
-            (identical(other.reservationFilterListData,
-                    reservationFilterListData) ||
-                other.reservationFilterListData == reservationFilterListData) &&
+            const DeepCollectionEquality()
+                .equals(other._reservationList, _reservationList) &&
             (identical(other.filterListErrorMsg, filterListErrorMsg) ||
                 other.filterListErrorMsg == filterListErrorMsg) &&
+            (identical(other.hasNext, hasNext) || other.hasNext == hasNext) &&
+            (identical(other.totalCount, totalCount) ||
+                other.totalCount == totalCount) &&
+            (identical(other.offset, offset) || other.offset == offset) &&
             (identical(other.reservationFilterType, reservationFilterType) ||
                 other.reservationFilterType == reservationFilterType));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, filterListStatus,
-      reservationFilterListData, filterListErrorMsg, reservationFilterType);
+  int get hashCode => Object.hash(
+      runtimeType,
+      filterListStatus,
+      const DeepCollectionEquality().hash(_reservationList),
+      filterListErrorMsg,
+      hasNext,
+      totalCount,
+      offset,
+      reservationFilterType);
 
   @JsonKey(ignore: true)
   @override
@@ -548,16 +739,25 @@ class _$Initial implements Initial {
 abstract class Initial implements ReservationCheckState {
   const factory Initial(
       {final ReservationFilterListStatus filterListStatus,
-      final ReservationFilterListModel? reservationFilterListData,
+      final List<ReservationFilterModel> reservationList,
       final String? filterListErrorMsg,
+      final bool hasNext,
+      final int totalCount,
+      final int offset,
       final ReservationFilterType reservationFilterType}) = _$Initial;
 
   @override
   ReservationFilterListStatus get filterListStatus;
   @override
-  ReservationFilterListModel? get reservationFilterListData;
+  List<ReservationFilterModel> get reservationList;
   @override
   String? get filterListErrorMsg;
+  @override
+  bool get hasNext;
+  @override
+  int get totalCount;
+  @override
+  int get offset;
   @override
   ReservationFilterType get reservationFilterType;
   @override

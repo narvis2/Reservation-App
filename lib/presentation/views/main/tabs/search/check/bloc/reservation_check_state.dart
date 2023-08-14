@@ -14,8 +14,11 @@ class ReservationCheckState with _$ReservationCheckState {
       ReservationFilterListStatus.initial,
     )
     ReservationFilterListStatus filterListStatus,
-    @Default(null) ReservationFilterListModel? reservationFilterListData,
+    @Default([]) List<ReservationFilterModel> reservationList,
     @Default(null) String? filterListErrorMsg,
+    @Default(false) bool hasNext,
+    @Default(0) int totalCount,
+    @Default(0) int offset,
     @Default(ReservationFilterType.all) ReservationFilterType reservationFilterType,
   }) = Initial;
 }
