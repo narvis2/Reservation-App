@@ -25,6 +25,7 @@ import 'package:reservation_app/domain/usecase/banner/get_all_banner_image_use_c
 import 'package:reservation_app/domain/usecase/member/get_my_user_info_use_case.dart';
 import 'package:reservation_app/domain/usecase/member/request_update_fcm_token_use_case.dart';
 import 'package:reservation_app/domain/usecase/notice/get_all_notice_list_use_case.dart';
+import 'package:reservation_app/domain/usecase/reservation/get_reservation_filter_page_list_use_case.dart';
 import 'package:reservation_app/domain/usecase/reservation/get_reservation_non_auth_list_use_case.dart';
 import 'package:reservation_app/domain/usecase/reservation/get_reservation_target_part_time_use_case.dart';
 import 'package:reservation_app/domain/usecase/reservation/get_tartget_date_reservation_use_case.dart';
@@ -40,7 +41,7 @@ import 'package:reservation_app/presentation/views/main/tabs/home/bloc/home_tab_
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/home/bloc/content_home_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/location/bloc/content_location_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/notice/bloc/content_notice_tab_bloc.dart';
-import 'package:reservation_app/presentation/views/main/tabs/search/chart/bloc/reservation_check_bloc.dart';
+import 'package:reservation_app/presentation/views/main/tabs/search/check/bloc/reservation_check_bloc.dart';
 import 'package:reservation_app/presentation/views/network/bloc/network_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/fifth/reservation_fifth_bloc.dart';
 import 'package:reservation_app/presentation/views/reservation/bloc/fourth/reservation_fourth_bloc.dart';
@@ -171,6 +172,9 @@ Future<void> initializeDependencies() async {
   locator.registerLazySingleton<GetReservationNonAuthListUseCase>(
     () => GetReservationNonAuthListUseCase(locator<ReservationRepository>()),
   );
+  locator.registerLazySingleton<GetReservationFilterPageListUseCase>(
+    () => GetReservationFilterPageListUseCase(locator<ReservationRepository>()),
+  );
 
   // 📌 Bloc
   locator.registerFactory(() => MainBloc());
@@ -227,7 +231,7 @@ Future<void> initializeDependencies() async {
   );
   locator.registerFactory(
     () => ReservationCheckBloc(
-      locator<GetReservationNonAuthListUseCase>(),
+      locator<GetReservationFilterPageListUseCase>(),
     ),
   );
 }

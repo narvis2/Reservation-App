@@ -1,7 +1,11 @@
 import 'package:reservation_app/data/model/member/member_info_response.dart';
+import 'package:reservation_app/data/model/reservation/page/reservation_filter_list_response.dart';
+import 'package:reservation_app/data/model/reservation/page/reservation_filter_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_non_auth_response.dart';
 import 'package:reservation_app/data/model/sign/sign_in_request.dart';
 import 'package:reservation_app/domain/model/member/member_model.dart';
+import 'package:reservation_app/domain/model/reservation/page/reservation_filter_list_model.dart';
+import 'package:reservation_app/domain/model/reservation/page/reservation_filter_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_non_auth_model.dart';
 import 'package:reservation_app/domain/model/sign/sign_in_request_model.dart';
 
@@ -37,6 +41,33 @@ extension ReservationNonAuthResponseExtension on ReservationNonAuthResponse {
       reservationCount: reservationCount,
       selectedSeats: selectedSeats,
       partTime: partTime,
+    );
+  }
+}
+
+extension ReservationFilterListResponseExtension on ReservationFilterListResponse {
+  ReservationFilterListModel toReservationFilterListModel() {
+    return ReservationFilterListModel(
+      totalCount: totalCount,
+      totalPages: totalPages,
+      hasNext: hasNext,
+      reservationList: reservationList
+          .map((item) => item.toReservationFilterModel())
+          .toList(),
+    );
+  }
+}
+
+extension ReservationFilterResponseExtension on ReservationFilterResponse {
+  ReservationFilterModel toReservationFilterModel() {
+    return ReservationFilterModel(
+      id: id,
+      name: name,
+      phoneNumber: phoneNumber,
+      reservationTime: reservationDateTime,
+      reservationCount: reservationCount,
+      partTime: partTime,
+      createdAt: createdAt,
     );
   }
 }

@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:reservation_app/data/common/response/response_base.dart';
 import 'package:reservation_app/data/common/response/response_list_base.dart';
+import 'package:reservation_app/data/model/reservation/page/reservation_filter_list_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_create_request.dart';
 import 'package:reservation_app/data/model/reservation/reservation_non_auth_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_target_date_response.dart';
 import 'package:reservation_app/domain/model/reservation/enum/part_time.dart';
+import 'package:reservation_app/domain/model/reservation/enum/reservation_filter_type.dart';
 import 'package:reservation_app/domain/model/seat/enum/seat_type.dart';
 import 'package:retrofit/http.dart';
 
@@ -37,4 +39,12 @@ abstract class ReservationApiService {
   @GET("/reservation/non-auth")
   Future<BaseListResponse<ReservationNonAuthResponse>>
       getNonAuthReservationList();
+
+  @GET("/reservation/filter")
+  Future<BaseResponse<ReservationFilterListResponse>>
+      requestReservationFilterList(
+    @Query("page") int page,
+    @Query("size") int limit,
+    @Query("filterType") ReservationFilterType filterType,
+  );
 }

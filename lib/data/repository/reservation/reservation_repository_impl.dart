@@ -3,12 +3,15 @@ import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:reservation_app/data/datasource/remote_data_source.dart';
 import 'package:reservation_app/data/mapper/object_mapper.dart';
+import 'package:reservation_app/data/model/reservation/page/reservation_filter_list_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_create_request.dart';
 import 'package:reservation_app/data/model/reservation/reservation_non_auth_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_target_date_response.dart';
 import 'package:reservation_app/di/prefs/shared_pref_module.dart';
 import 'package:reservation_app/domain/model/base/data_state.dart';
 import 'package:reservation_app/domain/model/reservation/enum/part_time.dart';
+import 'package:reservation_app/domain/model/reservation/enum/reservation_filter_type.dart';
+import 'package:reservation_app/domain/model/reservation/page/reservation_filter_list_model.dart';
 import 'package:reservation_app/domain/model/reservation/part_time_seat_list.dart';
 import 'package:reservation_app/domain/model/reservation/request/reservation_create_request_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_non_auth_model.dart';
@@ -191,7 +194,45 @@ class ReservationRepositoryImpl implements ReservationRepository {
 
       return DataNetworkError(response.resultMsg);
     } on DioException catch (error) {
-      debugPrint("🌹 GET [/reservation] API DioException 👉 ${error.message}");
+      debugPrint(
+          "🌹 GET [/reservation/non-auth] API DioException 👉 ${error.message}");
+      final Map<String, dynamic>? responseData = error.response?.data;
+
+      if (responseData != null) {
+        final String? resultMsg = responseData['resultMsg'];
+        if (resultMsg != null) {
+          return DataNetworkError(resultMsg);
+        }
+      }
+
+      return DataError(error);
+    }
+  }
+
+  @override
+  Future<DataState<ReservationFilterListModel>>
+      getReservationFilterPageList(
+    int page,
+    int limit,
+    ReservationFilterType filterType,
+  ) async {
+    try {
+      final response = await _remoteDataSource.requestReservationFilterList(
+        page,
+        limit,
+        filterType,
+      );
+
+      final ReservationFilterListResponse? resultData = response.data;
+
+      if (response.success && response.code == 200 && resultData != null) {
+        return DataSuccess(resultData.toReservationFilterListModel());
+      }
+
+      return DataNetworkError(response.resultMsg);
+    } on DioException catch (error) {
+      debugPrint(
+          "🌹 GET [/reservation/filter] API DioException 👉 ${error.message}");
       final Map<String, dynamic>? responseData = error.response?.data;
 
       if (responseData != null) {

@@ -8,6 +8,7 @@ import 'package:reservation_app/data/common/response/response_list_base.dart';
 import 'package:reservation_app/data/datasource/remote_data_source.dart';
 import 'package:reservation_app/data/model/member/member_info_response.dart';
 import 'package:reservation_app/data/model/member/member_update_fcm_token_request.dart';
+import 'package:reservation_app/data/model/reservation/page/reservation_filter_list_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_create_request.dart';
 import 'package:reservation_app/data/model/reservation/reservation_non_auth_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_target_date_response.dart';
@@ -18,6 +19,7 @@ import 'package:reservation_app/data/model/sign/sign_in_response.dart';
 import 'package:reservation_app/domain/model/banner/banner_image_model.dart';
 import 'package:reservation_app/domain/model/notice/notice_model.dart';
 import 'package:reservation_app/domain/model/reservation/enum/part_time.dart';
+import 'package:reservation_app/domain/model/reservation/enum/reservation_filter_type.dart';
 import 'package:reservation_app/domain/model/seat/enum/seat_type.dart';
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -84,8 +86,23 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   }
 
   @override
-  Future<BaseListResponse<ReservationNonAuthResponse>> getNonAuthReservationList() {
+  Future<BaseListResponse<ReservationNonAuthResponse>>
+      getNonAuthReservationList() {
     return _reservationApiService.getNonAuthReservationList();
+  }
+
+  @override
+  Future<BaseResponse<ReservationFilterListResponse>>
+      requestReservationFilterList(
+    int page,
+    int limit,
+    ReservationFilterType filterType,
+  ) {
+    return _reservationApiService.requestReservationFilterList(
+      page,
+      limit,
+      filterType,
+    );
   }
 
   @override
