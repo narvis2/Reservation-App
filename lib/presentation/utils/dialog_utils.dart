@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:lottie/lottie.dart';
+import 'package:reservation_app/domain/model/common/bottom_sheet_model.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
+import 'package:reservation_app/presentation/utils/list_extensions.dart';
 import 'package:reservation_app/presentation/views/sign/signin_signup_screen.dart';
 
 class DialogUtils {
@@ -276,6 +278,91 @@ class DialogUtils {
         Animation<double> secondaryAnimation,
       ) {
         return SignInSignUpScreen(buildContext: context);
+      },
+    );
+  }
+
+  static showBottomSheetDialog({
+    required BuildContext context,
+    required List<BottomSheetModel> itemList,
+    required void Function(int index) onItemClick,
+  }) async {
+    await showModalBottomSheet(
+      context: context,
+      clipBehavior: Clip.hardEdge,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(27),
+        ),
+      ),
+      builder: (context) {
+        return SingleChildScrollView(
+          child: Wrap(
+            children: [
+              Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: ColorsConstants.settingDivider,
+                      width: 1.0,
+                    ),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    "더보기",
+                    style: TextStyle(
+                      color: ColorsConstants.boldColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10,),
+                margin: EdgeInsets.only(
+                  bottom: 30
+                ),
+                child: Column(
+                  children: itemList
+                      .mapIndexed(
+                        (item, index) => InkWell(
+                          onTap: () {
+                            onItemClick(index);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: SizedBox(
+                              height: 40,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    item.title,
+                                    style: TextStyle(
+                                      color: ColorsConstants.boldColor,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward_ios_outlined,
+                                    color: ColorsConstants.guideText,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+            ],
+          ),
+        );
       },
     );
   }
