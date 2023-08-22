@@ -21,7 +21,7 @@ class _CheckTopAreaWidgetState extends State<CheckTopAreaWidget> {
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: ColorsConstants.settingDivider,
+            color: ColorsConstants.thinDivider,
             width: 1.0,
           ),
         ),
@@ -41,7 +41,7 @@ class _CheckTopAreaWidgetState extends State<CheckTopAreaWidget> {
                 ],
                 normalColors: ColorsConstants.divider,
                 normalFontSize: 13,
-                bolderColors: ColorsConstants.strokeColor,
+                bolderColors: state == 0 ? ColorsConstants.primary : ColorsConstants.strokeColor,
                 bolderFontSize: 14,
                 bolderFontWeight: FontWeight.bold,
               );
