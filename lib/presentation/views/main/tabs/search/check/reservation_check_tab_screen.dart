@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:reservation_app/domain/model/common/bottom_sheet_model.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/constants.dart';
 import 'package:reservation_app/presentation/utils/dialog_utils.dart';
@@ -14,6 +15,7 @@ import 'package:reservation_app/presentation/views/main/tabs/search/check/bloc/r
 import 'package:reservation_app/presentation/views/main/tabs/search/check/utils/check_utils.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/widget/adapter/reservation_filter_list_adapter.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/widget/check_top_area_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ReservationCheckTabScreen extends StatefulWidget {
   const ReservationCheckTabScreen({Key? key}) : super(key: key);
@@ -175,11 +177,10 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
                         DialogUtils.showBasicDialog(
                           context: context,
                           title: "예약 거절",
-                          message: "${state.reservationList[index].name}님의 예약을 거절하시겠습니까?",
+                          message:
+                              "${state.reservationList[index].name}님의 예약을 거절하시겠습니까?",
                           enableCancelBtn: true,
-                          onConfirmClick: () {
-
-                          },
+                          onConfirmClick: () {},
                         );
                       },
                       backgroundColor: ColorsConstants.primary,
@@ -193,11 +194,10 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
                         DialogUtils.showBasicDialog(
                           context: context,
                           title: "예약 승인",
-                          message: "${state.reservationList[index].name}님의 예약을 승인하시겠습니까?",
+                          message:
+                              "${state.reservationList[index].name}님의 예약을 승인하시겠습니까?",
                           enableCancelBtn: true,
-                          onConfirmClick: () {
-
-                          },
+                          onConfirmClick: () {},
                         );
                       },
                       backgroundColor: ColorsConstants.strokeColor,
@@ -216,6 +216,65 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
                   onItemMoreClick: () {
                     debugPrint(
                         "👠 item 더보기 클릭 BottomSheetDialog 생성, id 👉 ${state.reservationList[index].id}");
+                    DialogUtils.showBottomSheetDialog(
+                        context: context,
+                        itemList: [
+                          BottomSheetModel(title: "예약 상세 보기"),
+                          BottomSheetModel(title: "예약 승인"),
+                          BottomSheetModel(title: "예약 거절"),
+                          BottomSheetModel(title: "전화걸기"),
+                        ],
+                        onItemClick: (value) {
+                          if (value == 0) {
+                          } else if (value == 1) {
+                            if (Navigator.of(context).canPop()) {
+                              Navigator.of(context).pop();
+                            }
+
+                            DialogUtils.showBasicDialog(
+                              context: context,
+                              title: "예약 승인",
+                              message:
+                                  "${state.reservationList[index].name}님의 예약을 승인하시겠습니까?",
+                              enableCancelBtn: true,
+                              onConfirmClick: () {},
+                            );
+                          } else if (value == 2) {
+                            if (Navigator.of(context).canPop()) {
+                              Navigator.of(context).pop();
+                            }
+
+                            DialogUtils.showBasicDialog(
+                              context: context,
+                              title: "예약 거절",
+                              message:
+                                  "${state.reservationList[index].name}님의 예약을 거절하시겠습니까?",
+                              enableCancelBtn: true,
+                              onConfirmClick: () {},
+                            );
+                          } else if (value == 3) {
+                            if (Navigator.of(context).canPop()) {
+                              Navigator.of(context).pop();
+                            }
+
+                            DialogUtils.showBasicDialog(
+                              context: context,
+                              title: "전화걸기",
+                              message:
+                                  "${state.reservationList[index].name}님에게 전화를 거시겠습니까?\n(${CheckUtils.makePhoneNumber(state.reservationList[index].phoneNumber)})",
+                              enableCancelBtn: true,
+                              onConfirmClick: () async {
+                                final Uri launchUri = Uri(
+                                  scheme: 'tel',
+                                  path:
+                                      state.reservationList[index].phoneNumber,
+                                );
+
+                                await launchUrl(launchUri);
+                              },
+                            );
+                          }
+                        });
                   },
                 ),
               );
@@ -226,7 +285,7 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
         return EmptyWidget(
           message: "${CheckUtils.mappingFilterType(
             state.reservationFilterType,
-          )} 예약이 존재하지 않습니다.",
+          )}된 예약이 존재하지 않습니다.",
         );
       }
     } else if (state.filterListStatus == ReservationFilterListStatus.error) {
