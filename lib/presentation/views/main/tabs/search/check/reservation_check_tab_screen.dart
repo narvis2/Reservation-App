@@ -3,6 +3,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:reservation_app/presentation/utils/color_constants.dart';
+import 'package:reservation_app/presentation/views/common/bolder_text_widget.dart';
 import 'package:reservation_app/presentation/views/common/network_loading_widget.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/bloc/reservation_check_bloc.dart';
 
@@ -41,11 +43,13 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
       return;
     }
 
-    if (_scrollController.position.userScrollDirection == ScrollDirection.forward) {
+    if (_scrollController.position.userScrollDirection ==
+        ScrollDirection.forward) {
       setState(() {
         _isScrollToBottom = true;
       });
-    } else if (_scrollController.position.userScrollDirection == ScrollDirection.reverse) {
+    } else if (_scrollController.position.userScrollDirection ==
+        ScrollDirection.reverse) {
       setState(() {
         _isScrollToBottom = false;
       });
@@ -67,11 +71,13 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
   }
 
   void scrollToTop() {
-    _scrollController.animateTo(
+    _scrollController
+        .animateTo(
       0,
       duration: Duration(milliseconds: 500),
       curve: Curves.easeInOut,
-    ).then((value)  {
+    )
+        .then((value) {
       setState(() {
         _isScrollToBottom = false;
       });
@@ -101,46 +107,86 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
       body: BlocBuilder<ReservationCheckBloc, ReservationCheckState>(
         bloc: _reservationCheckBloc,
         builder: (context, state) {
-          return SmartRefresher(
-            controller: _refreshController,
-            onRefresh: _onRefresh,
-            onLoading: _onLoading,
-            enablePullDown: true,
-            enablePullUp: state.hasNext,
-            header: WaterDropHeader(
-              completeDuration: Duration(milliseconds: 1000),
-              refresh: NetworkLoadingWidget(),
-              complete: Lottie.asset(
-                'assets/lottie/success_animation.json',
-                animate: true,
-                width: 100,
-                height: 100,
-                repeat: false,
+          return Column(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: ColorsConstants.settingDivider,
+                      width: 1.0,
+                    ),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    BorderTextWidget(
+                      texts: [
+                        "총 예약 : ",
+                        [state.totalCount.toString(), true]
+                      ],
+                      normalColors: ColorsConstants.guideText,
+                      bolderColors: ColorsConstants.strokeColor,
+                      normalFontSize: 13,
+                      bolderFontSize: 14,
+                      bolderFontWeight: FontWeight.bold,
+                    ),
+                    Text(
+                      "전체",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: ColorsConstants.boldColor,
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-            footer: CustomFooter(
-              builder: (context, mode) {
-                if (mode == LoadStatus.loading) {
-                  return NetworkLoadingWidget();
-                }
+              Expanded(
+                child: SmartRefresher(
+                  controller: _refreshController,
+                  onRefresh: _onRefresh,
+                  onLoading: _onLoading,
+                  enablePullDown: true,
+                  enablePullUp: state.hasNext,
+                  header: WaterDropHeader(
+                    completeDuration: Duration(milliseconds: 1000),
+                    refresh: NetworkLoadingWidget(),
+                    complete: Lottie.asset(
+                      'assets/lottie/success_animation.json',
+                      animate: true,
+                      width: 100,
+                      height: 100,
+                      repeat: false,
+                    ),
+                  ),
+                  footer: CustomFooter(
+                    builder: (context, mode) {
+                      if (mode == LoadStatus.loading) {
+                        return NetworkLoadingWidget();
+                      }
 
-                return SizedBox.shrink();
-              },
-            ),
-            child: ListView.builder(
-              controller: _scrollController,
-              itemCount: state.reservationList.length,
-              itemBuilder: (context, index) => Card(
-                margin: const EdgeInsets.symmetric(
-                  vertical: 100,
-                  horizontal: 10,
-                ),
-                child: ListTile(
-                  title: Text(state.reservationList[index].name),
-                  subtitle: Text(index.toString()),
+                      return SizedBox.shrink();
+                    },
+                  ),
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    itemCount: state.reservationList.length,
+                    itemBuilder: (context, index) => SizedBox(
+                      height: 40,
+                      width: MediaQuery.of(context).size.width,
+                      child: Row(children: [
+                        Text(state.reservationList[index].name),
+                        Text(index.toString()),
+                      ]),
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           );
         },
       ),
