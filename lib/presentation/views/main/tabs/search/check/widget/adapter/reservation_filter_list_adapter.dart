@@ -31,7 +31,16 @@ class _ReservationFilterListAdapterState
         widget.onItemClick();
       },
       child: Container(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.symmetric(vertical: 20),
+        margin: EdgeInsets.symmetric(horizontal: 20),
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: ColorsConstants.settingDivider,
+              width: 1.0,
+            ),
+          ),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
