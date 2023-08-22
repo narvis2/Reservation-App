@@ -6,11 +6,13 @@ import 'package:lottie/lottie.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/constants.dart';
+import 'package:reservation_app/presentation/utils/dialog_utils.dart';
 import 'package:reservation_app/presentation/views/common/empty_widget.dart';
 import 'package:reservation_app/presentation/views/common/network_error_widget.dart';
 import 'package:reservation_app/presentation/views/common/network_loading_widget.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/bloc/reservation_check_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/utils/check_utils.dart';
+import 'package:reservation_app/presentation/views/main/tabs/search/check/widget/adapter/reservation_filter_list_adapter.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/widget/check_top_area_widget.dart';
 
 class ReservationCheckTabScreen extends StatefulWidget {
@@ -169,8 +171,17 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
                   children: [
                     SlidableAction(
                       autoClose: true,
-                      // 여러 액션이 있을때 차지하는 비율
-                      onPressed: (BuildContext context) {},
+                      onPressed: (BuildContext context) {
+                        DialogUtils.showBasicDialog(
+                          context: context,
+                          title: "예약 거절",
+                          message: "${state.reservationList[index].name}님의 예약을 거절하시겠습니까?",
+                          enableCancelBtn: true,
+                          onConfirmClick: () {
+
+                          },
+                        );
+                      },
                       backgroundColor: ColorsConstants.primary,
                       foregroundColor: Colors.white,
                       icon: Icons.delete_forever_outlined,
@@ -178,30 +189,34 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
                     ),
                     SlidableAction(
                       autoClose: true,
-                      // 여러 액션이 있을때 차지하는 비율
-                      onPressed: (BuildContext context) {},
+                      onPressed: (BuildContext context) {
+                        DialogUtils.showBasicDialog(
+                          context: context,
+                          title: "예약 승인",
+                          message: "${state.reservationList[index].name}님의 예약을 승인하시겠습니까?",
+                          enableCancelBtn: true,
+                          onConfirmClick: () {
+
+                          },
+                        );
+                      },
                       backgroundColor: ColorsConstants.strokeColor,
                       foregroundColor: Colors.white,
                       icon: Icons.check_rounded,
                       label: '승인',
-
                     ),
                   ],
                 ),
-                child: InkWell(
-                  onTap: () {
-                    debugPrint("👠");
+                child: ReservationFilterListAdapter(
+                  item: state.reservationList[index],
+                  onItemClick: () {
+                    debugPrint(
+                        "👠 item 클릭 Detail 화면으로 이동, id 👉 ${state.reservationList[index].id}");
                   },
-                  child: Container(
-                    height: 100,
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      children: [
-                        Text(state.reservationList[index].name),
-                        Text(index.toString()),
-                      ],
-                    ),
-                  ),
+                  onItemMoreClick: () {
+                    debugPrint(
+                        "👠 item 더보기 클릭 BottomSheetDialog 생성, id 👉 ${state.reservationList[index].id}");
+                  },
                 ),
               );
             },

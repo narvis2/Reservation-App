@@ -68,6 +68,7 @@ extension ReservationFilterResponseExtension on ReservationFilterResponse {
       reservationCount: reservationCount,
       partTime: partTime,
       createdAt: createdAt,
+      isAuthUser: certificationNumber != null,
     );
   }
 }
