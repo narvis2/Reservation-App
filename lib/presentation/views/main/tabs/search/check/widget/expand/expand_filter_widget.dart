@@ -6,6 +6,7 @@ import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/constants.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/bloc/reservation_check_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/model/menu_item_model.dart';
+import 'package:reservation_app/presentation/views/main/tabs/search/check/utils/check_utils.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/widget/expand/expand_menu_widget.dart';
 
 class ExpandFilterWidget extends StatefulWidget {
@@ -75,13 +76,7 @@ class _ExpandFilterWidgetState extends State<ExpandFilterWidget> {
                 color: ColorsConstants.strokeColor,
               ),
               Text(
-                state == ReservationFilterType.all
-                    ? "전체"
-                    : state == ReservationFilterType.nonAuth
-                        ? "비인증"
-                        : state == ReservationFilterType.auth
-                            ? "인증"
-                            : "전체",
+                CheckUtils.mappingFilterType(state),
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,

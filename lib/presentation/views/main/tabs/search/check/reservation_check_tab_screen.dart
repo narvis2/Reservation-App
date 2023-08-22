@@ -3,8 +3,12 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:reservation_app/presentation/utils/constants.dart';
+import 'package:reservation_app/presentation/views/common/empty_widget.dart';
+import 'package:reservation_app/presentation/views/common/network_error_widget.dart';
 import 'package:reservation_app/presentation/views/common/network_loading_widget.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/bloc/reservation_check_bloc.dart';
+import 'package:reservation_app/presentation/views/main/tabs/search/check/utils/check_utils.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/widget/check_top_area_widget.dart';
 
 class ReservationCheckTabScreen extends StatefulWidget {
@@ -75,14 +79,12 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
       0,
       duration: Duration(milliseconds: 500),
       curve: Curves.easeInOut,
-    ).then((value) {
-        setState(
-          () {
-            _isScrollToBottom = false;
-          },
-        );
-      },
-    );
+    )
+        .then((value) {
+      setState(() {
+        _isScrollToBottom = false;
+      });
+    });
   }
 
   @override
@@ -110,7 +112,7 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
         builder: (context, state) {
           return Column(
             children: [
-              CheckTopAreaWidget(),
+              CheckTopAreaWidget(), // 총 예약 수, 검색 필터 변경
               Expanded(
                 child: SmartRefresher(
                   controller: _refreshController,
@@ -138,20 +140,7 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
                       return SizedBox.shrink();
                     },
                   ),
-                  child: ListView.builder(
-                    controller: _scrollController,
-                    itemCount: state.reservationList.length,
-                    itemBuilder: (context, index) => SizedBox(
-                      height: 40,
-                      width: MediaQuery.of(context).size.width,
-                      child: Row(
-                        children: [
-                          Text(state.reservationList[index].name),
-                          Text(index.toString()),
-                        ],
-                      ),
-                    ),
-                  ),
+                  child: buildReservationListWidget(state),
                 ),
               ),
             ],
@@ -159,5 +148,42 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
         },
       ),
     );
+  }
+
+  Widget buildReservationListWidget(ReservationCheckState state) {
+    if (state.filterListStatus == ReservationFilterListStatus.loading) {
+      return NetworkLoadingWidget();
+    } else if (state.filterListStatus == ReservationFilterListStatus.success) {
+      if (state.reservationList.isNotEmpty) {
+        return ListView.builder(
+          controller: _scrollController,
+          itemCount: state.reservationList.length,
+          itemBuilder: (context, index) {
+            return SizedBox(
+              height: 40,
+              width: MediaQuery.of(context).size.width,
+              child: Row(
+                children: [
+                  Text(state.reservationList[index].name),
+                  Text(index.toString()),
+                ],
+              ),
+            );
+          },
+        );
+      } else {
+        return EmptyWidget(
+          message: "${CheckUtils.mappingFilterType(
+            state.reservationFilterType,
+          )} 예약이 존재하지 않습니다.",
+        );
+      }
+    } else if (state.filterListStatus == ReservationFilterListStatus.error) {
+      return NetworkErrorWidget(
+        errorMessage: state.filterListErrorMsg ?? Constants.dataError,
+      );
+    } else {
+      return SizedBox.shrink();
+    }
   }
 }
