@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:reservation_app/domain/model/common/bottom_sheet_model.dart';
+import 'package:reservation_app/presentation/config/router/app_router.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/constants.dart';
 import 'package:reservation_app/presentation/utils/dialog_utils.dart';
@@ -212,69 +214,73 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
                   onItemClick: () {
                     debugPrint(
                         "👠 item 클릭 Detail 화면으로 이동, id 👉 ${state.reservationList[index].id}");
+                    AutoRouter.of(context).push(
+                      ReservationCheckTabDetailsRoute(
+                          id: state.reservationList[index].id,
+                          title:
+                              "${state.reservationList[index].name}님의 예약 상세정보"),
+                    );
                   },
                   onItemMoreClick: () {
                     debugPrint(
                         "👠 item 더보기 클릭 BottomSheetDialog 생성, id 👉 ${state.reservationList[index].id}");
                     DialogUtils.showBottomSheetDialog(
-                        context: context,
-                        itemList: [
-                          BottomSheetModel(title: "예약 상세 보기"),
-                          BottomSheetModel(title: "예약 승인"),
-                          BottomSheetModel(title: "예약 거절"),
-                          BottomSheetModel(title: "전화걸기"),
-                        ],
-                        onItemClick: (value) {
-                          if (value == 0) {
-                          } else if (value == 1) {
-                            if (Navigator.of(context).canPop()) {
-                              Navigator.of(context).pop();
-                            }
+                      context: context,
+                      itemList: [
+                        BottomSheetModel(title: "예약 상세 보기"),
+                        BottomSheetModel(title: "예약 승인"),
+                        BottomSheetModel(title: "예약 거절"),
+                        BottomSheetModel(title: "전화걸기"),
+                      ],
+                      onItemClick: (value) {
+                        if (Navigator.of(context).canPop()) {
+                          Navigator.of(context).pop();
+                        }
 
-                            DialogUtils.showBasicDialog(
-                              context: context,
-                              title: "예약 승인",
-                              message:
-                                  "${state.reservationList[index].name}님의 예약을 승인하시겠습니까?",
-                              enableCancelBtn: true,
-                              onConfirmClick: () {},
-                            );
-                          } else if (value == 2) {
-                            if (Navigator.of(context).canPop()) {
-                              Navigator.of(context).pop();
-                            }
+                        if (value == 0) {
+                          AutoRouter.of(context).push(
+                            ReservationCheckTabDetailsRoute(
+                                id: state.reservationList[index].id,
+                                title:
+                                    "${state.reservationList[index].name}님의 예약 상세정보"),
+                          );
+                        } else if (value == 1) {
+                          DialogUtils.showBasicDialog(
+                            context: context,
+                            title: "예약 승인",
+                            message:
+                                "${state.reservationList[index].name}님의 예약을 승인하시겠습니까?",
+                            enableCancelBtn: true,
+                            onConfirmClick: () {},
+                          );
+                        } else if (value == 2) {
+                          DialogUtils.showBasicDialog(
+                            context: context,
+                            title: "예약 거절",
+                            message:
+                                "${state.reservationList[index].name}님의 예약을 거절하시겠습니까?",
+                            enableCancelBtn: true,
+                            onConfirmClick: () {},
+                          );
+                        } else if (value == 3) {
+                          DialogUtils.showBasicDialog(
+                            context: context,
+                            title: "전화걸기",
+                            message:
+                                "${state.reservationList[index].name}님에게 전화를 거시겠습니까?\n(${CheckUtils.makePhoneNumber(state.reservationList[index].phoneNumber)})",
+                            enableCancelBtn: true,
+                            onConfirmClick: () async {
+                              final Uri launchUri = Uri(
+                                scheme: 'tel',
+                                path: state.reservationList[index].phoneNumber,
+                              );
 
-                            DialogUtils.showBasicDialog(
-                              context: context,
-                              title: "예약 거절",
-                              message:
-                                  "${state.reservationList[index].name}님의 예약을 거절하시겠습니까?",
-                              enableCancelBtn: true,
-                              onConfirmClick: () {},
-                            );
-                          } else if (value == 3) {
-                            if (Navigator.of(context).canPop()) {
-                              Navigator.of(context).pop();
-                            }
-
-                            DialogUtils.showBasicDialog(
-                              context: context,
-                              title: "전화걸기",
-                              message:
-                                  "${state.reservationList[index].name}님에게 전화를 거시겠습니까?\n(${CheckUtils.makePhoneNumber(state.reservationList[index].phoneNumber)})",
-                              enableCancelBtn: true,
-                              onConfirmClick: () async {
-                                final Uri launchUri = Uri(
-                                  scheme: 'tel',
-                                  path:
-                                      state.reservationList[index].phoneNumber,
-                                );
-
-                                await launchUrl(launchUri);
-                              },
-                            );
-                          }
-                        });
+                              await launchUrl(launchUri);
+                            },
+                          );
+                        }
+                      },
+                    );
                   },
                 ),
               );
