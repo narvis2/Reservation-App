@@ -3,10 +3,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:reservation_app/presentation/utils/color_constants.dart';
-import 'package:reservation_app/presentation/views/common/bolder_text_widget.dart';
 import 'package:reservation_app/presentation/views/common/network_loading_widget.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/bloc/reservation_check_bloc.dart';
+import 'package:reservation_app/presentation/views/main/tabs/search/check/widget/check_top_area_widget.dart';
 
 class ReservationCheckTabScreen extends StatefulWidget {
   const ReservationCheckTabScreen({Key? key}) : super(key: key);
@@ -56,17 +55,17 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
     }
   }
 
-  // enablePullUp 이 true 일떄 호출되는 함수
+  // enablePullUp 이 true 일떄 호출되는 함수 (데이터를 계속 가져올때)
   void _onLoading() async {
     await Future.delayed(Duration(milliseconds: 1000));
     _reservationCheckBloc.add(ReservationCheckLoadNextDataEvent());
     _refreshController.loadComplete();
   }
 
-  // enablePullDown 이 true 일때 호출되는 함수
+  // enablePullDown 이 true 일때 호출되는 함수 (Refresh)
   void _onRefresh() async {
     await Future.delayed(Duration(milliseconds: 1000));
-    _reservationCheckBloc.add(ReservationCheckInitEvent());
+    _reservationCheckBloc.add(ReservationCheckRefreshEvent());
     _refreshController.refreshCompleted();
   }
 
@@ -76,12 +75,14 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
       0,
       duration: Duration(milliseconds: 500),
       curve: Curves.easeInOut,
-    )
-        .then((value) {
-      setState(() {
-        _isScrollToBottom = false;
-      });
-    });
+    ).then((value) {
+        setState(
+          () {
+            _isScrollToBottom = false;
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -109,42 +110,7 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
         builder: (context, state) {
           return Column(
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: ColorsConstants.settingDivider,
-                      width: 1.0,
-                    ),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    BorderTextWidget(
-                      texts: [
-                        "총 예약 : ",
-                        [state.totalCount.toString(), true]
-                      ],
-                      normalColors: ColorsConstants.guideText,
-                      bolderColors: ColorsConstants.strokeColor,
-                      normalFontSize: 13,
-                      bolderFontSize: 14,
-                      bolderFontWeight: FontWeight.bold,
-                    ),
-                    Text(
-                      "전체",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: ColorsConstants.boldColor,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              CheckTopAreaWidget(),
               Expanded(
                 child: SmartRefresher(
                   controller: _refreshController,
@@ -178,10 +144,12 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
                     itemBuilder: (context, index) => SizedBox(
                       height: 40,
                       width: MediaQuery.of(context).size.width,
-                      child: Row(children: [
-                        Text(state.reservationList[index].name),
-                        Text(index.toString()),
-                      ]),
+                      child: Row(
+                        children: [
+                          Text(state.reservationList[index].name),
+                          Text(index.toString()),
+                        ],
+                      ),
                     ),
                   ),
                 ),

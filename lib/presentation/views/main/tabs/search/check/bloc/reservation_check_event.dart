@@ -6,9 +6,14 @@ class ReservationCheckEvent with _$ReservationCheckEvent {
 
   const factory ReservationCheckEvent.filterList({
     required int page,
-    required int limit,
     required ReservationFilterType filterType,
   }) = ReservationCheckFilterListEvent;
 
   const factory ReservationCheckEvent.loadNextData() = ReservationCheckLoadNextDataEvent;
+
+  const factory ReservationCheckEvent.changeFilter({
+    required ReservationFilterType filterType,
+  }) = ReservationCheckChangeFilterEvent;
+
+  const factory ReservationCheckEvent.refreshList() = ReservationCheckRefreshEvent;
 }

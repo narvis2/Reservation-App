@@ -42,6 +42,20 @@ class ReservationCheckBloc
         emit,
       ),
     );
+
+    on<ReservationCheckChangeFilterEvent>(
+      (event, emit) => _onChangeFilter(
+        event,
+        emit,
+      ),
+    );
+
+    on<ReservationCheckRefreshEvent>(
+      (event, emit) => _onRefreshList(
+        event,
+        emit,
+      ),
+    );
   }
 
   void _requestInit(
@@ -64,7 +78,6 @@ class ReservationCheckBloc
     add(
       ReservationCheckFilterListEvent(
         page: state.offset,
-        limit: 5,
         filterType: state.reservationFilterType,
       ),
     );
@@ -78,7 +91,7 @@ class ReservationCheckBloc
 
     final response = await _getReservationFilterPageListUseCase.invoke(
       event.page,
-      event.limit,
+      5,
       event.filterType,
     );
 
@@ -152,10 +165,52 @@ class ReservationCheckBloc
       add(
         ReservationCheckFilterListEvent(
           page: state.offset,
-          limit: 5,
           filterType: state.reservationFilterType,
         ),
       );
     }
+  }
+
+  void _onChangeFilter(
+    ReservationCheckChangeFilterEvent event,
+    Emitter<ReservationCheckState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        reservationFilterType: event.filterType,
+        offset: 0,
+        totalCount: 0,
+        reservationList: [],
+        hasNext: false,
+      ),
+    );
+
+    add(
+      ReservationCheckFilterListEvent(
+        page: state.offset,
+        filterType: state.reservationFilterType,
+      ),
+    );
+  }
+
+  void _onRefreshList(
+    ReservationCheckRefreshEvent event,
+    Emitter<ReservationCheckState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        offset: 0,
+        totalCount: 0,
+        reservationList: [],
+        hasNext: false,
+      ),
+    );
+
+    add(
+      ReservationCheckFilterListEvent(
+        page: state.offset,
+        filterType: state.reservationFilterType,
+      ),
+    );
   }
 }

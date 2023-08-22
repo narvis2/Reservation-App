@@ -1,3 +1,6 @@
+import 'package:reservation_app/domain/model/reservation/enum/reservation_filter_type.dart';
+import 'package:reservation_app/presentation/views/main/tabs/search/check/model/menu_item_model.dart';
+
 class Constants {
   static const List<String> homeTabCategoryList = [
     "홈",
@@ -32,4 +35,10 @@ class Constants {
 
   static const noticeContentSample =
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+
+  static final List<MenuItemModel> checkFilterMenuList = [
+    MenuItemModel(filterType: ReservationFilterType.all, isChecked: false),
+    MenuItemModel(filterType: ReservationFilterType.nonAuth, isChecked: false),
+    MenuItemModel(filterType: ReservationFilterType.auth, isChecked: false),
+  ];
 }
