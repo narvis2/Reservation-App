@@ -73,6 +73,8 @@ dependencies:
   animated_toggle_switch: ^0.7.0
   # 무한 스크롤 및 새로고침
   pull_to_refresh: ^2.0.0
+  # List Swipe
+  flutter_slidable: ^3.0.0
 
   flutter_localizations:
     sdk: flutter

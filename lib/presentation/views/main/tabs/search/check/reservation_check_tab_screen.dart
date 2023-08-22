@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/constants.dart';
 import 'package:reservation_app/presentation/views/common/empty_widget.dart';
 import 'package:reservation_app/presentation/views/common/network_error_widget.dart';
@@ -155,21 +157,55 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
       return NetworkLoadingWidget();
     } else if (state.filterListStatus == ReservationFilterListStatus.success) {
       if (state.reservationList.isNotEmpty) {
-        return ListView.builder(
-          controller: _scrollController,
-          itemCount: state.reservationList.length,
-          itemBuilder: (context, index) {
-            return SizedBox(
-              height: 40,
-              width: MediaQuery.of(context).size.width,
-              child: Row(
-                children: [
-                  Text(state.reservationList[index].name),
-                  Text(index.toString()),
-                ],
-              ),
-            );
-          },
+        return SlidableAutoCloseBehavior(
+          child: ListView.builder(
+            controller: _scrollController,
+            itemCount: state.reservationList.length,
+            itemBuilder: (context, index) {
+              return Slidable(
+                key: Key(index.toString()),
+                endActionPane: ActionPane(
+                  motion: const ScrollMotion(), // 스와이프 애니메이션..
+                  children: [
+                    SlidableAction(
+                      autoClose: true,
+                      // 여러 액션이 있을때 차지하는 비율
+                      onPressed: (BuildContext context) {},
+                      backgroundColor: ColorsConstants.primary,
+                      foregroundColor: Colors.white,
+                      icon: Icons.delete_forever_outlined,
+                      label: '거절',
+                    ),
+                    SlidableAction(
+                      autoClose: true,
+                      // 여러 액션이 있을때 차지하는 비율
+                      onPressed: (BuildContext context) {},
+                      backgroundColor: ColorsConstants.strokeColor,
+                      foregroundColor: Colors.white,
+                      icon: Icons.check_rounded,
+                      label: '승인',
+
+                    ),
+                  ],
+                ),
+                child: InkWell(
+                  onTap: () {
+                    debugPrint("👠");
+                  },
+                  child: Container(
+                    height: 100,
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      children: [
+                        Text(state.reservationList[index].name),
+                        Text(index.toString()),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
         );
       } else {
         return EmptyWidget(
