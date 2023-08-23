@@ -16,4 +16,8 @@ class ReservationCheckEvent with _$ReservationCheckEvent {
   }) = ReservationCheckChangeFilterEvent;
 
   const factory ReservationCheckEvent.refreshList() = ReservationCheckRefreshEvent;
+
+  const factory ReservationCheckEvent.approvalCheck({
+    required ReservationApprovalCheckRequestModel request,
+  }) = ReservationCheckApprovalEvent;
 }

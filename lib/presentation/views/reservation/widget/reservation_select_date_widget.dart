@@ -78,6 +78,16 @@ class _ReservationSelectDateWidgetState
                     bool available,
                   ) {
                     final now = DateTime.now();
+
+                    if (dateTime.weekday == 2) {
+                      SnackBarUtils.showCustomSnackBar(
+                        context,
+                        "매주 화요일은 휴무입니다.",
+                      );
+
+                      return false;
+                    }
+
                     // 같은 날짜 선택했을 때 Callback
                     if ((dateTime.year == now.year &&
                         dateTime.month == now.month &&

@@ -6,10 +6,12 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:reservation_app/domain/model/common/bottom_sheet_model.dart';
+import 'package:reservation_app/domain/model/reservation/request/reservation_approval_check_request_model.dart';
 import 'package:reservation_app/presentation/config/router/app_router.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/constants.dart';
 import 'package:reservation_app/presentation/utils/dialog_utils.dart';
+import 'package:reservation_app/presentation/utils/snack_bar_utils.dart';
 import 'package:reservation_app/presentation/views/common/empty_widget.dart';
 import 'package:reservation_app/presentation/views/common/network_error_widget.dart';
 import 'package:reservation_app/presentation/views/common/network_loading_widget.dart';
@@ -115,8 +117,43 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
           child: Icon(Icons.arrow_upward),
         ),
       ),
-      body: BlocBuilder<ReservationCheckBloc, ReservationCheckState>(
+      body: BlocConsumer<ReservationCheckBloc, ReservationCheckState>(
         bloc: _reservationCheckBloc,
+        listenWhen: (previous, current) {
+          return previous != current &&
+              previous.approvalCheckStatus != current.approvalCheckStatus;
+        },
+        listener: (context, state) {
+          if (state.approvalCheckStatus ==
+              ReservationApprovalCheckStatus.loading) {
+            DialogUtils.showLoadingDialog(context);
+          } else if (state.approvalCheckStatus ==
+              ReservationApprovalCheckStatus.success) {
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            }
+
+            SnackBarUtils.showCustomSnackBar(
+              context,
+              "완료되었습니다.",
+            );
+
+            _reservationCheckBloc.add(ReservationCheckRefreshEvent());
+          } else if (state.approvalCheckStatus ==
+              ReservationApprovalCheckStatus.error) {
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            }
+
+            SnackBarUtils.showCustomSnackBar(
+              context,
+              state.approvalCheckErrorMsg ?? Constants.networkError,
+            );
+          }
+        },
+        buildWhen: (previous, current) {
+          return previous != current;
+        },
         builder: (context, state) {
           return Column(
             children: [
@@ -180,57 +217,88 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
                           context: context,
                           title: "예약 거절",
                           message:
-                              "${state.reservationList[index].name}님의 예약을 거절하시겠습니까?",
+                              "${state.reservationList[index].name}님의 예약을 거절하시겠습니까?\n(예약을 거절하면 삭제 처리됩니다.)",
                           enableCancelBtn: true,
-                          onConfirmClick: () {},
+                          onConfirmClick: () {
+                            _reservationCheckBloc.add(
+                              ReservationCheckApprovalEvent(
+                                request: ReservationApprovalCheckRequestModel(
+                                  id: state.reservationList[index].id,
+                                  isAgree: false,
+                                ),
+                              ),
+                            );
+                          },
                         );
                       },
                       backgroundColor: ColorsConstants.primary,
                       foregroundColor: Colors.white,
                       icon: Icons.delete_forever_outlined,
-                      label: '거절',
+                      label: !state.reservationList[index].isAuthUser
+                          ? '거절'
+                          : '삭제',
                     ),
-                    SlidableAction(
-                      autoClose: true,
-                      onPressed: (BuildContext context) {
-                        DialogUtils.showBasicDialog(
-                          context: context,
-                          title: "예약 승인",
-                          message:
-                              "${state.reservationList[index].name}님의 예약을 승인하시겠습니까?",
-                          enableCancelBtn: true,
-                          onConfirmClick: () {},
-                        );
-                      },
-                      backgroundColor: ColorsConstants.strokeColor,
-                      foregroundColor: Colors.white,
-                      icon: Icons.check_rounded,
-                      label: '승인',
+                    Visibility(
+                      visible: !state.reservationList[index].isAuthUser,
+                      child: SlidableAction(
+                        autoClose: true,
+                        onPressed: (BuildContext context) {
+                          DialogUtils.showBasicDialog(
+                            context: context,
+                            title: "예약 승인",
+                            message:
+                                "${state.reservationList[index].name}님의 예약을 승인하시겠습니까?",
+                            enableCancelBtn: true,
+                            onConfirmClick: () {
+                              _reservationCheckBloc.add(
+                                ReservationCheckApprovalEvent(
+                                  request: ReservationApprovalCheckRequestModel(
+                                    id: state.reservationList[index].id,
+                                    isAgree: true,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        backgroundColor: ColorsConstants.strokeColor,
+                        foregroundColor: Colors.white,
+                        icon: Icons.check_rounded,
+                        label: '승인',
+                      ),
                     ),
                   ],
                 ),
                 child: ReservationFilterListAdapter(
                   item: state.reservationList[index],
                   onItemClick: () {
-                    debugPrint(
-                        "👠 item 클릭 Detail 화면으로 이동, id 👉 ${state.reservationList[index].id}");
                     AutoRouter.of(context).push(
                       ReservationCheckTabDetailsRoute(
-                          id: state.reservationList[index].id,
-                          title:
-                              "${state.reservationList[index].name}님의 예약 상세정보"),
+                        id: state.reservationList[index].id,
+                        title: "${state.reservationList[index].name}님의 예약 상세정보",
+                      ),
                     );
                   },
                   onItemMoreClick: () {
-                    debugPrint(
-                        "👠 item 더보기 클릭 BottomSheetDialog 생성, id 👉 ${state.reservationList[index].id}");
                     DialogUtils.showBottomSheetDialog(
                       context: context,
                       itemList: [
-                        BottomSheetModel(title: "예약 상세 보기"),
-                        BottomSheetModel(title: "예약 승인"),
-                        BottomSheetModel(title: "예약 거절"),
-                        BottomSheetModel(title: "전화걸기"),
+                        BottomSheetModel(
+                          title: "예약 상세 보기",
+                          enable: true,
+                        ),
+                        BottomSheetModel(
+                          title: "전화걸기",
+                          enable: true,
+                        ),
+                        BottomSheetModel(
+                          title: "예약 승인",
+                          enable: !state.reservationList[index].isAuthUser,
+                        ),
+                        BottomSheetModel(
+                          title: "예약 거절(삭제)",
+                          enable: true,
+                        ),
                       ],
                       onItemClick: (value) {
                         if (Navigator.of(context).canPop()) {
@@ -247,27 +315,9 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
                         } else if (value == 1) {
                           DialogUtils.showBasicDialog(
                             context: context,
-                            title: "예약 승인",
-                            message:
-                                "${state.reservationList[index].name}님의 예약을 승인하시겠습니까?",
-                            enableCancelBtn: true,
-                            onConfirmClick: () {},
-                          );
-                        } else if (value == 2) {
-                          DialogUtils.showBasicDialog(
-                            context: context,
-                            title: "예약 거절",
-                            message:
-                                "${state.reservationList[index].name}님의 예약을 거절하시겠습니까?",
-                            enableCancelBtn: true,
-                            onConfirmClick: () {},
-                          );
-                        } else if (value == 3) {
-                          DialogUtils.showBasicDialog(
-                            context: context,
                             title: "전화걸기",
                             message:
-                                "${state.reservationList[index].name}님에게 전화를 거시겠습니까?\n(${CheckUtils.makePhoneNumber(state.reservationList[index].phoneNumber)})",
+                            "${state.reservationList[index].name}님에게 전화를 거시겠습니까?\n(${CheckUtils.makePhoneNumber(state.reservationList[index].phoneNumber)})",
                             enableCancelBtn: true,
                             onConfirmClick: () async {
                               final Uri launchUri = Uri(
@@ -276,6 +326,42 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
                               );
 
                               await launchUrl(launchUri);
+                            },
+                          );
+                        } else if (value == 2) {
+                          DialogUtils.showBasicDialog(
+                            context: context,
+                            title: state.reservationList[index].isAuthUser ? "예약 거절" : "예약 승인" ,
+                            message:
+                            "${state.reservationList[index].name}님의 예약을 ${state.reservationList[index].isAuthUser ? "거절" : "승인"}하시겠습니까?",
+                            enableCancelBtn: true,
+                            onConfirmClick: () {
+                              _reservationCheckBloc.add(
+                                ReservationCheckApprovalEvent(
+                                  request: ReservationApprovalCheckRequestModel(
+                                    id: state.reservationList[index].id,
+                                    isAgree: !state.reservationList[index].isAuthUser,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        } else if (value == 3) {
+                          DialogUtils.showBasicDialog(
+                            context: context,
+                            title: "예약 거절",
+                            message:
+                            "${state.reservationList[index].name}님의 예약을 거절하시겠습니까?\n(예약을 거절하면 삭제 처리됩니다.)",
+                            enableCancelBtn: true,
+                            onConfirmClick: () {
+                              _reservationCheckBloc.add(
+                                ReservationCheckApprovalEvent(
+                                  request: ReservationApprovalCheckRequestModel(
+                                    id: state.reservationList[index].id,
+                                    isAgree: false,
+                                  ),
+                                ),
+                              );
                             },
                           );
                         }

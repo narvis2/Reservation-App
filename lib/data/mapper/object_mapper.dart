@@ -1,11 +1,13 @@
 import 'package:reservation_app/data/model/member/member_info_response.dart';
 import 'package:reservation_app/data/model/reservation/page/reservation_filter_list_response.dart';
 import 'package:reservation_app/data/model/reservation/page/reservation_filter_response.dart';
+import 'package:reservation_app/data/model/reservation/reservation_approval_check_request.dart';
 import 'package:reservation_app/data/model/reservation/reservation_non_auth_response.dart';
 import 'package:reservation_app/data/model/sign/sign_in_request.dart';
 import 'package:reservation_app/domain/model/member/member_model.dart';
 import 'package:reservation_app/domain/model/reservation/page/reservation_filter_list_model.dart';
 import 'package:reservation_app/domain/model/reservation/page/reservation_filter_model.dart';
+import 'package:reservation_app/domain/model/reservation/request/reservation_approval_check_request_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_non_auth_model.dart';
 import 'package:reservation_app/domain/model/sign/sign_in_request_model.dart';
 
@@ -45,7 +47,8 @@ extension ReservationNonAuthResponseExtension on ReservationNonAuthResponse {
   }
 }
 
-extension ReservationFilterListResponseExtension on ReservationFilterListResponse {
+extension ReservationFilterListResponseExtension
+    on ReservationFilterListResponse {
   ReservationFilterListModel toReservationFilterListModel() {
     return ReservationFilterListModel(
       totalCount: totalCount,
@@ -70,5 +73,12 @@ extension ReservationFilterResponseExtension on ReservationFilterResponse {
       createdAt: createdAt,
       isAuthUser: certificationNumber != null,
     );
+  }
+}
+
+extension ReservationApprovalCheckRequestModelExtension
+    on ReservationApprovalCheckRequestModel {
+  ReservationApprovalCheckRequest toReservationApprovalCheckRequest() {
+    return ReservationApprovalCheckRequest(isApproved: isAgree);
   }
 }

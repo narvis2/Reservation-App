@@ -40,12 +40,6 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const NoticeScreen(),
       );
     },
-    MainRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const MainScreen(),
-      );
-    },
     ReservationCheckTabDetailsRoute.name: (routeData) {
       final args = routeData.argsAs<ReservationCheckTabDetailsRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -55,6 +49,12 @@ abstract class _$AppRouter extends RootStackRouter {
           id: args.id,
           title: args.title,
         ),
+      );
+    },
+    MainRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const MainScreen(),
       );
     },
   };
@@ -132,20 +132,6 @@ class NoticeRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [MainScreen]
-class MainRoute extends PageRouteInfo<void> {
-  const MainRoute({List<PageRouteInfo>? children})
-      : super(
-          MainRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'MainRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
 /// [ReservationCheckTabDetailsScreen]
 class ReservationCheckTabDetailsRoute
     extends PageRouteInfo<ReservationCheckTabDetailsRouteArgs> {
@@ -187,4 +173,18 @@ class ReservationCheckTabDetailsRouteArgs {
   String toString() {
     return 'ReservationCheckTabDetailsRouteArgs{key: $key, id: $id, title: $title}';
   }
+}
+
+/// generated route for
+/// [MainScreen]
+class MainRoute extends PageRouteInfo<void> {
+  const MainRoute({List<PageRouteInfo>? children})
+      : super(
+          MainRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MainRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }

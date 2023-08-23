@@ -5,7 +5,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:reservation_app/domain/model/base/data_state.dart';
 import 'package:reservation_app/domain/model/reservation/enum/reservation_filter_type.dart';
 import 'package:reservation_app/domain/model/reservation/page/reservation_filter_model.dart';
+import 'package:reservation_app/domain/model/reservation/request/reservation_approval_check_request_model.dart';
 import 'package:reservation_app/domain/usecase/reservation/get_reservation_filter_page_list_use_case.dart';
+import 'package:reservation_app/domain/usecase/reservation/request_approval_check_reservation_use_case.dart';
 import 'package:reservation_app/presentation/utils/constants.dart';
 
 part 'reservation_check_bloc.freezed.dart';
@@ -19,8 +21,12 @@ class ReservationCheckBloc
   final GetReservationFilterPageListUseCase
       _getReservationFilterPageListUseCase;
 
+  final RequestApprovalCheckReservationUseCase
+      _requestApprovalCheckReservationUseCase;
+
   ReservationCheckBloc(
     this._getReservationFilterPageListUseCase,
+    this._requestApprovalCheckReservationUseCase,
   ) : super(ReservationCheckState()) {
     on<ReservationCheckInitEvent>(
       (event, emit) => _requestInit(
@@ -52,6 +58,13 @@ class ReservationCheckBloc
 
     on<ReservationCheckRefreshEvent>(
       (event, emit) => _onRefreshList(
+        event,
+        emit,
+      ),
+    );
+
+    on<ReservationCheckApprovalEvent>(
+      (event, emit) => _onApprovalCheck(
         event,
         emit,
       ),
@@ -177,6 +190,7 @@ class ReservationCheckBloc
   ) {
     emit(
       state.copyWith(
+        approvalCheckStatus: ReservationApprovalCheckStatus.initial,
         reservationFilterType: event.filterType,
         offset: 0,
         totalCount: 0,
@@ -212,5 +226,50 @@ class ReservationCheckBloc
         filterType: state.reservationFilterType,
       ),
     );
+  }
+
+  FutureOr<void> _onApprovalCheck(
+    ReservationCheckApprovalEvent event,
+    Emitter<ReservationCheckState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        approvalCheckStatus: ReservationApprovalCheckStatus.loading,
+      ),
+    );
+
+    final response = await _requestApprovalCheckReservationUseCase.invoke(
+      event.request,
+    );
+
+    if (response is DataSuccess) {
+      emit(
+        state.copyWith(
+          approvalCheckStatus: ReservationApprovalCheckStatus.success,
+          filterListErrorMsg: null,
+        ),
+      );
+    } else if (response is DataNetworkError) {
+      emit(
+        state.copyWith(
+          approvalCheckStatus: ReservationApprovalCheckStatus.error,
+          filterListErrorMsg: response.message ?? Constants.networkError,
+        ),
+      );
+    } else if (response is DataError) {
+      emit(
+        state.copyWith(
+          approvalCheckStatus: ReservationApprovalCheckStatus.error,
+          filterListErrorMsg: response.message ?? Constants.dataError,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          approvalCheckStatus: ReservationApprovalCheckStatus.error,
+          filterListErrorMsg: Constants.dataError,
+        ),
+      );
+    }
   }
 }

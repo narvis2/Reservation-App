@@ -24,6 +24,8 @@ mixin _$ReservationCheckEvent {
     required TResult Function() loadNextData,
     required TResult Function(ReservationFilterType filterType) changeFilter,
     required TResult Function() refreshList,
+    required TResult Function(ReservationApprovalCheckRequestModel request)
+        approvalCheck,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -33,6 +35,8 @@ mixin _$ReservationCheckEvent {
     TResult? Function()? loadNextData,
     TResult? Function(ReservationFilterType filterType)? changeFilter,
     TResult? Function()? refreshList,
+    TResult? Function(ReservationApprovalCheckRequestModel request)?
+        approvalCheck,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -42,6 +46,8 @@ mixin _$ReservationCheckEvent {
     TResult Function()? loadNextData,
     TResult Function(ReservationFilterType filterType)? changeFilter,
     TResult Function()? refreshList,
+    TResult Function(ReservationApprovalCheckRequestModel request)?
+        approvalCheck,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -54,6 +60,8 @@ mixin _$ReservationCheckEvent {
     required TResult Function(ReservationCheckChangeFilterEvent value)
         changeFilter,
     required TResult Function(ReservationCheckRefreshEvent value) refreshList,
+    required TResult Function(ReservationCheckApprovalEvent value)
+        approvalCheck,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +71,7 @@ mixin _$ReservationCheckEvent {
     TResult? Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
     TResult? Function(ReservationCheckChangeFilterEvent value)? changeFilter,
     TResult? Function(ReservationCheckRefreshEvent value)? refreshList,
+    TResult? Function(ReservationCheckApprovalEvent value)? approvalCheck,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,6 +81,7 @@ mixin _$ReservationCheckEvent {
     TResult Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
     TResult Function(ReservationCheckChangeFilterEvent value)? changeFilter,
     TResult Function(ReservationCheckRefreshEvent value)? refreshList,
+    TResult Function(ReservationCheckApprovalEvent value)? approvalCheck,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -143,6 +153,8 @@ class _$ReservationCheckInitEvent implements ReservationCheckInitEvent {
     required TResult Function() loadNextData,
     required TResult Function(ReservationFilterType filterType) changeFilter,
     required TResult Function() refreshList,
+    required TResult Function(ReservationApprovalCheckRequestModel request)
+        approvalCheck,
   }) {
     return init();
   }
@@ -155,6 +167,8 @@ class _$ReservationCheckInitEvent implements ReservationCheckInitEvent {
     TResult? Function()? loadNextData,
     TResult? Function(ReservationFilterType filterType)? changeFilter,
     TResult? Function()? refreshList,
+    TResult? Function(ReservationApprovalCheckRequestModel request)?
+        approvalCheck,
   }) {
     return init?.call();
   }
@@ -167,6 +181,8 @@ class _$ReservationCheckInitEvent implements ReservationCheckInitEvent {
     TResult Function()? loadNextData,
     TResult Function(ReservationFilterType filterType)? changeFilter,
     TResult Function()? refreshList,
+    TResult Function(ReservationApprovalCheckRequestModel request)?
+        approvalCheck,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -185,6 +201,8 @@ class _$ReservationCheckInitEvent implements ReservationCheckInitEvent {
     required TResult Function(ReservationCheckChangeFilterEvent value)
         changeFilter,
     required TResult Function(ReservationCheckRefreshEvent value) refreshList,
+    required TResult Function(ReservationCheckApprovalEvent value)
+        approvalCheck,
   }) {
     return init(this);
   }
@@ -197,6 +215,7 @@ class _$ReservationCheckInitEvent implements ReservationCheckInitEvent {
     TResult? Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
     TResult? Function(ReservationCheckChangeFilterEvent value)? changeFilter,
     TResult? Function(ReservationCheckRefreshEvent value)? refreshList,
+    TResult? Function(ReservationCheckApprovalEvent value)? approvalCheck,
   }) {
     return init?.call(this);
   }
@@ -209,6 +228,7 @@ class _$ReservationCheckInitEvent implements ReservationCheckInitEvent {
     TResult Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
     TResult Function(ReservationCheckChangeFilterEvent value)? changeFilter,
     TResult Function(ReservationCheckRefreshEvent value)? refreshList,
+    TResult Function(ReservationCheckApprovalEvent value)? approvalCheck,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -307,6 +327,8 @@ class _$ReservationCheckFilterListEvent
     required TResult Function() loadNextData,
     required TResult Function(ReservationFilterType filterType) changeFilter,
     required TResult Function() refreshList,
+    required TResult Function(ReservationApprovalCheckRequestModel request)
+        approvalCheck,
   }) {
     return filterList(page, filterType);
   }
@@ -319,6 +341,8 @@ class _$ReservationCheckFilterListEvent
     TResult? Function()? loadNextData,
     TResult? Function(ReservationFilterType filterType)? changeFilter,
     TResult? Function()? refreshList,
+    TResult? Function(ReservationApprovalCheckRequestModel request)?
+        approvalCheck,
   }) {
     return filterList?.call(page, filterType);
   }
@@ -331,6 +355,8 @@ class _$ReservationCheckFilterListEvent
     TResult Function()? loadNextData,
     TResult Function(ReservationFilterType filterType)? changeFilter,
     TResult Function()? refreshList,
+    TResult Function(ReservationApprovalCheckRequestModel request)?
+        approvalCheck,
     required TResult orElse(),
   }) {
     if (filterList != null) {
@@ -349,6 +375,8 @@ class _$ReservationCheckFilterListEvent
     required TResult Function(ReservationCheckChangeFilterEvent value)
         changeFilter,
     required TResult Function(ReservationCheckRefreshEvent value) refreshList,
+    required TResult Function(ReservationCheckApprovalEvent value)
+        approvalCheck,
   }) {
     return filterList(this);
   }
@@ -361,6 +389,7 @@ class _$ReservationCheckFilterListEvent
     TResult? Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
     TResult? Function(ReservationCheckChangeFilterEvent value)? changeFilter,
     TResult? Function(ReservationCheckRefreshEvent value)? refreshList,
+    TResult? Function(ReservationCheckApprovalEvent value)? approvalCheck,
   }) {
     return filterList?.call(this);
   }
@@ -373,6 +402,7 @@ class _$ReservationCheckFilterListEvent
     TResult Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
     TResult Function(ReservationCheckChangeFilterEvent value)? changeFilter,
     TResult Function(ReservationCheckRefreshEvent value)? refreshList,
+    TResult Function(ReservationCheckApprovalEvent value)? approvalCheck,
     required TResult orElse(),
   }) {
     if (filterList != null) {
@@ -445,6 +475,8 @@ class _$ReservationCheckLoadNextDataEvent
     required TResult Function() loadNextData,
     required TResult Function(ReservationFilterType filterType) changeFilter,
     required TResult Function() refreshList,
+    required TResult Function(ReservationApprovalCheckRequestModel request)
+        approvalCheck,
   }) {
     return loadNextData();
   }
@@ -457,6 +489,8 @@ class _$ReservationCheckLoadNextDataEvent
     TResult? Function()? loadNextData,
     TResult? Function(ReservationFilterType filterType)? changeFilter,
     TResult? Function()? refreshList,
+    TResult? Function(ReservationApprovalCheckRequestModel request)?
+        approvalCheck,
   }) {
     return loadNextData?.call();
   }
@@ -469,6 +503,8 @@ class _$ReservationCheckLoadNextDataEvent
     TResult Function()? loadNextData,
     TResult Function(ReservationFilterType filterType)? changeFilter,
     TResult Function()? refreshList,
+    TResult Function(ReservationApprovalCheckRequestModel request)?
+        approvalCheck,
     required TResult orElse(),
   }) {
     if (loadNextData != null) {
@@ -487,6 +523,8 @@ class _$ReservationCheckLoadNextDataEvent
     required TResult Function(ReservationCheckChangeFilterEvent value)
         changeFilter,
     required TResult Function(ReservationCheckRefreshEvent value) refreshList,
+    required TResult Function(ReservationCheckApprovalEvent value)
+        approvalCheck,
   }) {
     return loadNextData(this);
   }
@@ -499,6 +537,7 @@ class _$ReservationCheckLoadNextDataEvent
     TResult? Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
     TResult? Function(ReservationCheckChangeFilterEvent value)? changeFilter,
     TResult? Function(ReservationCheckRefreshEvent value)? refreshList,
+    TResult? Function(ReservationCheckApprovalEvent value)? approvalCheck,
   }) {
     return loadNextData?.call(this);
   }
@@ -511,6 +550,7 @@ class _$ReservationCheckLoadNextDataEvent
     TResult Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
     TResult Function(ReservationCheckChangeFilterEvent value)? changeFilter,
     TResult Function(ReservationCheckRefreshEvent value)? refreshList,
+    TResult Function(ReservationCheckApprovalEvent value)? approvalCheck,
     required TResult orElse(),
   }) {
     if (loadNextData != null) {
@@ -603,6 +643,8 @@ class _$ReservationCheckChangeFilterEvent
     required TResult Function() loadNextData,
     required TResult Function(ReservationFilterType filterType) changeFilter,
     required TResult Function() refreshList,
+    required TResult Function(ReservationApprovalCheckRequestModel request)
+        approvalCheck,
   }) {
     return changeFilter(filterType);
   }
@@ -615,6 +657,8 @@ class _$ReservationCheckChangeFilterEvent
     TResult? Function()? loadNextData,
     TResult? Function(ReservationFilterType filterType)? changeFilter,
     TResult? Function()? refreshList,
+    TResult? Function(ReservationApprovalCheckRequestModel request)?
+        approvalCheck,
   }) {
     return changeFilter?.call(filterType);
   }
@@ -627,6 +671,8 @@ class _$ReservationCheckChangeFilterEvent
     TResult Function()? loadNextData,
     TResult Function(ReservationFilterType filterType)? changeFilter,
     TResult Function()? refreshList,
+    TResult Function(ReservationApprovalCheckRequestModel request)?
+        approvalCheck,
     required TResult orElse(),
   }) {
     if (changeFilter != null) {
@@ -645,6 +691,8 @@ class _$ReservationCheckChangeFilterEvent
     required TResult Function(ReservationCheckChangeFilterEvent value)
         changeFilter,
     required TResult Function(ReservationCheckRefreshEvent value) refreshList,
+    required TResult Function(ReservationCheckApprovalEvent value)
+        approvalCheck,
   }) {
     return changeFilter(this);
   }
@@ -657,6 +705,7 @@ class _$ReservationCheckChangeFilterEvent
     TResult? Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
     TResult? Function(ReservationCheckChangeFilterEvent value)? changeFilter,
     TResult? Function(ReservationCheckRefreshEvent value)? refreshList,
+    TResult? Function(ReservationCheckApprovalEvent value)? approvalCheck,
   }) {
     return changeFilter?.call(this);
   }
@@ -669,6 +718,7 @@ class _$ReservationCheckChangeFilterEvent
     TResult Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
     TResult Function(ReservationCheckChangeFilterEvent value)? changeFilter,
     TResult Function(ReservationCheckRefreshEvent value)? refreshList,
+    TResult Function(ReservationCheckApprovalEvent value)? approvalCheck,
     required TResult orElse(),
   }) {
     if (changeFilter != null) {
@@ -739,6 +789,8 @@ class _$ReservationCheckRefreshEvent implements ReservationCheckRefreshEvent {
     required TResult Function() loadNextData,
     required TResult Function(ReservationFilterType filterType) changeFilter,
     required TResult Function() refreshList,
+    required TResult Function(ReservationApprovalCheckRequestModel request)
+        approvalCheck,
   }) {
     return refreshList();
   }
@@ -751,6 +803,8 @@ class _$ReservationCheckRefreshEvent implements ReservationCheckRefreshEvent {
     TResult? Function()? loadNextData,
     TResult? Function(ReservationFilterType filterType)? changeFilter,
     TResult? Function()? refreshList,
+    TResult? Function(ReservationApprovalCheckRequestModel request)?
+        approvalCheck,
   }) {
     return refreshList?.call();
   }
@@ -763,6 +817,8 @@ class _$ReservationCheckRefreshEvent implements ReservationCheckRefreshEvent {
     TResult Function()? loadNextData,
     TResult Function(ReservationFilterType filterType)? changeFilter,
     TResult Function()? refreshList,
+    TResult Function(ReservationApprovalCheckRequestModel request)?
+        approvalCheck,
     required TResult orElse(),
   }) {
     if (refreshList != null) {
@@ -781,6 +837,8 @@ class _$ReservationCheckRefreshEvent implements ReservationCheckRefreshEvent {
     required TResult Function(ReservationCheckChangeFilterEvent value)
         changeFilter,
     required TResult Function(ReservationCheckRefreshEvent value) refreshList,
+    required TResult Function(ReservationCheckApprovalEvent value)
+        approvalCheck,
   }) {
     return refreshList(this);
   }
@@ -793,6 +851,7 @@ class _$ReservationCheckRefreshEvent implements ReservationCheckRefreshEvent {
     TResult? Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
     TResult? Function(ReservationCheckChangeFilterEvent value)? changeFilter,
     TResult? Function(ReservationCheckRefreshEvent value)? refreshList,
+    TResult? Function(ReservationCheckApprovalEvent value)? approvalCheck,
   }) {
     return refreshList?.call(this);
   }
@@ -805,6 +864,7 @@ class _$ReservationCheckRefreshEvent implements ReservationCheckRefreshEvent {
     TResult Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
     TResult Function(ReservationCheckChangeFilterEvent value)? changeFilter,
     TResult Function(ReservationCheckRefreshEvent value)? refreshList,
+    TResult Function(ReservationCheckApprovalEvent value)? approvalCheck,
     required TResult orElse(),
   }) {
     if (refreshList != null) {
@@ -819,12 +879,185 @@ abstract class ReservationCheckRefreshEvent implements ReservationCheckEvent {
 }
 
 /// @nodoc
+abstract class _$$ReservationCheckApprovalEventCopyWith<$Res> {
+  factory _$$ReservationCheckApprovalEventCopyWith(
+          _$ReservationCheckApprovalEvent value,
+          $Res Function(_$ReservationCheckApprovalEvent) then) =
+      __$$ReservationCheckApprovalEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({ReservationApprovalCheckRequestModel request});
+}
+
+/// @nodoc
+class __$$ReservationCheckApprovalEventCopyWithImpl<$Res>
+    extends _$ReservationCheckEventCopyWithImpl<$Res,
+        _$ReservationCheckApprovalEvent>
+    implements _$$ReservationCheckApprovalEventCopyWith<$Res> {
+  __$$ReservationCheckApprovalEventCopyWithImpl(
+      _$ReservationCheckApprovalEvent _value,
+      $Res Function(_$ReservationCheckApprovalEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? request = null,
+  }) {
+    return _then(_$ReservationCheckApprovalEvent(
+      request: null == request
+          ? _value.request
+          : request // ignore: cast_nullable_to_non_nullable
+              as ReservationApprovalCheckRequestModel,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ReservationCheckApprovalEvent implements ReservationCheckApprovalEvent {
+  const _$ReservationCheckApprovalEvent({required this.request});
+
+  @override
+  final ReservationApprovalCheckRequestModel request;
+
+  @override
+  String toString() {
+    return 'ReservationCheckEvent.approvalCheck(request: $request)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ReservationCheckApprovalEvent &&
+            (identical(other.request, request) || other.request == request));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, request);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ReservationCheckApprovalEventCopyWith<_$ReservationCheckApprovalEvent>
+      get copyWith => __$$ReservationCheckApprovalEventCopyWithImpl<
+          _$ReservationCheckApprovalEvent>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function(int page, ReservationFilterType filterType)
+        filterList,
+    required TResult Function() loadNextData,
+    required TResult Function(ReservationFilterType filterType) changeFilter,
+    required TResult Function() refreshList,
+    required TResult Function(ReservationApprovalCheckRequestModel request)
+        approvalCheck,
+  }) {
+    return approvalCheck(request);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function(int page, ReservationFilterType filterType)? filterList,
+    TResult? Function()? loadNextData,
+    TResult? Function(ReservationFilterType filterType)? changeFilter,
+    TResult? Function()? refreshList,
+    TResult? Function(ReservationApprovalCheckRequestModel request)?
+        approvalCheck,
+  }) {
+    return approvalCheck?.call(request);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function(int page, ReservationFilterType filterType)? filterList,
+    TResult Function()? loadNextData,
+    TResult Function(ReservationFilterType filterType)? changeFilter,
+    TResult Function()? refreshList,
+    TResult Function(ReservationApprovalCheckRequestModel request)?
+        approvalCheck,
+    required TResult orElse(),
+  }) {
+    if (approvalCheck != null) {
+      return approvalCheck(request);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ReservationCheckInitEvent value) init,
+    required TResult Function(ReservationCheckFilterListEvent value) filterList,
+    required TResult Function(ReservationCheckLoadNextDataEvent value)
+        loadNextData,
+    required TResult Function(ReservationCheckChangeFilterEvent value)
+        changeFilter,
+    required TResult Function(ReservationCheckRefreshEvent value) refreshList,
+    required TResult Function(ReservationCheckApprovalEvent value)
+        approvalCheck,
+  }) {
+    return approvalCheck(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ReservationCheckInitEvent value)? init,
+    TResult? Function(ReservationCheckFilterListEvent value)? filterList,
+    TResult? Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
+    TResult? Function(ReservationCheckChangeFilterEvent value)? changeFilter,
+    TResult? Function(ReservationCheckRefreshEvent value)? refreshList,
+    TResult? Function(ReservationCheckApprovalEvent value)? approvalCheck,
+  }) {
+    return approvalCheck?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ReservationCheckInitEvent value)? init,
+    TResult Function(ReservationCheckFilterListEvent value)? filterList,
+    TResult Function(ReservationCheckLoadNextDataEvent value)? loadNextData,
+    TResult Function(ReservationCheckChangeFilterEvent value)? changeFilter,
+    TResult Function(ReservationCheckRefreshEvent value)? refreshList,
+    TResult Function(ReservationCheckApprovalEvent value)? approvalCheck,
+    required TResult orElse(),
+  }) {
+    if (approvalCheck != null) {
+      return approvalCheck(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ReservationCheckApprovalEvent implements ReservationCheckEvent {
+  const factory ReservationCheckApprovalEvent(
+          {required final ReservationApprovalCheckRequestModel request}) =
+      _$ReservationCheckApprovalEvent;
+
+  ReservationApprovalCheckRequestModel get request;
+  @JsonKey(ignore: true)
+  _$$ReservationCheckApprovalEventCopyWith<_$ReservationCheckApprovalEvent>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$ReservationCheckState {
   ReservationFilterListStatus get filterListStatus =>
+      throw _privateConstructorUsedError;
+  ReservationApprovalCheckStatus get approvalCheckStatus =>
       throw _privateConstructorUsedError;
   List<ReservationFilterModel> get reservationList =>
       throw _privateConstructorUsedError;
   String? get filterListErrorMsg => throw _privateConstructorUsedError;
+  String? get approvalCheckErrorMsg => throw _privateConstructorUsedError;
   bool get hasNext => throw _privateConstructorUsedError;
   int get totalCount => throw _privateConstructorUsedError;
   int get offset => throw _privateConstructorUsedError;
@@ -844,8 +1077,10 @@ abstract class $ReservationCheckStateCopyWith<$Res> {
   @useResult
   $Res call(
       {ReservationFilterListStatus filterListStatus,
+      ReservationApprovalCheckStatus approvalCheckStatus,
       List<ReservationFilterModel> reservationList,
       String? filterListErrorMsg,
+      String? approvalCheckErrorMsg,
       bool hasNext,
       int totalCount,
       int offset,
@@ -867,8 +1102,10 @@ class _$ReservationCheckStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? filterListStatus = null,
+    Object? approvalCheckStatus = null,
     Object? reservationList = null,
     Object? filterListErrorMsg = freezed,
+    Object? approvalCheckErrorMsg = freezed,
     Object? hasNext = null,
     Object? totalCount = null,
     Object? offset = null,
@@ -879,6 +1116,10 @@ class _$ReservationCheckStateCopyWithImpl<$Res,
           ? _value.filterListStatus
           : filterListStatus // ignore: cast_nullable_to_non_nullable
               as ReservationFilterListStatus,
+      approvalCheckStatus: null == approvalCheckStatus
+          ? _value.approvalCheckStatus
+          : approvalCheckStatus // ignore: cast_nullable_to_non_nullable
+              as ReservationApprovalCheckStatus,
       reservationList: null == reservationList
           ? _value.reservationList
           : reservationList // ignore: cast_nullable_to_non_nullable
@@ -886,6 +1127,10 @@ class _$ReservationCheckStateCopyWithImpl<$Res,
       filterListErrorMsg: freezed == filterListErrorMsg
           ? _value.filterListErrorMsg
           : filterListErrorMsg // ignore: cast_nullable_to_non_nullable
+              as String?,
+      approvalCheckErrorMsg: freezed == approvalCheckErrorMsg
+          ? _value.approvalCheckErrorMsg
+          : approvalCheckErrorMsg // ignore: cast_nullable_to_non_nullable
               as String?,
       hasNext: null == hasNext
           ? _value.hasNext
@@ -916,8 +1161,10 @@ abstract class _$$InitialCopyWith<$Res>
   @useResult
   $Res call(
       {ReservationFilterListStatus filterListStatus,
+      ReservationApprovalCheckStatus approvalCheckStatus,
       List<ReservationFilterModel> reservationList,
       String? filterListErrorMsg,
+      String? approvalCheckErrorMsg,
       bool hasNext,
       int totalCount,
       int offset,
@@ -935,8 +1182,10 @@ class __$$InitialCopyWithImpl<$Res>
   @override
   $Res call({
     Object? filterListStatus = null,
+    Object? approvalCheckStatus = null,
     Object? reservationList = null,
     Object? filterListErrorMsg = freezed,
+    Object? approvalCheckErrorMsg = freezed,
     Object? hasNext = null,
     Object? totalCount = null,
     Object? offset = null,
@@ -947,6 +1196,10 @@ class __$$InitialCopyWithImpl<$Res>
           ? _value.filterListStatus
           : filterListStatus // ignore: cast_nullable_to_non_nullable
               as ReservationFilterListStatus,
+      approvalCheckStatus: null == approvalCheckStatus
+          ? _value.approvalCheckStatus
+          : approvalCheckStatus // ignore: cast_nullable_to_non_nullable
+              as ReservationApprovalCheckStatus,
       reservationList: null == reservationList
           ? _value._reservationList
           : reservationList // ignore: cast_nullable_to_non_nullable
@@ -954,6 +1207,10 @@ class __$$InitialCopyWithImpl<$Res>
       filterListErrorMsg: freezed == filterListErrorMsg
           ? _value.filterListErrorMsg
           : filterListErrorMsg // ignore: cast_nullable_to_non_nullable
+              as String?,
+      approvalCheckErrorMsg: freezed == approvalCheckErrorMsg
+          ? _value.approvalCheckErrorMsg
+          : approvalCheckErrorMsg // ignore: cast_nullable_to_non_nullable
               as String?,
       hasNext: null == hasNext
           ? _value.hasNext
@@ -980,8 +1237,10 @@ class __$$InitialCopyWithImpl<$Res>
 class _$Initial implements Initial {
   const _$Initial(
       {this.filterListStatus = ReservationFilterListStatus.initial,
+      this.approvalCheckStatus = ReservationApprovalCheckStatus.initial,
       final List<ReservationFilterModel> reservationList = const [],
       this.filterListErrorMsg = null,
+      this.approvalCheckErrorMsg = null,
       this.hasNext = false,
       this.totalCount = 0,
       this.offset = 0,
@@ -991,6 +1250,9 @@ class _$Initial implements Initial {
   @override
   @JsonKey()
   final ReservationFilterListStatus filterListStatus;
+  @override
+  @JsonKey()
+  final ReservationApprovalCheckStatus approvalCheckStatus;
   final List<ReservationFilterModel> _reservationList;
   @override
   @JsonKey()
@@ -1003,6 +1265,9 @@ class _$Initial implements Initial {
   @override
   @JsonKey()
   final String? filterListErrorMsg;
+  @override
+  @JsonKey()
+  final String? approvalCheckErrorMsg;
   @override
   @JsonKey()
   final bool hasNext;
@@ -1018,7 +1283,7 @@ class _$Initial implements Initial {
 
   @override
   String toString() {
-    return 'ReservationCheckState(filterListStatus: $filterListStatus, reservationList: $reservationList, filterListErrorMsg: $filterListErrorMsg, hasNext: $hasNext, totalCount: $totalCount, offset: $offset, reservationFilterType: $reservationFilterType)';
+    return 'ReservationCheckState(filterListStatus: $filterListStatus, approvalCheckStatus: $approvalCheckStatus, reservationList: $reservationList, filterListErrorMsg: $filterListErrorMsg, approvalCheckErrorMsg: $approvalCheckErrorMsg, hasNext: $hasNext, totalCount: $totalCount, offset: $offset, reservationFilterType: $reservationFilterType)';
   }
 
   @override
@@ -1028,10 +1293,14 @@ class _$Initial implements Initial {
             other is _$Initial &&
             (identical(other.filterListStatus, filterListStatus) ||
                 other.filterListStatus == filterListStatus) &&
+            (identical(other.approvalCheckStatus, approvalCheckStatus) ||
+                other.approvalCheckStatus == approvalCheckStatus) &&
             const DeepCollectionEquality()
                 .equals(other._reservationList, _reservationList) &&
             (identical(other.filterListErrorMsg, filterListErrorMsg) ||
                 other.filterListErrorMsg == filterListErrorMsg) &&
+            (identical(other.approvalCheckErrorMsg, approvalCheckErrorMsg) ||
+                other.approvalCheckErrorMsg == approvalCheckErrorMsg) &&
             (identical(other.hasNext, hasNext) || other.hasNext == hasNext) &&
             (identical(other.totalCount, totalCount) ||
                 other.totalCount == totalCount) &&
@@ -1044,8 +1313,10 @@ class _$Initial implements Initial {
   int get hashCode => Object.hash(
       runtimeType,
       filterListStatus,
+      approvalCheckStatus,
       const DeepCollectionEquality().hash(_reservationList),
       filterListErrorMsg,
+      approvalCheckErrorMsg,
       hasNext,
       totalCount,
       offset,
@@ -1061,8 +1332,10 @@ class _$Initial implements Initial {
 abstract class Initial implements ReservationCheckState {
   const factory Initial(
       {final ReservationFilterListStatus filterListStatus,
+      final ReservationApprovalCheckStatus approvalCheckStatus,
       final List<ReservationFilterModel> reservationList,
       final String? filterListErrorMsg,
+      final String? approvalCheckErrorMsg,
       final bool hasNext,
       final int totalCount,
       final int offset,
@@ -1071,9 +1344,13 @@ abstract class Initial implements ReservationCheckState {
   @override
   ReservationFilterListStatus get filterListStatus;
   @override
+  ReservationApprovalCheckStatus get approvalCheckStatus;
+  @override
   List<ReservationFilterModel> get reservationList;
   @override
   String? get filterListErrorMsg;
+  @override
+  String? get approvalCheckErrorMsg;
   @override
   bool get hasNext;
   @override

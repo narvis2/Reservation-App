@@ -1,6 +1,7 @@
 import 'package:reservation_app/domain/model/reservation/enum/part_time.dart';
 import 'package:reservation_app/domain/model/reservation/enum/reservation_filter_type.dart';
 import 'package:reservation_app/domain/model/reservation/page/reservation_filter_list_model.dart';
+import 'package:reservation_app/domain/model/reservation/request/reservation_approval_check_request_model.dart';
 import 'package:reservation_app/domain/model/reservation/request/reservation_create_request_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_non_auth_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_target_date_model.dart';
@@ -26,10 +27,13 @@ abstract class ReservationRepository {
 
   Future<DataState<List<ReservationNonAuthModel>>> getReservationNonAuthList();
 
-  Future<DataState<ReservationFilterListModel>>
-      getReservationFilterPageList(
+  Future<DataState<ReservationFilterListModel>> getReservationFilterPageList(
     int page,
     int limit,
     ReservationFilterType filterType,
+  );
+
+  Future<DataState> requestApprovalCheckReservation(
+    ReservationApprovalCheckRequestModel request,
   );
 }

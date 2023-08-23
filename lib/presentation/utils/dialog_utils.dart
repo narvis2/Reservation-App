@@ -322,12 +322,14 @@ class DialogUtils {
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10,),
-                margin: EdgeInsets.only(
-                  bottom: 30
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
                 ),
+                margin: EdgeInsets.only(bottom: 30),
                 child: Column(
                   children: itemList
+                      .where((item) => item.enable)
                       .mapIndexed(
                         (item, index) => InkWell(
                           onTap: () {
@@ -338,7 +340,8 @@ class DialogUtils {
                             child: SizedBox(
                               height: 40,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     item.title,

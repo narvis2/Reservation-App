@@ -57,17 +57,12 @@ class _ReservationFilterListAdapterState
                     ),
                   ),
                   alignment: Alignment.center,
-                  padding: EdgeInsets.all(15.0),
-                  child: Text(
-                    widget.item.isAuthUser ? 'A' : 'N',
-                    style: TextStyle(
-                      color: widget.item.isAuthUser
-                          ? ColorsConstants.strokeColor
-                          : ColorsConstants.primary,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                    ),
-                    textAlign: TextAlign.center,
+                  padding: EdgeInsets.all(10.0),
+                  child: Icon(
+                    widget.item.isAuthUser ? Icons.check : Icons.close,
+                    color: widget.item.isAuthUser
+                        ? ColorsConstants.strokeColor
+                        : ColorsConstants.primary,
                   ),
                 ),
                 SizedBox(width: 15),
