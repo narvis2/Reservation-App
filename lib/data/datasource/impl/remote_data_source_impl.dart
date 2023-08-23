@@ -11,6 +11,7 @@ import 'package:reservation_app/data/model/member/member_update_fcm_token_reques
 import 'package:reservation_app/data/model/reservation/page/reservation_filter_list_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_approval_check_request.dart';
 import 'package:reservation_app/data/model/reservation/reservation_create_request.dart';
+import 'package:reservation_app/data/model/reservation/reservation_detail_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_non_auth_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_target_date_response.dart';
 import 'package:reservation_app/data/model/sign/phone_auth_check_request.dart';
@@ -112,6 +113,23 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     ReservationApprovalCheckRequest request,
   ) {
     return _reservationApiService.requestApprovalCheck(id, request);
+  }
+
+  @override
+  Future<BaseResponse<ReservationDetailResponse>> requestReservationDetail(
+    int id,
+  ) {
+    return _reservationApiService.requestReservationDetail(id);
+  }
+
+  @override
+  Future<BaseResponse<ReservationDetailResponse>>
+      requestReservationDetailByUser(
+    String certificationNumber,
+  ) {
+    return _reservationApiService.requestReservationDetailByUser(
+      certificationNumber,
+    );
   }
 
   @override

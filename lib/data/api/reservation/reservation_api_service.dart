@@ -4,6 +4,7 @@ import 'package:reservation_app/data/common/response/response_list_base.dart';
 import 'package:reservation_app/data/model/reservation/page/reservation_filter_list_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_approval_check_request.dart';
 import 'package:reservation_app/data/model/reservation/reservation_create_request.dart';
+import 'package:reservation_app/data/model/reservation/reservation_detail_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_non_auth_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_target_date_response.dart';
 import 'package:reservation_app/domain/model/reservation/enum/part_time.dart';
@@ -53,5 +54,16 @@ abstract class ReservationApiService {
   Future<BaseResponse> requestApprovalCheck(
     @Path() int id,
     @Body() ReservationApprovalCheckRequest request,
+  );
+
+  @GET("/reservation/{id}")
+  Future<BaseResponse<ReservationDetailResponse>> requestReservationDetail(
+    @Path() int id,
+  );
+
+  @GET("/reservation/user")
+  Future<BaseResponse<ReservationDetailResponse>>
+      requestReservationDetailByUser(
+    @Query("certificationNumber") String certificationNumber,
   );
 }
