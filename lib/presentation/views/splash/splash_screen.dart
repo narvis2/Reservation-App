@@ -44,12 +44,23 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!mounted) return;
     debugPrint("🔑 accessToken 👉 $accessToken");
 
-    if (accessToken != null && isAutoLogin) {
+    if (accessToken == null) {
+      AutoRouter.of(context).replace(const MainRoute());
+      return;
+    }
+
+    if (isAutoLogin) {
       debugPrint("⭐️⭐️⭐️ 자동로그인 ⭐️⭐⭐️️");
       _userInfoBloc.add(UserInfoUpdateFcmTokenEvent());
       AutoRouter.of(context).replace(const MainRoute());
     } else {
-      AutoRouter.of(context).replace(const MainRoute());
+      Future.wait([
+        pref.clearIsAutoLogin(),
+        pref.clearJWTToken(),
+        pref.clearRefreshToken(),
+      ]).then((value) {
+        AutoRouter.of(context).replace(const MainRoute());
+      });
     }
   }
 

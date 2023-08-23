@@ -13,6 +13,7 @@ class ReservationFilterModel with _$ReservationFilterModel {
     required String reservationTime,
     required int reservationCount,
     required PartTime partTime,
+    required bool isAuthUser,
     String? createdAt,
   }) = _ReservationFilterModel;
 }

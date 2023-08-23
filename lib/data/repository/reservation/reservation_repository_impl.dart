@@ -13,6 +13,7 @@ import 'package:reservation_app/domain/model/reservation/enum/part_time.dart';
 import 'package:reservation_app/domain/model/reservation/enum/reservation_filter_type.dart';
 import 'package:reservation_app/domain/model/reservation/page/reservation_filter_list_model.dart';
 import 'package:reservation_app/domain/model/reservation/part_time_seat_list.dart';
+import 'package:reservation_app/domain/model/reservation/request/reservation_approval_check_request_model.dart';
 import 'package:reservation_app/domain/model/reservation/request/reservation_create_request_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_non_auth_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_target_date_model.dart';
@@ -210,8 +211,7 @@ class ReservationRepositoryImpl implements ReservationRepository {
   }
 
   @override
-  Future<DataState<ReservationFilterListModel>>
-      getReservationFilterPageList(
+  Future<DataState<ReservationFilterListModel>> getReservationFilterPageList(
     int page,
     int limit,
     ReservationFilterType filterType,
@@ -233,6 +233,37 @@ class ReservationRepositoryImpl implements ReservationRepository {
     } on DioException catch (error) {
       debugPrint(
           "🌹 GET [/reservation/filter] API DioException 👉 ${error.message}");
+      final Map<String, dynamic>? responseData = error.response?.data;
+
+      if (responseData != null) {
+        final String? resultMsg = responseData['resultMsg'];
+        if (resultMsg != null) {
+          return DataNetworkError(resultMsg);
+        }
+      }
+
+      return DataError(error);
+    }
+  }
+
+  @override
+  Future<DataState> requestApprovalCheckReservation(
+    ReservationApprovalCheckRequestModel request,
+  ) async {
+    try {
+      final response = await _remoteDataSource.requestApprovalCheck(
+        request.id,
+        request.toReservationApprovalCheckRequest(),
+      );
+
+      if (response.success && response.code == 200) {
+        return DataSuccess(true);
+      }
+
+      return DataNetworkError(response.resultMsg);
+    } on DioException catch (error) {
+      debugPrint(
+          "🌹 POST [/reservation/check-auth/{id}] API DioException 👉 ${error.message}");
       final Map<String, dynamic>? responseData = error.response?.data;
 
       if (responseData != null) {

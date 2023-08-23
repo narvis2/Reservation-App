@@ -40,6 +40,17 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const NoticeScreen(),
       );
     },
+    ReservationCheckTabDetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<ReservationCheckTabDetailsRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ReservationCheckTabDetailsScreen(
+          key: args.key,
+          id: args.id,
+          title: args.title,
+        ),
+      );
+    },
     MainRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -118,6 +129,50 @@ class NoticeRoute extends PageRouteInfo<void> {
   static const String name = 'NoticeRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ReservationCheckTabDetailsScreen]
+class ReservationCheckTabDetailsRoute
+    extends PageRouteInfo<ReservationCheckTabDetailsRouteArgs> {
+  ReservationCheckTabDetailsRoute({
+    Key? key,
+    required int id,
+    required String title,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ReservationCheckTabDetailsRoute.name,
+          args: ReservationCheckTabDetailsRouteArgs(
+            key: key,
+            id: id,
+            title: title,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ReservationCheckTabDetailsRoute';
+
+  static const PageInfo<ReservationCheckTabDetailsRouteArgs> page =
+      PageInfo<ReservationCheckTabDetailsRouteArgs>(name);
+}
+
+class ReservationCheckTabDetailsRouteArgs {
+  const ReservationCheckTabDetailsRouteArgs({
+    this.key,
+    required this.id,
+    required this.title,
+  });
+
+  final Key? key;
+
+  final int id;
+
+  final String title;
+
+  @override
+  String toString() {
+    return 'ReservationCheckTabDetailsRouteArgs{key: $key, id: $id, title: $title}';
+  }
 }
 
 /// generated route for

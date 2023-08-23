@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:reservation_app/domain/model/notice/notice_model.dart';
+import 'package:reservation_app/presentation/views/main/tabs/search/check/details/reservation_check_tab_details_screen.dart';
 import 'package:reservation_app/presentation/views/notice/notice_detail_screen.dart';
 
 import '../../views/main/main_screen.dart';
@@ -43,6 +45,12 @@ class AppRouter extends _$AppRouter {
             DuplicateGuard(),
           ],
         ),
+        AutoRoute(
+          page: ReservationCheckTabDetailsRoute.page,
+          guards: [
+            DuplicateGuard(),
+          ],
+        )
       ];
 }
 

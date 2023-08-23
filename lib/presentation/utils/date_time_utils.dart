@@ -61,4 +61,13 @@ class DateTimeUtils {
       return false;
     }
   }
+
+  static String stringToDateTime(String dateTimeString) {
+    DateTime dateTime = DateTime.parse(dateTimeString);
+    String formattedDate = "${dateTime.year.toString().substring(2)}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}";
+    String formattedTime = "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
+
+    // ex_) 23-08-15 17:50
+    return "$formattedDate $formattedTime";
+  }
 }

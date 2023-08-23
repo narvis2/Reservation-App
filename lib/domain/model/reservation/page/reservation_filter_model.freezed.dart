@@ -22,6 +22,7 @@ mixin _$ReservationFilterModel {
   String get reservationTime => throw _privateConstructorUsedError;
   int get reservationCount => throw _privateConstructorUsedError;
   PartTime get partTime => throw _privateConstructorUsedError;
+  bool get isAuthUser => throw _privateConstructorUsedError;
   String? get createdAt => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -42,6 +43,7 @@ abstract class $ReservationFilterModelCopyWith<$Res> {
       String reservationTime,
       int reservationCount,
       PartTime partTime,
+      bool isAuthUser,
       String? createdAt});
 }
 
@@ -65,6 +67,7 @@ class _$ReservationFilterModelCopyWithImpl<$Res,
     Object? reservationTime = null,
     Object? reservationCount = null,
     Object? partTime = null,
+    Object? isAuthUser = null,
     Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
@@ -92,6 +95,10 @@ class _$ReservationFilterModelCopyWithImpl<$Res,
           ? _value.partTime
           : partTime // ignore: cast_nullable_to_non_nullable
               as PartTime,
+      isAuthUser: null == isAuthUser
+          ? _value.isAuthUser
+          : isAuthUser // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -115,6 +122,7 @@ abstract class _$$_ReservationFilterModelCopyWith<$Res>
       String reservationTime,
       int reservationCount,
       PartTime partTime,
+      bool isAuthUser,
       String? createdAt});
 }
 
@@ -136,6 +144,7 @@ class __$$_ReservationFilterModelCopyWithImpl<$Res>
     Object? reservationTime = null,
     Object? reservationCount = null,
     Object? partTime = null,
+    Object? isAuthUser = null,
     Object? createdAt = freezed,
   }) {
     return _then(_$_ReservationFilterModel(
@@ -163,6 +172,10 @@ class __$$_ReservationFilterModelCopyWithImpl<$Res>
           ? _value.partTime
           : partTime // ignore: cast_nullable_to_non_nullable
               as PartTime,
+      isAuthUser: null == isAuthUser
+          ? _value.isAuthUser
+          : isAuthUser // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -181,6 +194,7 @@ class _$_ReservationFilterModel implements _ReservationFilterModel {
       required this.reservationTime,
       required this.reservationCount,
       required this.partTime,
+      required this.isAuthUser,
       this.createdAt});
 
   @override
@@ -196,11 +210,13 @@ class _$_ReservationFilterModel implements _ReservationFilterModel {
   @override
   final PartTime partTime;
   @override
+  final bool isAuthUser;
+  @override
   final String? createdAt;
 
   @override
   String toString() {
-    return 'ReservationFilterModel(id: $id, name: $name, phoneNumber: $phoneNumber, reservationTime: $reservationTime, reservationCount: $reservationCount, partTime: $partTime, createdAt: $createdAt)';
+    return 'ReservationFilterModel(id: $id, name: $name, phoneNumber: $phoneNumber, reservationTime: $reservationTime, reservationCount: $reservationCount, partTime: $partTime, isAuthUser: $isAuthUser, createdAt: $createdAt)';
   }
 
   @override
@@ -218,13 +234,15 @@ class _$_ReservationFilterModel implements _ReservationFilterModel {
                 other.reservationCount == reservationCount) &&
             (identical(other.partTime, partTime) ||
                 other.partTime == partTime) &&
+            (identical(other.isAuthUser, isAuthUser) ||
+                other.isAuthUser == isAuthUser) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, id, name, phoneNumber,
-      reservationTime, reservationCount, partTime, createdAt);
+      reservationTime, reservationCount, partTime, isAuthUser, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -242,6 +260,7 @@ abstract class _ReservationFilterModel implements ReservationFilterModel {
       required final String reservationTime,
       required final int reservationCount,
       required final PartTime partTime,
+      required final bool isAuthUser,
       final String? createdAt}) = _$_ReservationFilterModel;
 
   @override
@@ -256,6 +275,8 @@ abstract class _ReservationFilterModel implements ReservationFilterModel {
   int get reservationCount;
   @override
   PartTime get partTime;
+  @override
+  bool get isAuthUser;
   @override
   String? get createdAt;
   @override

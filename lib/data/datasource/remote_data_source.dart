@@ -3,6 +3,7 @@ import 'package:reservation_app/data/common/response/response_list_base.dart';
 import 'package:reservation_app/data/model/member/member_info_response.dart';
 import 'package:reservation_app/data/model/member/member_update_fcm_token_request.dart';
 import 'package:reservation_app/data/model/reservation/page/reservation_filter_list_response.dart';
+import 'package:reservation_app/data/model/reservation/reservation_approval_check_request.dart';
 import 'package:reservation_app/data/model/reservation/reservation_create_request.dart';
 import 'package:reservation_app/data/model/reservation/reservation_non_auth_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_target_date_response.dart';
@@ -53,6 +54,11 @@ abstract class RemoteDataSource {
     int page,
     int limit,
     ReservationFilterType filterType,
+  );
+
+  Future<BaseResponse> requestApprovalCheck(
+    int id,
+    ReservationApprovalCheckRequest request,
   );
 
   // Sign
