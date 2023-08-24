@@ -8,13 +8,13 @@ import 'package:reservation_app/presentation/views/main/tabs/search/check/detail
 
 @RoutePage()
 class ReservationCheckTabDetailsScreen extends StatelessWidget {
-  final int id;
-  final String title;
+  final int? id;
+  final String? certificationNumber;
 
   const ReservationCheckTabDetailsScreen({
     Key? key,
-    required this.id,
-    required this.title,
+    this.id,
+    this.certificationNumber,
   }) : super(key: key);
 
   @override
@@ -26,17 +26,21 @@ class ReservationCheckTabDetailsScreen extends StatelessWidget {
           backgroundColor: ColorsConstants.background,
           centerTitle: true,
           title: Text(
-            title,
+            "예약 상세 정보",
             style: TextStyle(
               fontSize: 16,
               color: ColorsConstants.splashText,
+              fontWeight: FontWeight.bold,
             ),
           ),
           leading: AutoLeadingButton(color: ColorsConstants.splashText),
           elevation: 3,
         ),
         body: SafeArea(
-          child: ReservationCheckDetailsView(id: id,),
+          child: ReservationCheckDetailsView(
+            id: id,
+            certificationNumber: certificationNumber,
+          ),
         ),
       ),
     );

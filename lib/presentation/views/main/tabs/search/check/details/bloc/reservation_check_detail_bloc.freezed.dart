@@ -20,18 +20,21 @@ mixin _$ReservationCheckDetailEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(int id) requestDetails,
     required TResult Function(String certificationNumber) requestDetailsByUser,
+    required TResult Function(int? id, String? certificationNumber) requestInit,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int id)? requestDetails,
     TResult? Function(String certificationNumber)? requestDetailsByUser,
+    TResult? Function(int? id, String? certificationNumber)? requestInit,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int id)? requestDetails,
     TResult Function(String certificationNumber)? requestDetailsByUser,
+    TResult Function(int? id, String? certificationNumber)? requestInit,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -41,6 +44,8 @@ mixin _$ReservationCheckDetailEvent {
         requestDetails,
     required TResult Function(ReservationRequestCheckDetailByUserEvent value)
         requestDetailsByUser,
+    required TResult Function(ReservationRequestCheckDetailInitDataEvent value)
+        requestInit,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -48,6 +53,8 @@ mixin _$ReservationCheckDetailEvent {
     TResult? Function(ReservationRequestCheckDetailEvent value)? requestDetails,
     TResult? Function(ReservationRequestCheckDetailByUserEvent value)?
         requestDetailsByUser,
+    TResult? Function(ReservationRequestCheckDetailInitDataEvent value)?
+        requestInit,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,6 +62,8 @@ mixin _$ReservationCheckDetailEvent {
     TResult Function(ReservationRequestCheckDetailEvent value)? requestDetails,
     TResult Function(ReservationRequestCheckDetailByUserEvent value)?
         requestDetailsByUser,
+    TResult Function(ReservationRequestCheckDetailInitDataEvent value)?
+        requestInit,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -153,6 +162,7 @@ class _$ReservationRequestCheckDetailEvent
   TResult when<TResult extends Object?>({
     required TResult Function(int id) requestDetails,
     required TResult Function(String certificationNumber) requestDetailsByUser,
+    required TResult Function(int? id, String? certificationNumber) requestInit,
   }) {
     return requestDetails(id);
   }
@@ -162,6 +172,7 @@ class _$ReservationRequestCheckDetailEvent
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int id)? requestDetails,
     TResult? Function(String certificationNumber)? requestDetailsByUser,
+    TResult? Function(int? id, String? certificationNumber)? requestInit,
   }) {
     return requestDetails?.call(id);
   }
@@ -171,6 +182,7 @@ class _$ReservationRequestCheckDetailEvent
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int id)? requestDetails,
     TResult Function(String certificationNumber)? requestDetailsByUser,
+    TResult Function(int? id, String? certificationNumber)? requestInit,
     required TResult orElse(),
   }) {
     if (requestDetails != null) {
@@ -186,6 +198,8 @@ class _$ReservationRequestCheckDetailEvent
         requestDetails,
     required TResult Function(ReservationRequestCheckDetailByUserEvent value)
         requestDetailsByUser,
+    required TResult Function(ReservationRequestCheckDetailInitDataEvent value)
+        requestInit,
   }) {
     return requestDetails(this);
   }
@@ -196,6 +210,8 @@ class _$ReservationRequestCheckDetailEvent
     TResult? Function(ReservationRequestCheckDetailEvent value)? requestDetails,
     TResult? Function(ReservationRequestCheckDetailByUserEvent value)?
         requestDetailsByUser,
+    TResult? Function(ReservationRequestCheckDetailInitDataEvent value)?
+        requestInit,
   }) {
     return requestDetails?.call(this);
   }
@@ -206,6 +222,8 @@ class _$ReservationRequestCheckDetailEvent
     TResult Function(ReservationRequestCheckDetailEvent value)? requestDetails,
     TResult Function(ReservationRequestCheckDetailByUserEvent value)?
         requestDetailsByUser,
+    TResult Function(ReservationRequestCheckDetailInitDataEvent value)?
+        requestInit,
     required TResult orElse(),
   }) {
     if (requestDetails != null) {
@@ -301,6 +319,7 @@ class _$ReservationRequestCheckDetailByUserEvent
   TResult when<TResult extends Object?>({
     required TResult Function(int id) requestDetails,
     required TResult Function(String certificationNumber) requestDetailsByUser,
+    required TResult Function(int? id, String? certificationNumber) requestInit,
   }) {
     return requestDetailsByUser(certificationNumber);
   }
@@ -310,6 +329,7 @@ class _$ReservationRequestCheckDetailByUserEvent
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int id)? requestDetails,
     TResult? Function(String certificationNumber)? requestDetailsByUser,
+    TResult? Function(int? id, String? certificationNumber)? requestInit,
   }) {
     return requestDetailsByUser?.call(certificationNumber);
   }
@@ -319,6 +339,7 @@ class _$ReservationRequestCheckDetailByUserEvent
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int id)? requestDetails,
     TResult Function(String certificationNumber)? requestDetailsByUser,
+    TResult Function(int? id, String? certificationNumber)? requestInit,
     required TResult orElse(),
   }) {
     if (requestDetailsByUser != null) {
@@ -334,6 +355,8 @@ class _$ReservationRequestCheckDetailByUserEvent
         requestDetails,
     required TResult Function(ReservationRequestCheckDetailByUserEvent value)
         requestDetailsByUser,
+    required TResult Function(ReservationRequestCheckDetailInitDataEvent value)
+        requestInit,
   }) {
     return requestDetailsByUser(this);
   }
@@ -344,6 +367,8 @@ class _$ReservationRequestCheckDetailByUserEvent
     TResult? Function(ReservationRequestCheckDetailEvent value)? requestDetails,
     TResult? Function(ReservationRequestCheckDetailByUserEvent value)?
         requestDetailsByUser,
+    TResult? Function(ReservationRequestCheckDetailInitDataEvent value)?
+        requestInit,
   }) {
     return requestDetailsByUser?.call(this);
   }
@@ -354,6 +379,8 @@ class _$ReservationRequestCheckDetailByUserEvent
     TResult Function(ReservationRequestCheckDetailEvent value)? requestDetails,
     TResult Function(ReservationRequestCheckDetailByUserEvent value)?
         requestDetailsByUser,
+    TResult Function(ReservationRequestCheckDetailInitDataEvent value)?
+        requestInit,
     required TResult orElse(),
   }) {
     if (requestDetailsByUser != null) {
@@ -373,6 +400,174 @@ abstract class ReservationRequestCheckDetailByUserEvent
   @JsonKey(ignore: true)
   _$$ReservationRequestCheckDetailByUserEventCopyWith<
           _$ReservationRequestCheckDetailByUserEvent>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ReservationRequestCheckDetailInitDataEventCopyWith<$Res> {
+  factory _$$ReservationRequestCheckDetailInitDataEventCopyWith(
+          _$ReservationRequestCheckDetailInitDataEvent value,
+          $Res Function(_$ReservationRequestCheckDetailInitDataEvent) then) =
+      __$$ReservationRequestCheckDetailInitDataEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int? id, String? certificationNumber});
+}
+
+/// @nodoc
+class __$$ReservationRequestCheckDetailInitDataEventCopyWithImpl<$Res>
+    extends _$ReservationCheckDetailEventCopyWithImpl<$Res,
+        _$ReservationRequestCheckDetailInitDataEvent>
+    implements _$$ReservationRequestCheckDetailInitDataEventCopyWith<$Res> {
+  __$$ReservationRequestCheckDetailInitDataEventCopyWithImpl(
+      _$ReservationRequestCheckDetailInitDataEvent _value,
+      $Res Function(_$ReservationRequestCheckDetailInitDataEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? certificationNumber = freezed,
+  }) {
+    return _then(_$ReservationRequestCheckDetailInitDataEvent(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      certificationNumber: freezed == certificationNumber
+          ? _value.certificationNumber
+          : certificationNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ReservationRequestCheckDetailInitDataEvent
+    implements ReservationRequestCheckDetailInitDataEvent {
+  const _$ReservationRequestCheckDetailInitDataEvent(
+      {this.id, this.certificationNumber});
+
+  @override
+  final int? id;
+  @override
+  final String? certificationNumber;
+
+  @override
+  String toString() {
+    return 'ReservationCheckDetailEvent.requestInit(id: $id, certificationNumber: $certificationNumber)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ReservationRequestCheckDetailInitDataEvent &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.certificationNumber, certificationNumber) ||
+                other.certificationNumber == certificationNumber));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id, certificationNumber);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ReservationRequestCheckDetailInitDataEventCopyWith<
+          _$ReservationRequestCheckDetailInitDataEvent>
+      get copyWith =>
+          __$$ReservationRequestCheckDetailInitDataEventCopyWithImpl<
+              _$ReservationRequestCheckDetailInitDataEvent>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int id) requestDetails,
+    required TResult Function(String certificationNumber) requestDetailsByUser,
+    required TResult Function(int? id, String? certificationNumber) requestInit,
+  }) {
+    return requestInit(id, certificationNumber);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(int id)? requestDetails,
+    TResult? Function(String certificationNumber)? requestDetailsByUser,
+    TResult? Function(int? id, String? certificationNumber)? requestInit,
+  }) {
+    return requestInit?.call(id, certificationNumber);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int id)? requestDetails,
+    TResult Function(String certificationNumber)? requestDetailsByUser,
+    TResult Function(int? id, String? certificationNumber)? requestInit,
+    required TResult orElse(),
+  }) {
+    if (requestInit != null) {
+      return requestInit(id, certificationNumber);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ReservationRequestCheckDetailEvent value)
+        requestDetails,
+    required TResult Function(ReservationRequestCheckDetailByUserEvent value)
+        requestDetailsByUser,
+    required TResult Function(ReservationRequestCheckDetailInitDataEvent value)
+        requestInit,
+  }) {
+    return requestInit(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ReservationRequestCheckDetailEvent value)? requestDetails,
+    TResult? Function(ReservationRequestCheckDetailByUserEvent value)?
+        requestDetailsByUser,
+    TResult? Function(ReservationRequestCheckDetailInitDataEvent value)?
+        requestInit,
+  }) {
+    return requestInit?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ReservationRequestCheckDetailEvent value)? requestDetails,
+    TResult Function(ReservationRequestCheckDetailByUserEvent value)?
+        requestDetailsByUser,
+    TResult Function(ReservationRequestCheckDetailInitDataEvent value)?
+        requestInit,
+    required TResult orElse(),
+  }) {
+    if (requestInit != null) {
+      return requestInit(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ReservationRequestCheckDetailInitDataEvent
+    implements ReservationCheckDetailEvent {
+  const factory ReservationRequestCheckDetailInitDataEvent(
+          {final int? id, final String? certificationNumber}) =
+      _$ReservationRequestCheckDetailInitDataEvent;
+
+  int? get id;
+  String? get certificationNumber;
+  @JsonKey(ignore: true)
+  _$$ReservationRequestCheckDetailInitDataEventCopyWith<
+          _$ReservationRequestCheckDetailInitDataEvent>
       get copyWith => throw _privateConstructorUsedError;
 }
 

@@ -9,4 +9,9 @@ class ReservationCheckDetailEvent with _$ReservationCheckDetailEvent {
   const factory ReservationCheckDetailEvent.requestDetailsByUser({
     required String certificationNumber,
   }) = ReservationRequestCheckDetailByUserEvent;
+
+  const factory ReservationCheckDetailEvent.requestInit({
+    int? id,
+    String? certificationNumber,
+  }) = ReservationRequestCheckDetailInitDataEvent;
 }
