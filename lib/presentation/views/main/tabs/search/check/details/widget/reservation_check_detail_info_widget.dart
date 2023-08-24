@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
+import 'package:reservation_app/presentation/utils/date_time_utils.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/details/widget/reservation_check_detail_content_widget.dart';
 
 class ReservationCheckDetailInfoWidget extends StatelessWidget {
@@ -79,8 +80,17 @@ class ReservationCheckDetailInfoWidget extends StatelessWidget {
             ),
           ),
           ReservationCheckDetailContentWidget(
+            title: "날짜",
+            content: DateTimeUtils.stringToDateYear(reservationDateTime),
+          ),
+          Container(
+            constraints: const BoxConstraints.expand(
+              height: 10.0,
+            ),
+          ),
+          ReservationCheckDetailContentWidget(
             title: "시간",
-            content: reservationDateTime,
+            content: DateTimeUtils.stringToTimeMinute(reservationDateTime),
           ),
           Container(
             constraints: const BoxConstraints.expand(

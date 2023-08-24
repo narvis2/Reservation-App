@@ -70,4 +70,19 @@ class DateTimeUtils {
     // ex_) 23-08-15 17:50
     return "$formattedDate $formattedTime";
   }
+
+  static String stringToDateYear(String dateTimeString) {
+    DateTime dateTime = DateTime.parse(dateTimeString);
+    String formattedDate = "${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}";
+    return formattedDate;
+  }
+
+  static String stringToTimeMinute(String dateTimeString) {
+    DateTime dateTime = DateTime.parse(dateTimeString);
+
+    String formattedTime = DateFormat('h시 mm분').format(dateTime);
+    String period = dateTime.hour < 12 ? '오전' : '오후';
+
+    return '$period $formattedTime';
+  }
 }

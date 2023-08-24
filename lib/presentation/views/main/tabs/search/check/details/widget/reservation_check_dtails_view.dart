@@ -6,6 +6,7 @@ import 'package:reservation_app/presentation/views/common/network_error_widget.d
 import 'package:reservation_app/presentation/views/common/network_loading_widget.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/details/bloc/reservation_check_detail_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/details/widget/reservation_check_detail_info_widget.dart';
+import 'package:reservation_app/presentation/views/main/tabs/search/check/details/widget/reservation_check_detail_seat_info_widget.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/details/widget/reservation_check_detail_terms_agree_widget.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/details/widget/reservation_detail_user_info_widget.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/utils/check_utils.dart';
@@ -64,40 +65,53 @@ class _ReservationCheckDetailsViewState
                 ? Container(
                     color: ColorsConstants.settingDivider,
                     width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
                     padding: EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // 예약자 정보
-                        ReservationDetailUserInfoWidget(
-                          name: result.name,
-                          phoneNumber: CheckUtils.makePhoneNumber(
-                            result.phoneNumber,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // 예약자 정보
+                          ReservationDetailUserInfoWidget(
+                            name: result.name,
+                            phoneNumber: CheckUtils.makePhoneNumber(
+                              result.phoneNumber,
+                            ),
+                            isAuthPhone: result.isUserValidation,
                           ),
-                          isAuthPhone: result.isUserValidation,
-                        ),
-                        Container(
-                          constraints: const BoxConstraints.expand(
-                            height: 5.0,
+                          Container(
+                            constraints: const BoxConstraints.expand(
+                              height: 5.0,
+                            ),
                           ),
-                        ),
-                        // 예약 정보
-                        ReservationCheckDetailInfoWidget(
-                          isApproved: result.certificationNumber != null,
-                          reservationDateTime: result.reservationDateTime,
-                          reservationCount: result.reservationCount,
-                          certificationNumber: result.certificationNumber,
-                        ),
-                        Container(
-                          constraints: const BoxConstraints.expand(
-                            height: 5.0,
+                          // 예약 정보
+                          ReservationCheckDetailInfoWidget(
+                            isApproved: result.certificationNumber != null,
+                            reservationDateTime: result.reservationDateTime,
+                            reservationCount: result.reservationCount,
+                            certificationNumber: result.certificationNumber,
                           ),
-                        ),
-                        // 약관 동의
-                        ReservationCheckDetailTermsAgreeWidget(
-                          isAgree: result.isTermAllAgree,
-                        ),
-                      ],
+                          Container(
+                            constraints: const BoxConstraints.expand(
+                              height: 5.0,
+                            ),
+                          ),
+                          // 약관 동의
+                          ReservationCheckDetailTermsAgreeWidget(
+                            isAgree: result.isTermAllAgree,
+                          ),
+                          Container(
+                            constraints: const BoxConstraints.expand(
+                              height: 5.0,
+                            ),
+                          ),
+                          // 좌석 정보
+                          ReservationCheckDetailSeatInfoWidget(
+                            count: result.reservationCount,
+                            seats: result.seats,
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 : SizedBox();
