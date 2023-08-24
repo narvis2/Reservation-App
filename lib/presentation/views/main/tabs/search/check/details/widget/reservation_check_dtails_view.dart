@@ -5,6 +5,7 @@ import 'package:reservation_app/presentation/utils/constants.dart';
 import 'package:reservation_app/presentation/views/common/network_error_widget.dart';
 import 'package:reservation_app/presentation/views/common/network_loading_widget.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/details/bloc/reservation_check_detail_bloc.dart';
+import 'package:reservation_app/presentation/views/main/tabs/search/check/details/widget/reservation_check_detail_info_widget.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/details/widget/reservation_detail_user_info_widget.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/utils/check_utils.dart';
 
@@ -72,6 +73,19 @@ class _ReservationCheckDetailsViewState
                           phoneNumber: CheckUtils.makePhoneNumber(
                             result.phoneNumber,
                           ),
+                          isAuthPhone: result.isUserValidation,
+                        ),
+                        Container(
+                          constraints: const BoxConstraints.expand(
+                            height: 5.0,
+                          ),
+                        ),
+                        // 예약 정보
+                        ReservationCheckDetailInfoWidget(
+                          isApproved: result.certificationNumber != null,
+                          reservationDateTime: result.reservationDateTime,
+                          reservationCount: result.reservationCount,
+                          certificationNumber: result.certificationNumber,
                         ),
                       ],
                     ),

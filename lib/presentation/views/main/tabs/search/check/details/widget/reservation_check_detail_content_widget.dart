@@ -4,11 +4,13 @@ import 'package:reservation_app/presentation/utils/color_constants.dart';
 class ReservationCheckDetailContentWidget extends StatelessWidget {
   final String title;
   final String content;
+  final Color? contentColor;
 
   const ReservationCheckDetailContentWidget({
     Key? key,
     required this.title,
     this.content = '',
+    this.contentColor,
   }) : super(key: key);
 
   @override
@@ -28,7 +30,7 @@ class ReservationCheckDetailContentWidget extends StatelessWidget {
         Text(
           content,
           style: TextStyle(
-            color: ColorsConstants.divider,
+            color: contentColor ?? ColorsConstants.divider,
             fontSize: 14,
             fontWeight: FontWeight.bold,
           ),
