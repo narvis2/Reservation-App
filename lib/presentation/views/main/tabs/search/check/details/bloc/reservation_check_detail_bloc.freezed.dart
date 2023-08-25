@@ -21,6 +21,7 @@ mixin _$ReservationCheckDetailEvent {
     required TResult Function(int id) requestDetails,
     required TResult Function(String certificationNumber) requestDetailsByUser,
     required TResult Function(int? id, String? certificationNumber) requestInit,
+    required TResult Function(int id, bool isApproval) requestCheck,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -28,6 +29,7 @@ mixin _$ReservationCheckDetailEvent {
     TResult? Function(int id)? requestDetails,
     TResult? Function(String certificationNumber)? requestDetailsByUser,
     TResult? Function(int? id, String? certificationNumber)? requestInit,
+    TResult? Function(int id, bool isApproval)? requestCheck,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -35,6 +37,7 @@ mixin _$ReservationCheckDetailEvent {
     TResult Function(int id)? requestDetails,
     TResult Function(String certificationNumber)? requestDetailsByUser,
     TResult Function(int? id, String? certificationNumber)? requestInit,
+    TResult Function(int id, bool isApproval)? requestCheck,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -46,6 +49,8 @@ mixin _$ReservationCheckDetailEvent {
         requestDetailsByUser,
     required TResult Function(ReservationRequestCheckDetailInitDataEvent value)
         requestInit,
+    required TResult Function(ReservationCheckDetailCheckEvent value)
+        requestCheck,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,6 +60,7 @@ mixin _$ReservationCheckDetailEvent {
         requestDetailsByUser,
     TResult? Function(ReservationRequestCheckDetailInitDataEvent value)?
         requestInit,
+    TResult? Function(ReservationCheckDetailCheckEvent value)? requestCheck,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -64,6 +70,7 @@ mixin _$ReservationCheckDetailEvent {
         requestDetailsByUser,
     TResult Function(ReservationRequestCheckDetailInitDataEvent value)?
         requestInit,
+    TResult Function(ReservationCheckDetailCheckEvent value)? requestCheck,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -163,6 +170,7 @@ class _$ReservationRequestCheckDetailEvent
     required TResult Function(int id) requestDetails,
     required TResult Function(String certificationNumber) requestDetailsByUser,
     required TResult Function(int? id, String? certificationNumber) requestInit,
+    required TResult Function(int id, bool isApproval) requestCheck,
   }) {
     return requestDetails(id);
   }
@@ -173,6 +181,7 @@ class _$ReservationRequestCheckDetailEvent
     TResult? Function(int id)? requestDetails,
     TResult? Function(String certificationNumber)? requestDetailsByUser,
     TResult? Function(int? id, String? certificationNumber)? requestInit,
+    TResult? Function(int id, bool isApproval)? requestCheck,
   }) {
     return requestDetails?.call(id);
   }
@@ -183,6 +192,7 @@ class _$ReservationRequestCheckDetailEvent
     TResult Function(int id)? requestDetails,
     TResult Function(String certificationNumber)? requestDetailsByUser,
     TResult Function(int? id, String? certificationNumber)? requestInit,
+    TResult Function(int id, bool isApproval)? requestCheck,
     required TResult orElse(),
   }) {
     if (requestDetails != null) {
@@ -200,6 +210,8 @@ class _$ReservationRequestCheckDetailEvent
         requestDetailsByUser,
     required TResult Function(ReservationRequestCheckDetailInitDataEvent value)
         requestInit,
+    required TResult Function(ReservationCheckDetailCheckEvent value)
+        requestCheck,
   }) {
     return requestDetails(this);
   }
@@ -212,6 +224,7 @@ class _$ReservationRequestCheckDetailEvent
         requestDetailsByUser,
     TResult? Function(ReservationRequestCheckDetailInitDataEvent value)?
         requestInit,
+    TResult? Function(ReservationCheckDetailCheckEvent value)? requestCheck,
   }) {
     return requestDetails?.call(this);
   }
@@ -224,6 +237,7 @@ class _$ReservationRequestCheckDetailEvent
         requestDetailsByUser,
     TResult Function(ReservationRequestCheckDetailInitDataEvent value)?
         requestInit,
+    TResult Function(ReservationCheckDetailCheckEvent value)? requestCheck,
     required TResult orElse(),
   }) {
     if (requestDetails != null) {
@@ -320,6 +334,7 @@ class _$ReservationRequestCheckDetailByUserEvent
     required TResult Function(int id) requestDetails,
     required TResult Function(String certificationNumber) requestDetailsByUser,
     required TResult Function(int? id, String? certificationNumber) requestInit,
+    required TResult Function(int id, bool isApproval) requestCheck,
   }) {
     return requestDetailsByUser(certificationNumber);
   }
@@ -330,6 +345,7 @@ class _$ReservationRequestCheckDetailByUserEvent
     TResult? Function(int id)? requestDetails,
     TResult? Function(String certificationNumber)? requestDetailsByUser,
     TResult? Function(int? id, String? certificationNumber)? requestInit,
+    TResult? Function(int id, bool isApproval)? requestCheck,
   }) {
     return requestDetailsByUser?.call(certificationNumber);
   }
@@ -340,6 +356,7 @@ class _$ReservationRequestCheckDetailByUserEvent
     TResult Function(int id)? requestDetails,
     TResult Function(String certificationNumber)? requestDetailsByUser,
     TResult Function(int? id, String? certificationNumber)? requestInit,
+    TResult Function(int id, bool isApproval)? requestCheck,
     required TResult orElse(),
   }) {
     if (requestDetailsByUser != null) {
@@ -357,6 +374,8 @@ class _$ReservationRequestCheckDetailByUserEvent
         requestDetailsByUser,
     required TResult Function(ReservationRequestCheckDetailInitDataEvent value)
         requestInit,
+    required TResult Function(ReservationCheckDetailCheckEvent value)
+        requestCheck,
   }) {
     return requestDetailsByUser(this);
   }
@@ -369,6 +388,7 @@ class _$ReservationRequestCheckDetailByUserEvent
         requestDetailsByUser,
     TResult? Function(ReservationRequestCheckDetailInitDataEvent value)?
         requestInit,
+    TResult? Function(ReservationCheckDetailCheckEvent value)? requestCheck,
   }) {
     return requestDetailsByUser?.call(this);
   }
@@ -381,6 +401,7 @@ class _$ReservationRequestCheckDetailByUserEvent
         requestDetailsByUser,
     TResult Function(ReservationRequestCheckDetailInitDataEvent value)?
         requestInit,
+    TResult Function(ReservationCheckDetailCheckEvent value)? requestCheck,
     required TResult orElse(),
   }) {
     if (requestDetailsByUser != null) {
@@ -487,6 +508,7 @@ class _$ReservationRequestCheckDetailInitDataEvent
     required TResult Function(int id) requestDetails,
     required TResult Function(String certificationNumber) requestDetailsByUser,
     required TResult Function(int? id, String? certificationNumber) requestInit,
+    required TResult Function(int id, bool isApproval) requestCheck,
   }) {
     return requestInit(id, certificationNumber);
   }
@@ -497,6 +519,7 @@ class _$ReservationRequestCheckDetailInitDataEvent
     TResult? Function(int id)? requestDetails,
     TResult? Function(String certificationNumber)? requestDetailsByUser,
     TResult? Function(int? id, String? certificationNumber)? requestInit,
+    TResult? Function(int id, bool isApproval)? requestCheck,
   }) {
     return requestInit?.call(id, certificationNumber);
   }
@@ -507,6 +530,7 @@ class _$ReservationRequestCheckDetailInitDataEvent
     TResult Function(int id)? requestDetails,
     TResult Function(String certificationNumber)? requestDetailsByUser,
     TResult Function(int? id, String? certificationNumber)? requestInit,
+    TResult Function(int id, bool isApproval)? requestCheck,
     required TResult orElse(),
   }) {
     if (requestInit != null) {
@@ -524,6 +548,8 @@ class _$ReservationRequestCheckDetailInitDataEvent
         requestDetailsByUser,
     required TResult Function(ReservationRequestCheckDetailInitDataEvent value)
         requestInit,
+    required TResult Function(ReservationCheckDetailCheckEvent value)
+        requestCheck,
   }) {
     return requestInit(this);
   }
@@ -536,6 +562,7 @@ class _$ReservationRequestCheckDetailInitDataEvent
         requestDetailsByUser,
     TResult? Function(ReservationRequestCheckDetailInitDataEvent value)?
         requestInit,
+    TResult? Function(ReservationCheckDetailCheckEvent value)? requestCheck,
   }) {
     return requestInit?.call(this);
   }
@@ -548,6 +575,7 @@ class _$ReservationRequestCheckDetailInitDataEvent
         requestDetailsByUser,
     TResult Function(ReservationRequestCheckDetailInitDataEvent value)?
         requestInit,
+    TResult Function(ReservationCheckDetailCheckEvent value)? requestCheck,
     required TResult orElse(),
   }) {
     if (requestInit != null) {
@@ -572,58 +600,192 @@ abstract class ReservationRequestCheckDetailInitDataEvent
 }
 
 /// @nodoc
-mixin _$ReservationCheckDetailState {
+abstract class _$$ReservationCheckDetailCheckEventCopyWith<$Res> {
+  factory _$$ReservationCheckDetailCheckEventCopyWith(
+          _$ReservationCheckDetailCheckEvent value,
+          $Res Function(_$ReservationCheckDetailCheckEvent) then) =
+      __$$ReservationCheckDetailCheckEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int id, bool isApproval});
+}
+
+/// @nodoc
+class __$$ReservationCheckDetailCheckEventCopyWithImpl<$Res>
+    extends _$ReservationCheckDetailEventCopyWithImpl<$Res,
+        _$ReservationCheckDetailCheckEvent>
+    implements _$$ReservationCheckDetailCheckEventCopyWith<$Res> {
+  __$$ReservationCheckDetailCheckEventCopyWithImpl(
+      _$ReservationCheckDetailCheckEvent _value,
+      $Res Function(_$ReservationCheckDetailCheckEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? isApproval = null,
+  }) {
+    return _then(_$ReservationCheckDetailCheckEvent(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      isApproval: null == isApproval
+          ? _value.isApproval
+          : isApproval // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ReservationCheckDetailCheckEvent
+    implements ReservationCheckDetailCheckEvent {
+  const _$ReservationCheckDetailCheckEvent(
+      {required this.id, required this.isApproval});
+
+  @override
+  final int id;
+  @override
+  final bool isApproval;
+
+  @override
+  String toString() {
+    return 'ReservationCheckDetailEvent.requestCheck(id: $id, isApproval: $isApproval)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ReservationCheckDetailCheckEvent &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.isApproval, isApproval) ||
+                other.isApproval == isApproval));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id, isApproval);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ReservationCheckDetailCheckEventCopyWith<
+          _$ReservationCheckDetailCheckEvent>
+      get copyWith => __$$ReservationCheckDetailCheckEventCopyWithImpl<
+          _$ReservationCheckDetailCheckEvent>(this, _$identity);
+
+  @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(ReservationDetailModel? reservationDetailModel)
-        success,
-    required TResult Function(String? errorMsg) error,
-  }) =>
-      throw _privateConstructorUsedError;
+    required TResult Function(int id) requestDetails,
+    required TResult Function(String certificationNumber) requestDetailsByUser,
+    required TResult Function(int? id, String? certificationNumber) requestInit,
+    required TResult Function(int id, bool isApproval) requestCheck,
+  }) {
+    return requestCheck(id, isApproval);
+  }
+
+  @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(ReservationDetailModel? reservationDetailModel)? success,
-    TResult? Function(String? errorMsg)? error,
-  }) =>
-      throw _privateConstructorUsedError;
+    TResult? Function(int id)? requestDetails,
+    TResult? Function(String certificationNumber)? requestDetailsByUser,
+    TResult? Function(int? id, String? certificationNumber)? requestInit,
+    TResult? Function(int id, bool isApproval)? requestCheck,
+  }) {
+    return requestCheck?.call(id, isApproval);
+  }
+
+  @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(ReservationDetailModel? reservationDetailModel)? success,
-    TResult Function(String? errorMsg)? error,
+    TResult Function(int id)? requestDetails,
+    TResult Function(String certificationNumber)? requestDetailsByUser,
+    TResult Function(int? id, String? certificationNumber)? requestInit,
+    TResult Function(int id, bool isApproval)? requestCheck,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) {
+    if (requestCheck != null) {
+      return requestCheck(id, isApproval);
+    }
+    return orElse();
+  }
+
+  @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ReservationCheckDetailInitial value) initial,
-    required TResult Function(_ReservationCheckDetailLoading value) loading,
-    required TResult Function(_ReservationCheckDetailSuccess value) success,
-    required TResult Function(_ReservationCheckDetailError value) error,
-  }) =>
-      throw _privateConstructorUsedError;
+    required TResult Function(ReservationRequestCheckDetailEvent value)
+        requestDetails,
+    required TResult Function(ReservationRequestCheckDetailByUserEvent value)
+        requestDetailsByUser,
+    required TResult Function(ReservationRequestCheckDetailInitDataEvent value)
+        requestInit,
+    required TResult Function(ReservationCheckDetailCheckEvent value)
+        requestCheck,
+  }) {
+    return requestCheck(this);
+  }
+
+  @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ReservationCheckDetailInitial value)? initial,
-    TResult? Function(_ReservationCheckDetailLoading value)? loading,
-    TResult? Function(_ReservationCheckDetailSuccess value)? success,
-    TResult? Function(_ReservationCheckDetailError value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
+    TResult? Function(ReservationRequestCheckDetailEvent value)? requestDetails,
+    TResult? Function(ReservationRequestCheckDetailByUserEvent value)?
+        requestDetailsByUser,
+    TResult? Function(ReservationRequestCheckDetailInitDataEvent value)?
+        requestInit,
+    TResult? Function(ReservationCheckDetailCheckEvent value)? requestCheck,
+  }) {
+    return requestCheck?.call(this);
+  }
+
+  @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ReservationCheckDetailInitial value)? initial,
-    TResult Function(_ReservationCheckDetailLoading value)? loading,
-    TResult Function(_ReservationCheckDetailSuccess value)? success,
-    TResult Function(_ReservationCheckDetailError value)? error,
+    TResult Function(ReservationRequestCheckDetailEvent value)? requestDetails,
+    TResult Function(ReservationRequestCheckDetailByUserEvent value)?
+        requestDetailsByUser,
+    TResult Function(ReservationRequestCheckDetailInitDataEvent value)?
+        requestInit,
+    TResult Function(ReservationCheckDetailCheckEvent value)? requestCheck,
     required TResult orElse(),
-  }) =>
+  }) {
+    if (requestCheck != null) {
+      return requestCheck(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ReservationCheckDetailCheckEvent
+    implements ReservationCheckDetailEvent {
+  const factory ReservationCheckDetailCheckEvent(
+      {required final int id,
+      required final bool isApproval}) = _$ReservationCheckDetailCheckEvent;
+
+  int get id;
+  bool get isApproval;
+  @JsonKey(ignore: true)
+  _$$ReservationCheckDetailCheckEventCopyWith<
+          _$ReservationCheckDetailCheckEvent>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$ReservationCheckDetailState {
+  ReservationDetailInfoStatus get detailInfoStatus =>
       throw _privateConstructorUsedError;
+  ReservationDetailModel? get reservationDetailModel =>
+      throw _privateConstructorUsedError;
+  String? get detailsInfoErrorMsg => throw _privateConstructorUsedError;
+  ReservationCheckStatus get checkStatus => throw _privateConstructorUsedError;
+  String? get checkErrorMsg => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $ReservationCheckDetailStateCopyWith<ReservationCheckDetailState>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -633,6 +795,13 @@ abstract class $ReservationCheckDetailStateCopyWith<$Res> {
           $Res Function(ReservationCheckDetailState) then) =
       _$ReservationCheckDetailStateCopyWithImpl<$Res,
           ReservationCheckDetailState>;
+  @useResult
+  $Res call(
+      {ReservationDetailInfoStatus detailInfoStatus,
+      ReservationDetailModel? reservationDetailModel,
+      String? detailsInfoErrorMsg,
+      ReservationCheckStatus checkStatus,
+      String? checkErrorMsg});
 }
 
 /// @nodoc
@@ -645,437 +814,92 @@ class _$ReservationCheckDetailStateCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-}
-
-/// @nodoc
-abstract class _$$_ReservationCheckDetailInitialCopyWith<$Res> {
-  factory _$$_ReservationCheckDetailInitialCopyWith(
-          _$_ReservationCheckDetailInitial value,
-          $Res Function(_$_ReservationCheckDetailInitial) then) =
-      __$$_ReservationCheckDetailInitialCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$_ReservationCheckDetailInitialCopyWithImpl<$Res>
-    extends _$ReservationCheckDetailStateCopyWithImpl<$Res,
-        _$_ReservationCheckDetailInitial>
-    implements _$$_ReservationCheckDetailInitialCopyWith<$Res> {
-  __$$_ReservationCheckDetailInitialCopyWithImpl(
-      _$_ReservationCheckDetailInitial _value,
-      $Res Function(_$_ReservationCheckDetailInitial) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$_ReservationCheckDetailInitial
-    implements _ReservationCheckDetailInitial {
-  const _$_ReservationCheckDetailInitial();
-
-  @override
-  String toString() {
-    return 'ReservationCheckDetailState.initial()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_ReservationCheckDetailInitial);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(ReservationDetailModel? reservationDetailModel)
-        success,
-    required TResult Function(String? errorMsg) error,
-  }) {
-    return initial();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(ReservationDetailModel? reservationDetailModel)? success,
-    TResult? Function(String? errorMsg)? error,
-  }) {
-    return initial?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(ReservationDetailModel? reservationDetailModel)? success,
-    TResult Function(String? errorMsg)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_ReservationCheckDetailInitial value) initial,
-    required TResult Function(_ReservationCheckDetailLoading value) loading,
-    required TResult Function(_ReservationCheckDetailSuccess value) success,
-    required TResult Function(_ReservationCheckDetailError value) error,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ReservationCheckDetailInitial value)? initial,
-    TResult? Function(_ReservationCheckDetailLoading value)? loading,
-    TResult? Function(_ReservationCheckDetailSuccess value)? success,
-    TResult? Function(_ReservationCheckDetailError value)? error,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ReservationCheckDetailInitial value)? initial,
-    TResult Function(_ReservationCheckDetailLoading value)? loading,
-    TResult Function(_ReservationCheckDetailSuccess value)? success,
-    TResult Function(_ReservationCheckDetailError value)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ReservationCheckDetailInitial
-    implements ReservationCheckDetailState {
-  const factory _ReservationCheckDetailInitial() =
-      _$_ReservationCheckDetailInitial;
-}
-
-/// @nodoc
-abstract class _$$_ReservationCheckDetailLoadingCopyWith<$Res> {
-  factory _$$_ReservationCheckDetailLoadingCopyWith(
-          _$_ReservationCheckDetailLoading value,
-          $Res Function(_$_ReservationCheckDetailLoading) then) =
-      __$$_ReservationCheckDetailLoadingCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$_ReservationCheckDetailLoadingCopyWithImpl<$Res>
-    extends _$ReservationCheckDetailStateCopyWithImpl<$Res,
-        _$_ReservationCheckDetailLoading>
-    implements _$$_ReservationCheckDetailLoadingCopyWith<$Res> {
-  __$$_ReservationCheckDetailLoadingCopyWithImpl(
-      _$_ReservationCheckDetailLoading _value,
-      $Res Function(_$_ReservationCheckDetailLoading) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$_ReservationCheckDetailLoading
-    implements _ReservationCheckDetailLoading {
-  const _$_ReservationCheckDetailLoading();
-
-  @override
-  String toString() {
-    return 'ReservationCheckDetailState.loading()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_ReservationCheckDetailLoading);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(ReservationDetailModel? reservationDetailModel)
-        success,
-    required TResult Function(String? errorMsg) error,
-  }) {
-    return loading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(ReservationDetailModel? reservationDetailModel)? success,
-    TResult? Function(String? errorMsg)? error,
-  }) {
-    return loading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(ReservationDetailModel? reservationDetailModel)? success,
-    TResult Function(String? errorMsg)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_ReservationCheckDetailInitial value) initial,
-    required TResult Function(_ReservationCheckDetailLoading value) loading,
-    required TResult Function(_ReservationCheckDetailSuccess value) success,
-    required TResult Function(_ReservationCheckDetailError value) error,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ReservationCheckDetailInitial value)? initial,
-    TResult? Function(_ReservationCheckDetailLoading value)? loading,
-    TResult? Function(_ReservationCheckDetailSuccess value)? success,
-    TResult? Function(_ReservationCheckDetailError value)? error,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ReservationCheckDetailInitial value)? initial,
-    TResult Function(_ReservationCheckDetailLoading value)? loading,
-    TResult Function(_ReservationCheckDetailSuccess value)? success,
-    TResult Function(_ReservationCheckDetailError value)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ReservationCheckDetailLoading
-    implements ReservationCheckDetailState {
-  const factory _ReservationCheckDetailLoading() =
-      _$_ReservationCheckDetailLoading;
-}
-
-/// @nodoc
-abstract class _$$_ReservationCheckDetailSuccessCopyWith<$Res> {
-  factory _$$_ReservationCheckDetailSuccessCopyWith(
-          _$_ReservationCheckDetailSuccess value,
-          $Res Function(_$_ReservationCheckDetailSuccess) then) =
-      __$$_ReservationCheckDetailSuccessCopyWithImpl<$Res>;
-  @useResult
-  $Res call({ReservationDetailModel? reservationDetailModel});
-}
-
-/// @nodoc
-class __$$_ReservationCheckDetailSuccessCopyWithImpl<$Res>
-    extends _$ReservationCheckDetailStateCopyWithImpl<$Res,
-        _$_ReservationCheckDetailSuccess>
-    implements _$$_ReservationCheckDetailSuccessCopyWith<$Res> {
-  __$$_ReservationCheckDetailSuccessCopyWithImpl(
-      _$_ReservationCheckDetailSuccess _value,
-      $Res Function(_$_ReservationCheckDetailSuccess) _then)
-      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? detailInfoStatus = null,
     Object? reservationDetailModel = freezed,
+    Object? detailsInfoErrorMsg = freezed,
+    Object? checkStatus = null,
+    Object? checkErrorMsg = freezed,
   }) {
-    return _then(_$_ReservationCheckDetailSuccess(
+    return _then(_value.copyWith(
+      detailInfoStatus: null == detailInfoStatus
+          ? _value.detailInfoStatus
+          : detailInfoStatus // ignore: cast_nullable_to_non_nullable
+              as ReservationDetailInfoStatus,
       reservationDetailModel: freezed == reservationDetailModel
           ? _value.reservationDetailModel
           : reservationDetailModel // ignore: cast_nullable_to_non_nullable
               as ReservationDetailModel?,
-    ));
+      detailsInfoErrorMsg: freezed == detailsInfoErrorMsg
+          ? _value.detailsInfoErrorMsg
+          : detailsInfoErrorMsg // ignore: cast_nullable_to_non_nullable
+              as String?,
+      checkStatus: null == checkStatus
+          ? _value.checkStatus
+          : checkStatus // ignore: cast_nullable_to_non_nullable
+              as ReservationCheckStatus,
+      checkErrorMsg: freezed == checkErrorMsg
+          ? _value.checkErrorMsg
+          : checkErrorMsg // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
   }
 }
 
 /// @nodoc
-
-class _$_ReservationCheckDetailSuccess
-    implements _ReservationCheckDetailSuccess {
-  const _$_ReservationCheckDetailSuccess({this.reservationDetailModel = null});
-
+abstract class _$$InitialCopyWith<$Res>
+    implements $ReservationCheckDetailStateCopyWith<$Res> {
+  factory _$$InitialCopyWith(_$Initial value, $Res Function(_$Initial) then) =
+      __$$InitialCopyWithImpl<$Res>;
   @override
-  @JsonKey()
-  final ReservationDetailModel? reservationDetailModel;
-
-  @override
-  String toString() {
-    return 'ReservationCheckDetailState.success(reservationDetailModel: $reservationDetailModel)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_ReservationCheckDetailSuccess &&
-            (identical(other.reservationDetailModel, reservationDetailModel) ||
-                other.reservationDetailModel == reservationDetailModel));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, reservationDetailModel);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_ReservationCheckDetailSuccessCopyWith<_$_ReservationCheckDetailSuccess>
-      get copyWith => __$$_ReservationCheckDetailSuccessCopyWithImpl<
-          _$_ReservationCheckDetailSuccess>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(ReservationDetailModel? reservationDetailModel)
-        success,
-    required TResult Function(String? errorMsg) error,
-  }) {
-    return success(reservationDetailModel);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(ReservationDetailModel? reservationDetailModel)? success,
-    TResult? Function(String? errorMsg)? error,
-  }) {
-    return success?.call(reservationDetailModel);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(ReservationDetailModel? reservationDetailModel)? success,
-    TResult Function(String? errorMsg)? error,
-    required TResult orElse(),
-  }) {
-    if (success != null) {
-      return success(reservationDetailModel);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_ReservationCheckDetailInitial value) initial,
-    required TResult Function(_ReservationCheckDetailLoading value) loading,
-    required TResult Function(_ReservationCheckDetailSuccess value) success,
-    required TResult Function(_ReservationCheckDetailError value) error,
-  }) {
-    return success(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ReservationCheckDetailInitial value)? initial,
-    TResult? Function(_ReservationCheckDetailLoading value)? loading,
-    TResult? Function(_ReservationCheckDetailSuccess value)? success,
-    TResult? Function(_ReservationCheckDetailError value)? error,
-  }) {
-    return success?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ReservationCheckDetailInitial value)? initial,
-    TResult Function(_ReservationCheckDetailLoading value)? loading,
-    TResult Function(_ReservationCheckDetailSuccess value)? success,
-    TResult Function(_ReservationCheckDetailError value)? error,
-    required TResult orElse(),
-  }) {
-    if (success != null) {
-      return success(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ReservationCheckDetailSuccess
-    implements ReservationCheckDetailState {
-  const factory _ReservationCheckDetailSuccess(
-          {final ReservationDetailModel? reservationDetailModel}) =
-      _$_ReservationCheckDetailSuccess;
-
-  ReservationDetailModel? get reservationDetailModel;
-  @JsonKey(ignore: true)
-  _$$_ReservationCheckDetailSuccessCopyWith<_$_ReservationCheckDetailSuccess>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_ReservationCheckDetailErrorCopyWith<$Res> {
-  factory _$$_ReservationCheckDetailErrorCopyWith(
-          _$_ReservationCheckDetailError value,
-          $Res Function(_$_ReservationCheckDetailError) then) =
-      __$$_ReservationCheckDetailErrorCopyWithImpl<$Res>;
   @useResult
-  $Res call({String? errorMsg});
+  $Res call(
+      {ReservationDetailInfoStatus detailInfoStatus,
+      ReservationDetailModel? reservationDetailModel,
+      String? detailsInfoErrorMsg,
+      ReservationCheckStatus checkStatus,
+      String? checkErrorMsg});
 }
 
 /// @nodoc
-class __$$_ReservationCheckDetailErrorCopyWithImpl<$Res>
-    extends _$ReservationCheckDetailStateCopyWithImpl<$Res,
-        _$_ReservationCheckDetailError>
-    implements _$$_ReservationCheckDetailErrorCopyWith<$Res> {
-  __$$_ReservationCheckDetailErrorCopyWithImpl(
-      _$_ReservationCheckDetailError _value,
-      $Res Function(_$_ReservationCheckDetailError) _then)
+class __$$InitialCopyWithImpl<$Res>
+    extends _$ReservationCheckDetailStateCopyWithImpl<$Res, _$Initial>
+    implements _$$InitialCopyWith<$Res> {
+  __$$InitialCopyWithImpl(_$Initial _value, $Res Function(_$Initial) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? errorMsg = freezed,
+    Object? detailInfoStatus = null,
+    Object? reservationDetailModel = freezed,
+    Object? detailsInfoErrorMsg = freezed,
+    Object? checkStatus = null,
+    Object? checkErrorMsg = freezed,
   }) {
-    return _then(_$_ReservationCheckDetailError(
-      errorMsg: freezed == errorMsg
-          ? _value.errorMsg
-          : errorMsg // ignore: cast_nullable_to_non_nullable
+    return _then(_$Initial(
+      detailInfoStatus: null == detailInfoStatus
+          ? _value.detailInfoStatus
+          : detailInfoStatus // ignore: cast_nullable_to_non_nullable
+              as ReservationDetailInfoStatus,
+      reservationDetailModel: freezed == reservationDetailModel
+          ? _value.reservationDetailModel
+          : reservationDetailModel // ignore: cast_nullable_to_non_nullable
+              as ReservationDetailModel?,
+      detailsInfoErrorMsg: freezed == detailsInfoErrorMsg
+          ? _value.detailsInfoErrorMsg
+          : detailsInfoErrorMsg // ignore: cast_nullable_to_non_nullable
+              as String?,
+      checkStatus: null == checkStatus
+          ? _value.checkStatus
+          : checkStatus // ignore: cast_nullable_to_non_nullable
+              as ReservationCheckStatus,
+      checkErrorMsg: freezed == checkErrorMsg
+          ? _value.checkErrorMsg
+          : checkErrorMsg // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -1083,120 +907,83 @@ class __$$_ReservationCheckDetailErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ReservationCheckDetailError implements _ReservationCheckDetailError {
-  const _$_ReservationCheckDetailError({this.errorMsg = null});
+class _$Initial implements Initial {
+  const _$Initial(
+      {this.detailInfoStatus = ReservationDetailInfoStatus.initial,
+      this.reservationDetailModel = null,
+      this.detailsInfoErrorMsg = null,
+      this.checkStatus = ReservationCheckStatus.initial,
+      this.checkErrorMsg = null});
 
   @override
   @JsonKey()
-  final String? errorMsg;
+  final ReservationDetailInfoStatus detailInfoStatus;
+  @override
+  @JsonKey()
+  final ReservationDetailModel? reservationDetailModel;
+  @override
+  @JsonKey()
+  final String? detailsInfoErrorMsg;
+  @override
+  @JsonKey()
+  final ReservationCheckStatus checkStatus;
+  @override
+  @JsonKey()
+  final String? checkErrorMsg;
 
   @override
   String toString() {
-    return 'ReservationCheckDetailState.error(errorMsg: $errorMsg)';
+    return 'ReservationCheckDetailState(detailInfoStatus: $detailInfoStatus, reservationDetailModel: $reservationDetailModel, detailsInfoErrorMsg: $detailsInfoErrorMsg, checkStatus: $checkStatus, checkErrorMsg: $checkErrorMsg)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ReservationCheckDetailError &&
-            (identical(other.errorMsg, errorMsg) ||
-                other.errorMsg == errorMsg));
+            other is _$Initial &&
+            (identical(other.detailInfoStatus, detailInfoStatus) ||
+                other.detailInfoStatus == detailInfoStatus) &&
+            (identical(other.reservationDetailModel, reservationDetailModel) ||
+                other.reservationDetailModel == reservationDetailModel) &&
+            (identical(other.detailsInfoErrorMsg, detailsInfoErrorMsg) ||
+                other.detailsInfoErrorMsg == detailsInfoErrorMsg) &&
+            (identical(other.checkStatus, checkStatus) ||
+                other.checkStatus == checkStatus) &&
+            (identical(other.checkErrorMsg, checkErrorMsg) ||
+                other.checkErrorMsg == checkErrorMsg));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, errorMsg);
+  int get hashCode => Object.hash(runtimeType, detailInfoStatus,
+      reservationDetailModel, detailsInfoErrorMsg, checkStatus, checkErrorMsg);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ReservationCheckDetailErrorCopyWith<_$_ReservationCheckDetailError>
-      get copyWith => __$$_ReservationCheckDetailErrorCopyWithImpl<
-          _$_ReservationCheckDetailError>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(ReservationDetailModel? reservationDetailModel)
-        success,
-    required TResult Function(String? errorMsg) error,
-  }) {
-    return error(errorMsg);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(ReservationDetailModel? reservationDetailModel)? success,
-    TResult? Function(String? errorMsg)? error,
-  }) {
-    return error?.call(errorMsg);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(ReservationDetailModel? reservationDetailModel)? success,
-    TResult Function(String? errorMsg)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(errorMsg);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_ReservationCheckDetailInitial value) initial,
-    required TResult Function(_ReservationCheckDetailLoading value) loading,
-    required TResult Function(_ReservationCheckDetailSuccess value) success,
-    required TResult Function(_ReservationCheckDetailError value) error,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_ReservationCheckDetailInitial value)? initial,
-    TResult? Function(_ReservationCheckDetailLoading value)? loading,
-    TResult? Function(_ReservationCheckDetailSuccess value)? success,
-    TResult? Function(_ReservationCheckDetailError value)? error,
-  }) {
-    return error?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ReservationCheckDetailInitial value)? initial,
-    TResult Function(_ReservationCheckDetailLoading value)? loading,
-    TResult Function(_ReservationCheckDetailSuccess value)? success,
-    TResult Function(_ReservationCheckDetailError value)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
-  }
+  _$$InitialCopyWith<_$Initial> get copyWith =>
+      __$$InitialCopyWithImpl<_$Initial>(this, _$identity);
 }
 
-abstract class _ReservationCheckDetailError
-    implements ReservationCheckDetailState {
-  const factory _ReservationCheckDetailError({final String? errorMsg}) =
-      _$_ReservationCheckDetailError;
+abstract class Initial implements ReservationCheckDetailState {
+  const factory Initial(
+      {final ReservationDetailInfoStatus detailInfoStatus,
+      final ReservationDetailModel? reservationDetailModel,
+      final String? detailsInfoErrorMsg,
+      final ReservationCheckStatus checkStatus,
+      final String? checkErrorMsg}) = _$Initial;
 
-  String? get errorMsg;
+  @override
+  ReservationDetailInfoStatus get detailInfoStatus;
+  @override
+  ReservationDetailModel? get reservationDetailModel;
+  @override
+  String? get detailsInfoErrorMsg;
+  @override
+  ReservationCheckStatus get checkStatus;
+  @override
+  String? get checkErrorMsg;
+  @override
   @JsonKey(ignore: true)
-  _$$_ReservationCheckDetailErrorCopyWith<_$_ReservationCheckDetailError>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$InitialCopyWith<_$Initial> get copyWith =>
+      throw _privateConstructorUsedError;
 }

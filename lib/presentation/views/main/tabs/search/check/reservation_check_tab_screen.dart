@@ -272,11 +272,19 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
                 child: ReservationFilterListAdapter(
                   item: state.reservationList[index],
                   onItemClick: () {
-                    AutoRouter.of(context).push(
+                    AutoRouter.of(context)
+                        .push(
                       ReservationCheckTabDetailsRoute(
                         id: state.reservationList[index].id,
                       ),
-                    );
+                    )
+                        .then((value) {
+                      if (value != null) {
+                        _reservationCheckBloc.add(
+                          ReservationCheckRefreshEvent(),
+                        );
+                      }
+                    });
                   },
                   onItemMoreClick: () {
                     DialogUtils.showBottomSheetDialog(

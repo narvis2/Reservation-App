@@ -145,6 +145,7 @@ class DialogUtils {
                     ),
                     Container(
                       margin: EdgeInsets.all(15),
+                      padding: EdgeInsets.only(top: 20, bottom: 10),
                       alignment: Alignment.center,
                       child: Text(
                         message,

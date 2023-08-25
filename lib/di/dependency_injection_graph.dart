@@ -260,6 +260,7 @@ Future<void> initializeDependencies() async {
     () => ReservationCheckDetailBloc(
       locator<RequestReservationDetailUseCase>(),
       locator<RequestReservationDetailByUserUseCase>(),
+      locator<RequestApprovalCheckReservationUseCase>(),
     ),
   );
 }

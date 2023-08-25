@@ -14,4 +14,9 @@ class ReservationCheckDetailEvent with _$ReservationCheckDetailEvent {
     int? id,
     String? certificationNumber,
   }) = ReservationRequestCheckDetailInitDataEvent;
+
+  const factory ReservationCheckDetailEvent.requestCheck({
+    required int id,
+    required bool isApproval,
+  }) = ReservationCheckDetailCheckEvent;
 }

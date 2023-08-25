@@ -1,9 +1,12 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:reservation_app/domain/model/base/data_state.dart';
+import 'package:reservation_app/domain/model/reservation/request/reservation_approval_check_request_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_detail_model.dart';
+import 'package:reservation_app/domain/usecase/reservation/request_approval_check_reservation_use_case.dart';
 import 'package:reservation_app/domain/usecase/reservation/request_reservation_detail_by_user_use_case.dart';
 import 'package:reservation_app/domain/usecase/reservation/request_reservation_detail_use_case.dart';
 import 'package:reservation_app/presentation/utils/constants.dart';
@@ -19,11 +22,14 @@ class ReservationCheckDetailBloc
   final RequestReservationDetailUseCase _requestReservationDetailUseCase;
   final RequestReservationDetailByUserUseCase
       _requestReservationDetailByUserUseCase;
+  final RequestApprovalCheckReservationUseCase
+      _requestApprovalCheckReservationUseCase;
 
   ReservationCheckDetailBloc(
     this._requestReservationDetailUseCase,
     this._requestReservationDetailByUserUseCase,
-  ) : super(const ReservationCheckDetailState.initial()) {
+    this._requestApprovalCheckReservationUseCase,
+  ) : super(ReservationCheckDetailState()) {
     on<ReservationRequestCheckDetailInitDataEvent>(
       (event, emit) => _onInitData(
         event,
@@ -40,6 +46,13 @@ class ReservationCheckDetailBloc
 
     on<ReservationRequestCheckDetailByUserEvent>(
       (event, emit) => _onRequestDetailByUser(
+        event,
+        emit,
+      ),
+    );
+
+    on<ReservationCheckDetailCheckEvent>(
+      (event, emit) => _onRequestCheck(
         event,
         emit,
       ),
@@ -72,32 +85,44 @@ class ReservationCheckDetailBloc
     ReservationRequestCheckDetailEvent event,
     Emitter<ReservationCheckDetailState> emit,
   ) async {
-    emit(const _ReservationCheckDetailLoading());
+    emit(
+      state.copyWith(
+        detailInfoStatus: ReservationDetailInfoStatus.loading,
+      ),
+    );
 
     final response = await _requestReservationDetailUseCase.invoke(event.id);
 
     if (response is DataSuccess) {
       emit(
-        _ReservationCheckDetailSuccess(
+        state.copyWith(
+          detailInfoStatus: ReservationDetailInfoStatus.success,
           reservationDetailModel: response.data,
+          detailsInfoErrorMsg: null,
         ),
       );
     } else if (response is DataError) {
       emit(
-        _ReservationCheckDetailError(
-          errorMsg: response.message ?? Constants.dataError,
+        state.copyWith(
+          detailInfoStatus: ReservationDetailInfoStatus.error,
+          reservationDetailModel: null,
+          detailsInfoErrorMsg: response.message ?? Constants.dataError,
         ),
       );
     } else if (response is DataNetworkError) {
       emit(
-        _ReservationCheckDetailError(
-          errorMsg: response.message ?? Constants.dataError,
+        state.copyWith(
+          detailInfoStatus: ReservationDetailInfoStatus.error,
+          reservationDetailModel: null,
+          detailsInfoErrorMsg: response.message ?? Constants.networkError,
         ),
       );
     } else {
       emit(
-        const _ReservationCheckDetailError(
-          errorMsg: Constants.dataError,
+        state.copyWith(
+          detailInfoStatus: ReservationDetailInfoStatus.error,
+          reservationDetailModel: null,
+          detailsInfoErrorMsg: response.message ?? Constants.dataError,
         ),
       );
     }
@@ -107,7 +132,11 @@ class ReservationCheckDetailBloc
     ReservationRequestCheckDetailByUserEvent event,
     Emitter<ReservationCheckDetailState> emit,
   ) async {
-    emit(const _ReservationCheckDetailLoading());
+    emit(
+      state.copyWith(
+        detailInfoStatus: ReservationDetailInfoStatus.loading,
+      ),
+    );
 
     final response = await _requestReservationDetailByUserUseCase.invoke(
       event.certificationNumber,
@@ -115,26 +144,85 @@ class ReservationCheckDetailBloc
 
     if (response is DataSuccess) {
       emit(
-        _ReservationCheckDetailSuccess(
+        state.copyWith(
+          detailInfoStatus: ReservationDetailInfoStatus.success,
           reservationDetailModel: response.data,
+          detailsInfoErrorMsg: null,
         ),
       );
     } else if (response is DataError) {
       emit(
-        _ReservationCheckDetailError(
-          errorMsg: response.message ?? Constants.dataError,
+        state.copyWith(
+          detailInfoStatus: ReservationDetailInfoStatus.error,
+          reservationDetailModel: null,
+          detailsInfoErrorMsg: response.message ?? Constants.dataError,
         ),
       );
     } else if (response is DataNetworkError) {
       emit(
-        _ReservationCheckDetailError(
-          errorMsg: response.message ?? Constants.dataError,
+        state.copyWith(
+          detailInfoStatus: ReservationDetailInfoStatus.error,
+          reservationDetailModel: null,
+          detailsInfoErrorMsg: response.message ?? Constants.dataError,
         ),
       );
     } else {
       emit(
-        const _ReservationCheckDetailError(
-          errorMsg: Constants.dataError,
+        state.copyWith(
+          detailInfoStatus: ReservationDetailInfoStatus.error,
+          reservationDetailModel: null,
+          detailsInfoErrorMsg: response.message ?? Constants.dataError,
+        ),
+      );
+    }
+  }
+
+  FutureOr<void> _onRequestCheck(
+    ReservationCheckDetailCheckEvent event,
+    Emitter<ReservationCheckDetailState> emit,
+  ) async {
+
+    debugPrint("👠 event.id 👉 ${event.id}");
+    debugPrint("👠 event.isApproval 👉 ${event.isApproval}");
+    emit(
+      state.copyWith(
+        checkStatus: ReservationCheckStatus.loading,
+      ),
+    );
+
+    final response = await _requestApprovalCheckReservationUseCase.invoke(
+      ReservationApprovalCheckRequestModel(
+        id: event.id,
+        isAgree: event.isApproval,
+      ),
+    );
+
+    if (response is DataSuccess) {
+      emit(
+        state.copyWith(
+          checkStatus: ReservationCheckStatus.success,
+          checkErrorMsg: null
+        ),
+      );
+    } else if (response is DataNetworkError) {
+      emit(
+        state.copyWith(
+            checkStatus: ReservationCheckStatus.success,
+            checkErrorMsg: response.message ?? Constants.networkError,
+        ),
+      );
+    } else if (response is DataError) {
+      emit(
+        state.copyWith(
+            checkStatus: ReservationCheckStatus.success,
+            checkErrorMsg: response.message ?? Constants.dataError,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+            checkStatus: ReservationCheckStatus.success,
+            checkErrorMsg: response.message ?? Constants.dataError,
         ),
       );
     }

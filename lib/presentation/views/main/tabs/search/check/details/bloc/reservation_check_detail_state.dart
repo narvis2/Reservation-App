@@ -1,18 +1,26 @@
 part of 'reservation_check_detail_bloc.dart';
 
+enum ReservationDetailInfoStatus {
+  initial,
+  loading,
+  success,
+  error,
+}
+
+enum ReservationCheckStatus {
+  initial,
+  loading,
+  success,
+  error,
+}
+
 @freezed
 class ReservationCheckDetailState with _$ReservationCheckDetailState {
-  const factory ReservationCheckDetailState.initial() =
-      _ReservationCheckDetailInitial;
-
-  const factory ReservationCheckDetailState.loading() =
-      _ReservationCheckDetailLoading;
-
-  const factory ReservationCheckDetailState.success({
+  const factory ReservationCheckDetailState({
+    @Default(ReservationDetailInfoStatus.initial) ReservationDetailInfoStatus detailInfoStatus,
     @Default(null) ReservationDetailModel? reservationDetailModel,
-  }) = _ReservationCheckDetailSuccess;
-
-  const factory ReservationCheckDetailState.error({
-    @Default(null) String? errorMsg,
-  }) = _ReservationCheckDetailError;
+    @Default(null) String? detailsInfoErrorMsg,
+    @Default(ReservationCheckStatus.initial) ReservationCheckStatus checkStatus,
+    @Default(null) String? checkErrorMsg,
+  }) = Initial;
 }
