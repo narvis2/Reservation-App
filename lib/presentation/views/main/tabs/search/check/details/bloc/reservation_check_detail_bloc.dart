@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:reservation_app/domain/model/base/data_state.dart';
@@ -182,8 +181,6 @@ class ReservationCheckDetailBloc
     Emitter<ReservationCheckDetailState> emit,
   ) async {
 
-    debugPrint("👠 event.id 👉 ${event.id}");
-    debugPrint("👠 event.isApproval 👉 ${event.isApproval}");
     emit(
       state.copyWith(
         checkStatus: ReservationCheckStatus.loading,
