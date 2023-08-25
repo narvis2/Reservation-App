@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/constants.dart';
+import 'package:reservation_app/presentation/utils/dialog_utils.dart';
 import 'package:reservation_app/presentation/views/common/network_error_widget.dart';
 import 'package:reservation_app/presentation/views/common/network_loading_widget.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/details/bloc/reservation_check_detail_bloc.dart';
+import 'package:reservation_app/presentation/views/main/tabs/search/check/details/widget/reservation_check_detail_botton.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/details/widget/reservation_check_detail_info_widget.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/details/widget/reservation_check_detail_seat_info_widget.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/details/widget/reservation_check_detail_terms_agree_widget.dart';
@@ -42,6 +44,18 @@ class _ReservationCheckDetailsViewState
       );
   }
 
+  void showAlertDialog(bool isApproval, String name) {
+    DialogUtils.showBasicDialog(
+      context: context,
+      title: isApproval ? "예약 승인" : "예약 거절",
+      message: isApproval
+          ? "$name님의 예약을 승인하시겠습니까?"
+          : "$name님의 예약을 거절하시겠습니까?\n(예약을 거절하면 삭제 처리됩니다.)",
+      enableCancelBtn: true,
+      onConfirmClick: () {},
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ReservationCheckDetailBloc, ReservationCheckDetailState>(
@@ -66,8 +80,9 @@ class _ReservationCheckDetailsViewState
                     color: ColorsConstants.settingDivider,
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.only(left: 10, right: 10, top: 10),
                     child: SingleChildScrollView(
+                      physics: ClampingScrollPhysics(),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -109,6 +124,41 @@ class _ReservationCheckDetailsViewState
                           ReservationCheckDetailSeatInfoWidget(
                             count: result.reservationCount,
                             seats: result.seats,
+                          ),
+                          Container(
+                            constraints: const BoxConstraints.expand(
+                              height: 20.0,
+                            ),
+                          ),
+                          // 버튼
+                          ReservationCheckDetailButton(
+                            isAuth: widget.certificationNumber == null &&
+                                result.certificationNumber != null,
+                            onRemoveClick: () {
+                              DialogUtils.showBasicDialog(
+                                context: context,
+                                title: "예약 거절",
+                                message:
+                                    "${result.name}님의 예약을 거절하시겠습니까?\n(예약을 거절하면 삭제 처리됩니다.)",
+                                enableCancelBtn: true,
+                                onConfirmClick: () => showAlertDialog(
+                                  false,
+                                  result.name,
+                                ),
+                              );
+                            },
+                            onApprovalClick: () {
+                              DialogUtils.showBasicDialog(
+                                context: context,
+                                title: "예약 승인",
+                                message: "${result.name}님의 예약을 승인하시겠습니까?",
+                                enableCancelBtn: true,
+                                onConfirmClick: () => showAlertDialog(
+                                  true,
+                                  result.name,
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),

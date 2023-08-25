@@ -37,6 +37,7 @@ class ReservationCheckTabDetailsScreen extends StatelessWidget {
           elevation: 3,
         ),
         body: SafeArea(
+          bottom: false,
           child: ReservationCheckDetailsView(
             id: id,
             certificationNumber: certificationNumber,
