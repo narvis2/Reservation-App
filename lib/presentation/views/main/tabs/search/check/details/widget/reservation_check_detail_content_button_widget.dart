@@ -30,15 +30,31 @@ class ReservationCheckDetailContentButtonWidget extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        InkWell(
-          onTap: onClickEvent,
+        ElevatedButton(
+          onPressed: onClickEvent,
+          style: ButtonStyle(
+            elevation: MaterialStateProperty.all<double>(
+              0.0
+            ),
+            overlayColor: MaterialStateProperty.all<Color>(
+              ColorsConstants.calendarCurrentColor,
+            ),
+            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              EdgeInsets.zero
+            ),
+            backgroundColor: MaterialStateProperty.all<Color>(
+              ColorsConstants.background,
+            ),
+          ),
           child: Row(
             children: [
               Icon(
                 contentIcon,
                 color: ColorsConstants.inProgressColor,
               ),
-              SizedBox(width: 5,),
+              SizedBox(
+                width: 5,
+              ),
               Text(
                 content,
                 style: TextStyle(
