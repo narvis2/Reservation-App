@@ -5,6 +5,7 @@ import 'package:reservation_app/data/datasource/remote_data_source.dart';
 import 'package:reservation_app/data/mapper/object_mapper.dart';
 import 'package:reservation_app/data/model/reservation/page/reservation_filter_list_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_create_request.dart';
+import 'package:reservation_app/data/model/reservation/reservation_detail_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_non_auth_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_target_date_response.dart';
 import 'package:reservation_app/di/prefs/shared_pref_module.dart';
@@ -15,6 +16,7 @@ import 'package:reservation_app/domain/model/reservation/page/reservation_filter
 import 'package:reservation_app/domain/model/reservation/part_time_seat_list.dart';
 import 'package:reservation_app/domain/model/reservation/request/reservation_approval_check_request_model.dart';
 import 'package:reservation_app/domain/model/reservation/request/reservation_create_request_model.dart';
+import 'package:reservation_app/domain/model/reservation/reservation_detail_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_non_auth_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_target_date_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_target_part_time_seat_model.dart';
@@ -263,7 +265,67 @@ class ReservationRepositoryImpl implements ReservationRepository {
       return DataNetworkError(response.resultMsg);
     } on DioException catch (error) {
       debugPrint(
-          "🌹 POST [/reservation/check-auth/{id}] API DioException 👉 ${error.message}");
+          "🌹 PUT [/reservation/check-auth/{id}] API DioException 👉 ${error.message}");
+      final Map<String, dynamic>? responseData = error.response?.data;
+
+      if (responseData != null) {
+        final String? resultMsg = responseData['resultMsg'];
+        if (resultMsg != null) {
+          return DataNetworkError(resultMsg);
+        }
+      }
+
+      return DataError(error);
+    }
+  }
+
+  @override
+  Future<DataState<ReservationDetailModel>> requestReservationDetail(
+    int id,
+  ) async {
+    try {
+      final response = await _remoteDataSource.requestReservationDetail(id);
+      final ReservationDetailResponse? resultData = response.data;
+
+      if (response.success && resultData != null) {
+        return DataSuccess(resultData.toReservationDetailModel());
+      }
+
+      return DataNetworkError(response.resultMsg);
+    } on DioException catch (error) {
+      debugPrint(
+          "🌹 GET [/reservation/{id}] API DioException 👉 ${error.message}");
+      final Map<String, dynamic>? responseData = error.response?.data;
+
+      if (responseData != null) {
+        final String? resultMsg = responseData['resultMsg'];
+        if (resultMsg != null) {
+          return DataNetworkError(resultMsg);
+        }
+      }
+
+      return DataError(error);
+    }
+  }
+
+  @override
+  Future<DataState<ReservationDetailModel>> requestReservationDetailByUser(
+    String certificationNumber,
+  ) async {
+    try {
+      final response = await _remoteDataSource.requestReservationDetailByUser(
+        certificationNumber,
+      );
+      final ReservationDetailResponse? resultData = response.data;
+
+      if (response.success && resultData != null) {
+        return DataSuccess(resultData.toReservationDetailModel());
+      }
+
+      return DataNetworkError(response.resultMsg);
+    } on DioException catch (error) {
+      debugPrint(
+          "🌹 GET [/reservation/user] API DioException 👉 ${error.message}");
       final Map<String, dynamic>? responseData = error.response?.data;
 
       if (responseData != null) {

@@ -112,57 +112,52 @@ class DialogUtils {
       builder: (BuildContext context) {
         return Center(
           child: Container(
-            width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.symmetric(horizontal: 60),
+            margin: EdgeInsets.symmetric(horizontal: 40),
             decoration: BoxDecoration(
               color: ColorsConstants.background,
               borderRadius: BorderRadius.circular(15),
             ),
-            height: 200,
-            child: Column(
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 50,
-                        alignment: Alignment.center,
-                        child: Text(
-                          title,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: ColorsConstants.divider,
-                          ),
-                          textAlign: TextAlign.center,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 50,
+                      alignment: Alignment.center,
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: ColorsConstants.divider,
                         ),
+                        textAlign: TextAlign.center,
                       ),
-                      Divider(
-                        height: 1,
-                        thickness: 1,
-                        indent: 15,
-                        endIndent: 15,
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.all(15),
-                          alignment: Alignment.center,
-                          child: Text(
-                            message,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: ColorsConstants.divider,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
+                    ),
+                    Divider(
+                      height: 1,
+                      thickness: 1,
+                      indent: 15,
+                      endIndent: 15,
+                    ),
+                    Container(
+                      margin: EdgeInsets.all(15),
+                      padding: EdgeInsets.only(top: 20, bottom: 10),
+                      alignment: Alignment.center,
+                      child: Text(
+                        message,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: ColorsConstants.divider,
                         ),
+                        textAlign: TextAlign.center,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),

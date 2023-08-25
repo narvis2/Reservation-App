@@ -27,7 +27,19 @@ class CheckUtils {
     } else if (count >= 4 && count < 6) {
       return "$count 명 (4~5 인석)";
     } else if (count >= 6) {
-      return "$count 명 (6 인석)}";
+      return "$count 명 (6 인석)";
+    }
+
+    return '';
+  }
+
+  static String makeReservationCountToSeatName(int count) {
+    if (count < 4) {
+      return "1 인석";
+    } else if (count >= 4 && count < 6) {
+      return "4~5 인석";
+    } else if (count >= 6) {
+      return "6 인석";
     }
 
     return '';

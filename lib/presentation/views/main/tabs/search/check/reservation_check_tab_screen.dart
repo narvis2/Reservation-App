@@ -272,12 +272,19 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
                 child: ReservationFilterListAdapter(
                   item: state.reservationList[index],
                   onItemClick: () {
-                    AutoRouter.of(context).push(
+                    AutoRouter.of(context)
+                        .push(
                       ReservationCheckTabDetailsRoute(
                         id: state.reservationList[index].id,
-                        title: "${state.reservationList[index].name}님의 예약 상세정보",
                       ),
-                    );
+                    )
+                        .then((value) {
+                      if (value != null) {
+                        _reservationCheckBloc.add(
+                          ReservationCheckRefreshEvent(),
+                        );
+                      }
+                    });
                   },
                   onItemMoreClick: () {
                     DialogUtils.showBottomSheetDialog(
@@ -308,16 +315,15 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
                         if (value == 0) {
                           AutoRouter.of(context).push(
                             ReservationCheckTabDetailsRoute(
-                                id: state.reservationList[index].id,
-                                title:
-                                    "${state.reservationList[index].name}님의 예약 상세정보"),
+                              id: state.reservationList[index].id,
+                            ),
                           );
                         } else if (value == 1) {
                           DialogUtils.showBasicDialog(
                             context: context,
                             title: "전화걸기",
                             message:
-                            "${state.reservationList[index].name}님에게 전화를 거시겠습니까?\n(${CheckUtils.makePhoneNumber(state.reservationList[index].phoneNumber)})",
+                                "${state.reservationList[index].name}님에게 전화를 거시겠습니까?\n(${CheckUtils.makePhoneNumber(state.reservationList[index].phoneNumber)})",
                             enableCancelBtn: true,
                             onConfirmClick: () async {
                               final Uri launchUri = Uri(
@@ -331,16 +337,19 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
                         } else if (value == 2) {
                           DialogUtils.showBasicDialog(
                             context: context,
-                            title: state.reservationList[index].isAuthUser ? "예약 거절" : "예약 승인" ,
+                            title: state.reservationList[index].isAuthUser
+                                ? "예약 거절"
+                                : "예약 승인",
                             message:
-                            "${state.reservationList[index].name}님의 예약을 ${state.reservationList[index].isAuthUser ? "거절" : "승인"}하시겠습니까?",
+                                "${state.reservationList[index].name}님의 예약을 ${state.reservationList[index].isAuthUser ? "거절" : "승인"}하시겠습니까?",
                             enableCancelBtn: true,
                             onConfirmClick: () {
                               _reservationCheckBloc.add(
                                 ReservationCheckApprovalEvent(
                                   request: ReservationApprovalCheckRequestModel(
                                     id: state.reservationList[index].id,
-                                    isAgree: !state.reservationList[index].isAuthUser,
+                                    isAgree: !state
+                                        .reservationList[index].isAuthUser,
                                   ),
                                 ),
                               );
@@ -351,7 +360,7 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
                             context: context,
                             title: "예약 거절",
                             message:
-                            "${state.reservationList[index].name}님의 예약을 거절하시겠습니까?\n(예약을 거절하면 삭제 처리됩니다.)",
+                                "${state.reservationList[index].name}님의 예약을 거절하시겠습니까?\n(예약을 거절하면 삭제 처리됩니다.)",
                             enableCancelBtn: true,
                             onConfirmClick: () {
                               _reservationCheckBloc.add(
