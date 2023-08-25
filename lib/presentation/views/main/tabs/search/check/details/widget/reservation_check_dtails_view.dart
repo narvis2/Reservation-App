@@ -93,6 +93,7 @@ class _ReservationCheckDetailsViewState
                               result.phoneNumber,
                             ),
                             isAuthPhone: result.isUserValidation,
+                            isAdmin: widget.certificationNumber == null,
                           ),
                           Container(
                             constraints: const BoxConstraints.expand(
