@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:reservation_app/di/dependency_injection_graph.dart';
+import 'package:reservation_app/main.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/snack_bar_utils.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/location/bloc/content_location_tab_bloc.dart';
@@ -43,7 +44,7 @@ class _ContentLocationTabScreenState extends State<ContentLocationTabScreen> {
           TextButton.icon(
             onPressed: () {
               Clipboard.setData(ClipboardData(text: '대구 북구 동천로 126 3층, 우회담'));
-              SnackBarUtils.showCustomSnackBar(context, '클립보드에 저장되었습니다.');
+              isIOS && SnackBarUtils.showCustomSnackBar(context, '클립보드에 저장되었습니다.');
             },
             icon: Icon(Icons.copy, size: 18),
             label: Text(

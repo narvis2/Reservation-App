@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:reservation_app/main.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/date_time_utils.dart';
+import 'package:reservation_app/presentation/utils/snack_bar_utils.dart';
+import 'package:reservation_app/presentation/views/main/tabs/search/check/details/widget/reservation_check_detail_content_button_widget.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/details/widget/reservation_check_detail_content_widget.dart';
 
 class ReservationCheckDetailInfoWidget extends StatelessWidget {
@@ -24,8 +28,7 @@ class ReservationCheckDetailInfoWidget extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: ColorsConstants.background,
-        borderRadius:
-        BorderRadius.circular(5), // 5의 radius를 적용
+        borderRadius: BorderRadius.circular(5), // 5의 radius를 적용
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -43,7 +46,9 @@ class ReservationCheckDetailInfoWidget extends StatelessWidget {
               height: 10.0,
             ),
           ),
-          Divider(height: 1,),
+          Divider(
+            height: 1,
+          ),
           Container(
             constraints: const BoxConstraints.expand(
               height: 15.0,
@@ -51,32 +56,34 @@ class ReservationCheckDetailInfoWidget extends StatelessWidget {
           ),
           ReservationCheckDetailContentWidget(
             title: "예약 승인 여부",
-            content: !isApproved
-                ? "승인되지 않은 예약입니다."
-                : "승인된 예약입니다.",
+            content: !isApproved ? "승인되지 않은 예약입니다." : "승인된 예약입니다.",
             contentColor: !isApproved
                 ? ColorsConstants.primary
                 : ColorsConstants.strokeColor,
           ),
           Visibility(
             visible: isApproved,
+            child: ReservationCheckDetailContentButtonWidget(
+              title: "예약 번호",
+              content: certificationNumber ?? '',
+              contentColor: ColorsConstants.inProgressColor,
+              contentIcon: Icons.copy_rounded,
+              onClickEvent: () {
+                Clipboard.setData(
+                  ClipboardData(
+                    text: certificationNumber ?? '',
+                  ),
+                );
+                isIOS && SnackBarUtils.showCustomSnackBar(context, '클립보드에 저장되었습니다.');
+              },
+            ),
+          ),
+          Visibility(
+            visible: !isApproved,
             child: Container(
               constraints: const BoxConstraints.expand(
                 height: 10.0,
               ),
-            ),
-          ),
-          Visibility(
-            visible: isApproved,
-            child: ReservationCheckDetailContentWidget(
-              title: "예약 번호",
-              content: certificationNumber ?? '',
-              contentColor: ColorsConstants.strokeColor,
-            ),
-          ),
-          Container(
-            constraints: const BoxConstraints.expand(
-              height: 10.0,
             ),
           ),
           ReservationCheckDetailContentWidget(
