@@ -4,6 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:reservation_app/domain/model/common/bottom_sheet_model.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/list_extensions.dart';
+import 'package:reservation_app/presentation/views/main/tabs/search/check/dialog/reservation_check_dialog_screen.dart';
 import 'package:reservation_app/presentation/views/sign/signin_signup_screen.dart';
 
 class DialogUtils {
@@ -273,6 +274,25 @@ class DialogUtils {
         Animation<double> secondaryAnimation,
       ) {
         return SignInSignUpScreen(buildContext: context);
+      },
+    );
+  }
+
+  static showInputDialog({
+    required BuildContext context,
+  }) async {
+    await showGeneralDialog(
+      barrierDismissible: true,
+      context: context,
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      barrierColor: ColorsConstants.dialogBackground,
+      transitionDuration: const Duration(milliseconds: 300),
+      pageBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+      ) {
+        return ReservationCheckDialogScreen(buildContext: context);
       },
     );
   }

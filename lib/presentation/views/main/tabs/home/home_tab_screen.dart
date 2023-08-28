@@ -7,6 +7,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:reservation_app/domain/model/notice/notice_model.dart';
 import 'package:reservation_app/presentation/config/router/app_router.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
+import 'package:reservation_app/presentation/utils/dialog_utils.dart';
 import 'package:reservation_app/presentation/views/common/network_error_widget.dart';
 import 'package:reservation_app/presentation/views/common/network_loading_widget.dart';
 import 'package:reservation_app/presentation/views/main/bloc/main_bloc.dart';
@@ -170,7 +171,9 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
           ),
           backgroundColor: ColorsConstants.splashText,
           labelBackgroundColor: ColorsConstants.splashText,
-          onTap: () {},
+          onTap: () {
+            DialogUtils.showInputDialog(context: context);
+          },
         ),
       ],
     );

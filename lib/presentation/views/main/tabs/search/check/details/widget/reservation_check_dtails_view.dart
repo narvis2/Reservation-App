@@ -151,43 +151,47 @@ class _ReservationCheckDetailsViewState
                         height: 20.0,
                       ),
                     ),
+
                     // 버튼
-                    ReservationCheckDetailButton(
-                      isAuth: widget.certificationNumber == null &&
-                          result.certificationNumber != null,
-                      onRemoveClick: () {
-                        DialogUtils.showBasicDialog(
-                          context: context,
-                          title: "예약 거절",
-                          message:
-                              "${result.name}님의 예약을 거절하시겠습니까?\n(예약을 거절하면 삭제 처리됩니다.)",
-                          enableCancelBtn: true,
-                          onConfirmClick: () {
-                            _reservationCheckDetailBloc.add(
-                              ReservationCheckDetailCheckEvent(
-                                id: result.id,
-                                isApproval: false,
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      onApprovalClick: () {
-                        DialogUtils.showBasicDialog(
-                          context: context,
-                          title: "예약 승인",
-                          message: "${result.name}님의 예약을 승인하시겠습니까?",
-                          enableCancelBtn: true,
-                          onConfirmClick: () {
-                            _reservationCheckDetailBloc.add(
-                              ReservationCheckDetailCheckEvent(
-                                id: result.id,
-                                isApproval: true,
-                              ),
-                            );
-                          },
-                        );
-                      },
+                    Visibility(
+                      visible: widget.certificationNumber == null,
+                      child: ReservationCheckDetailButton(
+                        isAuth: widget.certificationNumber == null &&
+                            result.certificationNumber != null,
+                        onRemoveClick: () {
+                          DialogUtils.showBasicDialog(
+                            context: context,
+                            title: "예약 거절",
+                            message:
+                                "${result.name}님의 예약을 거절하시겠습니까?\n(예약을 거절하면 삭제 처리됩니다.)",
+                            enableCancelBtn: true,
+                            onConfirmClick: () {
+                              _reservationCheckDetailBloc.add(
+                                ReservationCheckDetailCheckEvent(
+                                  id: result.id,
+                                  isApproval: false,
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        onApprovalClick: () {
+                          DialogUtils.showBasicDialog(
+                            context: context,
+                            title: "예약 승인",
+                            message: "${result.name}님의 예약을 승인하시겠습니까?",
+                            enableCancelBtn: true,
+                            onConfirmClick: () {
+                              _reservationCheckDetailBloc.add(
+                                ReservationCheckDetailCheckEvent(
+                                  id: result.id,
+                                  isApproval: true,
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
