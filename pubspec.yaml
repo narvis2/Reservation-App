@@ -75,6 +75,8 @@ dependencies:
   pull_to_refresh: ^2.0.0
   # List Swipe
   flutter_slidable: ^3.0.0
+  # 달력
+  table_calendar: ^3.0.9
 
   flutter_localizations:
     sdk: flutter
