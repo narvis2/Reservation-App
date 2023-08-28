@@ -15,16 +15,10 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    SplashRoute.name: (routeData) {
+    MainRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const SplashScreen(),
-      );
-    },
-    ReservationRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const ReservationScreen(),
+        child: const MainScreen(),
       );
     },
     NoticeDetailRoute.name: (routeData) {
@@ -52,39 +46,31 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    MainRoute.name: (routeData) {
+    ReservationRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const MainScreen(),
+        child: const ReservationScreen(),
+      );
+    },
+    SplashRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SplashScreen(),
       );
     },
   };
 }
 
 /// generated route for
-/// [SplashScreen]
-class SplashRoute extends PageRouteInfo<void> {
-  const SplashRoute({List<PageRouteInfo>? children})
+/// [MainScreen]
+class MainRoute extends PageRouteInfo<void> {
+  const MainRoute({List<PageRouteInfo>? children})
       : super(
-          SplashRoute.name,
+          MainRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'SplashRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [ReservationScreen]
-class ReservationRoute extends PageRouteInfo<void> {
-  const ReservationRoute({List<PageRouteInfo>? children})
-      : super(
-          ReservationRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'ReservationRoute';
+  static const String name = 'MainRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -177,15 +163,29 @@ class ReservationCheckTabDetailsRouteArgs {
 }
 
 /// generated route for
-/// [MainScreen]
-class MainRoute extends PageRouteInfo<void> {
-  const MainRoute({List<PageRouteInfo>? children})
+/// [ReservationScreen]
+class ReservationRoute extends PageRouteInfo<void> {
+  const ReservationRoute({List<PageRouteInfo>? children})
       : super(
-          MainRoute.name,
+          ReservationRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'MainRoute';
+  static const String name = 'ReservationRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SplashScreen]
+class SplashRoute extends PageRouteInfo<void> {
+  const SplashRoute({List<PageRouteInfo>? children})
+      : super(
+          SplashRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SplashRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
