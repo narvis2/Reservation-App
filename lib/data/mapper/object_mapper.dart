@@ -4,6 +4,8 @@ import 'package:reservation_app/data/model/reservation/page/reservation_filter_r
 import 'package:reservation_app/data/model/reservation/reservation_approval_check_request.dart';
 import 'package:reservation_app/data/model/reservation/reservation_detail_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_non_auth_response.dart';
+import 'package:reservation_app/data/model/reservation/reservation_range_section_data_response.dart';
+import 'package:reservation_app/data/model/reservation/reservation_range_section_response.dart';
 import 'package:reservation_app/data/model/sign/sign_in_request.dart';
 import 'package:reservation_app/data/model/sign/sign_out_request.dart';
 import 'package:reservation_app/domain/model/member/member_model.dart';
@@ -12,6 +14,8 @@ import 'package:reservation_app/domain/model/reservation/page/reservation_filter
 import 'package:reservation_app/domain/model/reservation/request/reservation_approval_check_request_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_detail_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_non_auth_model.dart';
+import 'package:reservation_app/domain/model/reservation/reservation_range_section_data_model.dart';
+import 'package:reservation_app/domain/model/reservation/reservation_range_section_model.dart';
 import 'package:reservation_app/domain/model/sign/request/sign_out_request_model.dart';
 import 'package:reservation_app/domain/model/sign/sign_in_request_model.dart';
 
@@ -104,9 +108,35 @@ extension ReservationDetailResponseExtension on ReservationDetailResponse {
 }
 
 extension SignOutRequestModelExtenstion on SignOutRequestModel {
-  SignOutRequest toSignOutRequestModel() {
+  SignOutRequest toSignOutRequest() {
     return SignOutRequest(
       memberId: memberId,
+    );
+  }
+}
+
+extension ReservationRangeSectionResponseExtension on ReservationRangeSectionResponse {
+  ReservationRangeSectionModel toReservationRangeSectionModel() {
+    return ReservationRangeSectionModel(
+      sectionTitle: sectionTitle,
+      partTime: partTime,
+      list: list.map((item) => item.toReservationRangeSectionDataModel()).toList()
+    );
+  }
+}
+
+extension ReservationRangeSectionDataResponseExtenstion on ReservationRangeSectionDataResponse {
+  ReservationRangeSectionDataModel toReservationRangeSectionDataModel() {
+    return ReservationRangeSectionDataModel(
+      id: id,
+      name: name,
+        phoneNumber: phoneNumber,
+        reservationDateTime: reservationDateTime,
+        reservationCount: reservationCount,
+        isTermAllAgree: isTermAllAgree,
+        isUserValidation: isUserValidation,
+        certificationNumber: certificationNumber,
+        partTime: partTime,
     );
   }
 }

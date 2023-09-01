@@ -7,6 +7,7 @@ import 'package:reservation_app/data/model/reservation/page/reservation_filter_l
 import 'package:reservation_app/data/model/reservation/reservation_create_request.dart';
 import 'package:reservation_app/data/model/reservation/reservation_detail_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_non_auth_response.dart';
+import 'package:reservation_app/data/model/reservation/reservation_range_section_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_target_date_response.dart';
 import 'package:reservation_app/di/prefs/shared_pref_module.dart';
 import 'package:reservation_app/domain/model/base/data_state.dart';
@@ -16,11 +17,14 @@ import 'package:reservation_app/domain/model/reservation/page/reservation_filter
 import 'package:reservation_app/domain/model/reservation/part_time_seat_list.dart';
 import 'package:reservation_app/domain/model/reservation/request/reservation_approval_check_request_model.dart';
 import 'package:reservation_app/domain/model/reservation/request/reservation_create_request_model.dart';
+import 'package:reservation_app/domain/model/reservation/request/reservation_date_range_req_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_detail_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_non_auth_model.dart';
+import 'package:reservation_app/domain/model/reservation/reservation_range_section_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_target_date_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_target_part_time_seat_model.dart';
 import 'package:reservation_app/domain/model/seat/enum/seat_type.dart';
+import 'package:reservation_app/presentation/utils/date_time_utils.dart';
 
 import '../../../domain/repository/reservation/reservation_repository.dart';
 
@@ -326,6 +330,44 @@ class ReservationRepositoryImpl implements ReservationRepository {
     } on DioException catch (error) {
       debugPrint(
           "🌹 GET [/reservation/user] API DioException 👉 ${error.message}");
+      final Map<String, dynamic>? responseData = error.response?.data;
+
+      if (responseData != null) {
+        final String? resultMsg = responseData['resultMsg'];
+        if (resultMsg != null) {
+          return DataNetworkError(resultMsg);
+        }
+      }
+
+      return DataError(error);
+    }
+  }
+
+  @override
+  Future<DataState<List<ReservationRangeSectionModel>>>
+      requestReservationRangeSectionList(
+    ReservationDateRangeReqModel request,
+  ) async {
+    try {
+      final response = await _remoteDataSource.requestReservationRangeList(
+        DateTimeUtils.dateTimeToYearDateString(request.searchStartDate),
+        DateTimeUtils.dateTimeToYearDateString(request.searchEndDate),
+      );
+
+      final List<ReservationRangeSectionResponse>? resultData = response.data;
+
+      if (response.success && response.code == 200 && resultData != null) {
+        return DataSuccess(
+          resultData
+              .map((item) => item.toReservationRangeSectionModel())
+              .toList(),
+        );
+      }
+
+      return DataNetworkError(response.resultMsg);
+    } on DioException catch (error) {
+      debugPrint(
+          "🌹 GET [/reservation/range] API DioException 👉 ${error.message}");
       final Map<String, dynamic>? responseData = error.response?.data;
 
       if (responseData != null) {

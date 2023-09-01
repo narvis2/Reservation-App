@@ -6,6 +6,7 @@ import 'package:reservation_app/data/model/reservation/reservation_approval_chec
 import 'package:reservation_app/data/model/reservation/reservation_create_request.dart';
 import 'package:reservation_app/data/model/reservation/reservation_detail_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_non_auth_response.dart';
+import 'package:reservation_app/data/model/reservation/reservation_range_section_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_target_date_response.dart';
 import 'package:reservation_app/domain/model/reservation/enum/part_time.dart';
 import 'package:reservation_app/domain/model/reservation/enum/reservation_filter_type.dart';
@@ -65,5 +66,12 @@ abstract class ReservationApiService {
   Future<BaseResponse<ReservationDetailResponse>>
       requestReservationDetailByUser(
     @Query("certificationNumber") String certificationNumber,
+  );
+
+  @GET("/reservation/range")
+  Future<BaseListResponse<ReservationRangeSectionResponse>>
+      requestReservationRangeList(
+    @Query("searchStartDate") String startDate,
+    @Query("searchEndDate") String endDate,
   );
 }

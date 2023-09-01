@@ -3,8 +3,10 @@ import 'package:reservation_app/domain/model/reservation/enum/reservation_filter
 import 'package:reservation_app/domain/model/reservation/page/reservation_filter_list_model.dart';
 import 'package:reservation_app/domain/model/reservation/request/reservation_approval_check_request_model.dart';
 import 'package:reservation_app/domain/model/reservation/request/reservation_create_request_model.dart';
+import 'package:reservation_app/domain/model/reservation/request/reservation_date_range_req_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_detail_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_non_auth_model.dart';
+import 'package:reservation_app/domain/model/reservation/reservation_range_section_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_target_date_model.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_target_part_time_seat_model.dart';
 
@@ -44,5 +46,10 @@ abstract class ReservationRepository {
 
   Future<DataState<ReservationDetailModel>> requestReservationDetailByUser(
     String certificationNumber,
+  );
+
+  Future<DataState<List<ReservationRangeSectionModel>>>
+      requestReservationRangeSectionList(
+    ReservationDateRangeReqModel request,
   );
 }

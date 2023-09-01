@@ -85,4 +85,8 @@ class DateTimeUtils {
 
     return '$period $formattedTime';
   }
+
+  static String dateTimeToYearDateString(DateTime dateTime) {
+    return DateFormat('yyyy-MM-dd').format(dateTime);
+  }
 }

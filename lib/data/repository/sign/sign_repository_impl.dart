@@ -54,7 +54,7 @@ class SignRepositoryImpl implements SignRepository {
   Future<DataState<bool>> requestSignOut(SignOutRequestModel request) async {
     try {
       final response = await _remoteDataSource.requestSignOut(
-        request.toSignOutRequestModel(),
+        request.toSignOutRequest(),
       );
 
       if (response.success && response.code == 200) {
