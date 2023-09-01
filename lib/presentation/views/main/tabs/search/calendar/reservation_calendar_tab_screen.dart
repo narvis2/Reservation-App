@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
+import 'package:reservation_app/presentation/utils/dialog_utils.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/calendar/bloc/reservation_calendar_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/calendar/utils/calendar_utils.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -84,15 +85,30 @@ class _ReservationCalendarTabScreenState
     }
   }
 
+  void _popBackStack() {
+    if (Navigator.of(context).canPop()) {
+      Navigator.of(context).pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ReservationCalendarTabBloc,
         ReservationCalendarTabState>(
       bloc: _reservationCalendarTabBloc,
       listenWhen: (previous, current) {
-        return previous != current;
+        return previous != current &&
+            previous.sectionListStatus != current.sectionListStatus;
       },
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state.sectionListStatus == SectionListStatus.loading) {
+          DialogUtils.showLoadingDialog(context);
+        } else if (state.sectionListStatus == SectionListStatus.success) {
+          _popBackStack();
+        } else if (state.sectionListStatus == SectionListStatus.error) {
+          _popBackStack();
+        }
+      },
       buildWhen: (previous, current) {
         return previous != current;
       },
