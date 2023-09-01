@@ -12,6 +12,7 @@ import 'package:reservation_app/data/model/sign/phone_auth_check_request.dart';
 import 'package:reservation_app/data/model/sign/phone_auth_request.dart';
 import 'package:reservation_app/data/model/sign/sign_in_request.dart';
 import 'package:reservation_app/data/model/sign/sign_in_response.dart';
+import 'package:reservation_app/data/model/sign/sign_out_request.dart';
 import 'package:reservation_app/domain/model/banner/banner_image_model.dart';
 import 'package:reservation_app/domain/model/notice/notice_model.dart';
 import 'package:reservation_app/domain/model/reservation/enum/part_time.dart';
@@ -76,7 +77,7 @@ abstract class RemoteDataSource {
     SignInRequest request,
   );
 
-  Future<BaseResponse> requestSignOut();
+  Future<BaseResponse> requestSignOut(SignOutRequest request);
 
   Future<BaseResponse> requestAuthPhoneNumber(
     PhoneAuthRequest request,

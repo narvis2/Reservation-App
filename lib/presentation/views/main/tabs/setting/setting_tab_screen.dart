@@ -179,7 +179,16 @@ class _SettingTabScreenState extends State<SettingTabScreen> {
                             message: "정말 로그아웃 하시겠습니까?",
                             enableCancelBtn: true,
                             onConfirmClick: () {
-                              _signBloc.add(SignOnSignOutClickEvent());
+                              final memberId =
+                                  _userInfoBloc.state.memberModel?.id;
+
+                              if (memberId != null) {
+                                _signBloc.add(
+                                  SignOnSignOutClickEvent(
+                                    memberId: memberId,
+                                  ),
+                                );
+                              }
                             },
                           );
                         },

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:reservation_app/di/prefs/shared_pref_module.dart';
 import 'package:reservation_app/domain/model/base/data_state.dart';
+import 'package:reservation_app/domain/model/sign/request/sign_out_request_model.dart';
 import 'package:reservation_app/domain/model/sign/sign_in_request_model.dart';
 import 'package:reservation_app/domain/usecase/sign/request_sign_in_use_case.dart';
 import 'package:reservation_app/domain/usecase/sign/request_sign_out_use_case.dart';
@@ -172,7 +173,11 @@ class SignBloc extends Bloc<SignEvent, SignState> {
   ) async {
     emit(state.copyWith(signOutStatus: SignOutState.loading));
 
-    final response = await _requestSignOutUseCase.invoke();
+    final response = await _requestSignOutUseCase.invoke(
+      SignOutRequestModel(
+        memberId: event.memberId,
+      ),
+    );
 
     if (response is DataSuccess<bool>) {
       final result = response.data ?? false;

@@ -46,11 +46,12 @@ class _SignApiService implements SignApiService {
   }
 
   @override
-  Future<BaseResponse<dynamic>> requestSignOut() async {
+  Future<BaseResponse<dynamic>> requestSignOut(request) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<BaseResponse<dynamic>>(Options(
       method: 'POST',

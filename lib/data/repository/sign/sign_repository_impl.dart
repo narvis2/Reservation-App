@@ -7,6 +7,7 @@ import 'package:reservation_app/data/model/sign/phone_auth_request.dart';
 import 'package:reservation_app/data/model/sign/sign_in_response.dart';
 import 'package:reservation_app/di/prefs/shared_pref_module.dart';
 import 'package:reservation_app/domain/model/base/data_state.dart';
+import 'package:reservation_app/domain/model/sign/request/sign_out_request_model.dart';
 import 'package:reservation_app/domain/model/sign/sign_in_request_model.dart';
 import 'package:reservation_app/domain/repository/sign/sign_repository.dart';
 
@@ -50,9 +51,11 @@ class SignRepositoryImpl implements SignRepository {
   }
 
   @override
-  Future<DataState<bool>> requestSignOut() async {
+  Future<DataState<bool>> requestSignOut(SignOutRequestModel request) async {
     try {
-      final response = await _remoteDataSource.requestSignOut();
+      final response = await _remoteDataSource.requestSignOut(
+        request.toSignOutRequestModel(),
+      );
 
       if (response.success && response.code == 200) {
         await Future.wait([

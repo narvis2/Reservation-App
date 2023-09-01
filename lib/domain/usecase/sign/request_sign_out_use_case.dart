@@ -1,5 +1,6 @@
 
 import 'package:reservation_app/domain/model/base/data_state.dart';
+import 'package:reservation_app/domain/model/sign/request/sign_out_request_model.dart';
 import 'package:reservation_app/domain/repository/sign/sign_repository.dart';
 
 class RequestSignOutUseCase {
@@ -7,7 +8,7 @@ class RequestSignOutUseCase {
 
   RequestSignOutUseCase(this._signRepository);
 
-  Future<DataState<bool>> invoke() {
-    return _signRepository.requestSignOut();
+  Future<DataState<bool>> invoke(SignOutRequestModel request) {
+    return _signRepository.requestSignOut(request);
   }
 }
