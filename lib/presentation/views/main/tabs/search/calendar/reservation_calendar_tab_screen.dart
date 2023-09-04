@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grouped_list/grouped_list.dart';
 import 'package:reservation_app/domain/model/reservation/enum/part_time.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_range_section_model.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
+import 'package:reservation_app/presentation/utils/date_time_utils.dart';
 import 'package:reservation_app/presentation/utils/dialog_utils.dart';
 import 'package:reservation_app/presentation/utils/snack_bar_utils.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/calendar/bloc/reservation_calendar_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/calendar/utils/calendar_utils.dart';
+import 'package:reservation_app/presentation/views/reservation/utils/reservation_utils.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class ReservationCalendarTabScreen extends StatefulWidget {
@@ -337,9 +340,11 @@ class _ReservationCalendarTabScreenState
               child: ValueListenableBuilder<List<ReservationRangeSectionModel>>(
                 valueListenable: _selectedEvents,
                 builder: (context, value, _) {
-                  return ListView.builder(
-                    itemCount: value.length,
-                    itemBuilder: (context, index) {
+                  return GroupedListView<ReservationRangeSectionModel, String>(
+                    elements: value,
+                    groupBy: (element) => _rangeSelectionMode == RangeSelectionMode.toggledOff ? "${ReservationUtils.partTimeToString(partTime: element.partTime.index)}" : "${DateTimeUtils.dateTimeToString(pattern: "yy-MM-dd", date: DateTime.parse(element.sectionTitle))} ${ReservationUtils.partTimeToString(partTime: element.partTime.index)}",
+                    groupSeparatorBuilder: (groupByValue) => Text(groupByValue),
+                    indexedItemBuilder: (context, element, index) {
                       return Container(
                         margin: EdgeInsets.only(
                           left: 10,
