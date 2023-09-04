@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reservation_app/domain/model/reservation/reservation_range_section_model.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/dialog_utils.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/calendar/bloc/reservation_calendar_tab_bloc.dart';
@@ -17,7 +18,7 @@ class ReservationCalendarTabScreen extends StatefulWidget {
 class _ReservationCalendarTabScreenState
     extends State<ReservationCalendarTabScreen> {
   late final ReservationCalendarTabBloc _reservationCalendarTabBloc;
-  late final ValueNotifier<List<Event>> _selectedEvents;
+  ValueNotifier<List<ReservationRangeSectionModel>> _selectedEvents = ValueNotifier([]);
 
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOff;
@@ -34,25 +35,42 @@ class _ReservationCalendarTabScreenState
       context,
     );
     _selectedDay = _focusedDay;
-    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
 
     _reservationCalendarTabBloc.add(ReservationCalendarTabInitDataEvent());
   }
 
-  List<Event> _getEventsForDay(DateTime day) {
-    return kEvents[day] ?? [];
+  List<ReservationRangeSectionModel> _getEventsForDay(
+    DateTime day,
+    List<ReservationRangeSectionModel> sectionList,
+  ) {
+    final events = <ReservationRangeSectionModel>[];
+
+    for (final section in sectionList) {
+      if (isSameDay(DateTime.parse(section.sectionTitle), day)) {
+        events.add(section);
+      }
+    }
+
+    return events;
   }
 
-  List<Event> _getEventsForRange(DateTime start, DateTime end) {
-    // Implementation example
+  List<ReservationRangeSectionModel> _getEventsForRange(
+    DateTime start,
+    DateTime end,
+    List<ReservationRangeSectionModel> sectionList,
+  ) {
     final days = daysInRange(start, end);
 
     return [
-      for (final d in days) ..._getEventsForDay(d),
+      for (final d in days) ..._getEventsForDay(d, sectionList),
     ];
   }
 
-  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+  void _onDaySelected(
+    DateTime selectedDay,
+    DateTime focusedDay,
+    List<ReservationRangeSectionModel> sectionList,
+  ) {
     if (!isSameDay(_selectedDay, selectedDay)) {
       setState(() {
         _selectedDay = selectedDay;
@@ -62,11 +80,16 @@ class _ReservationCalendarTabScreenState
         _rangeSelectionMode = RangeSelectionMode.toggledOff;
       });
 
-      _selectedEvents.value = _getEventsForDay(selectedDay);
+      _selectedEvents.value = _getEventsForDay(selectedDay, sectionList);
     }
   }
 
-  void _onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
+  void _onRangeSelected(
+    DateTime? start,
+    DateTime? end,
+    DateTime focusedDay,
+    List<ReservationRangeSectionModel> sectionList,
+  ) {
     setState(() {
       _selectedDay = null;
       _focusedDay = focusedDay;
@@ -77,11 +100,11 @@ class _ReservationCalendarTabScreenState
 
     // `start` or `end` could be null
     if (start != null && end != null) {
-      _selectedEvents.value = _getEventsForRange(start, end);
+      _selectedEvents.value = _getEventsForRange(start, end, sectionList);
     } else if (start != null) {
-      _selectedEvents.value = _getEventsForDay(start);
+      _selectedEvents.value = _getEventsForDay(start, sectionList);
     } else if (end != null) {
-      _selectedEvents.value = _getEventsForDay(end);
+      _selectedEvents.value = _getEventsForDay(end, sectionList);
     }
   }
 
@@ -104,6 +127,12 @@ class _ReservationCalendarTabScreenState
         if (state.sectionListStatus == SectionListStatus.loading) {
           DialogUtils.showLoadingDialog(context);
         } else if (state.sectionListStatus == SectionListStatus.success) {
+          _selectedEvents = ValueNotifier(
+            _getEventsForDay(
+              _selectedDay ?? DateTime.now(),
+              state.sectionList,
+            ),
+          );
           _popBackStack();
         } else if (state.sectionListStatus == SectionListStatus.error) {
           _popBackStack();
@@ -125,15 +154,26 @@ class _ReservationCalendarTabScreenState
               rangeEndDay: _rangeEnd,
               calendarFormat: _calendarFormat,
               rangeSelectionMode: _rangeSelectionMode,
-              eventLoader: _getEventsForDay,
+              eventLoader: (date) {
+                final events = <ReservationRangeSectionModel>[];
+
+                for (final section in state.sectionList) {
+                  if (isSameDay(DateTime.parse(section.sectionTitle), date)) {
+                    events.add(section);
+                  }
+                }
+
+                return events;
+              },
               startingDayOfWeek: StartingDayOfWeek.monday,
+              // 주의 첫 번째 날을 월요일로 설정
               calendarStyle: CalendarStyle(
-                // Use `CalendarStyle` to customize the UI
                 outsideDaysVisible: false,
+                // 달력에서 현재 월 이외의 날짜 숨김, false 👉 숨김
                 canMarkersOverflow: false,
                 markerMargin: const EdgeInsets.symmetric(horizontal: 0.3),
                 markerDecoration: const BoxDecoration(
-                  color: ColorsConstants.strokeColor,
+                  color: ColorsConstants.primary,
                   shape: BoxShape.circle,
                 ),
                 rangeHighlightColor: ColorsConstants.calendarSideColor,
@@ -176,15 +216,22 @@ class _ReservationCalendarTabScreenState
                   shape: BoxShape.circle,
                 ),
               ),
-              onDaySelected: _onDaySelected,
-              onRangeSelected: _onRangeSelected,
+              onDaySelected: (selectedDay, focusedDay) {
+                _onDaySelected(selectedDay, focusedDay, state.sectionList);
+              },
+              onRangeSelected: (start, end, focusedDay) {
+                // 날짜가 선택되었을 때 호출되는 콜백 함수
+                _onRangeSelected(start, end, focusedDay, state.sectionList);
+              },
+              // 범위가 선택되었을 때 호출되는 콜백 함수
               onFormatChanged: (format) {
                 if (_calendarFormat != format) {
                   setState(() {
-                    _calendarFormat = format;
+                    _calendarFormat = format; // 달력 형식 변경 시 상태 업데이트
                   });
                 }
               },
+              // 현재 페이지가 변경될 때 현재 포커스 날짜 업데이트
               onPageChanged: (focusedDay) {
                 _focusedDay = focusedDay;
               },
@@ -215,7 +262,7 @@ class _ReservationCalendarTabScreenState
             ),
             const SizedBox(height: 10.0),
             Expanded(
-              child: ValueListenableBuilder<List<Event>>(
+              child: ValueListenableBuilder<List<ReservationRangeSectionModel>>(
                 valueListenable: _selectedEvents,
                 builder: (context, value, _) {
                   return ListView.builder(
