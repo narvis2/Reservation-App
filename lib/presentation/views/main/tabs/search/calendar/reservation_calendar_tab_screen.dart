@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_range_section_model.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/dialog_utils.dart';
+import 'package:reservation_app/presentation/utils/snack_bar_utils.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/calendar/bloc/reservation_calendar_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/calendar/utils/calendar_utils.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -18,7 +19,8 @@ class ReservationCalendarTabScreen extends StatefulWidget {
 class _ReservationCalendarTabScreenState
     extends State<ReservationCalendarTabScreen> {
   late final ReservationCalendarTabBloc _reservationCalendarTabBloc;
-  ValueNotifier<List<ReservationRangeSectionModel>> _selectedEvents = ValueNotifier([]);
+  ValueNotifier<List<ReservationRangeSectionModel>> _selectedEvents =
+      ValueNotifier([]);
 
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOff;
@@ -36,6 +38,7 @@ class _ReservationCalendarTabScreenState
     );
     _selectedDay = _focusedDay;
 
+    // 데이터 호출
     _reservationCalendarTabBloc.add(ReservationCalendarTabInitDataEvent());
   }
 
@@ -217,10 +220,15 @@ class _ReservationCalendarTabScreenState
                 ),
               ),
               onDaySelected: (selectedDay, focusedDay) {
+                if (selectedDay.weekday == 2) {
+                  SnackBarUtils.showCustomSnackBar(context, "매주 화요일은 휴무입니다.");
+                  return;
+                }
+
                 _onDaySelected(selectedDay, focusedDay, state.sectionList);
               },
               onRangeSelected: (start, end, focusedDay) {
-                // 날짜가 선택되었을 때 호출되는 콜백 함수
+                // 범위 날짜가 선택되었을 때 호출되는 콜백 함수
                 _onRangeSelected(start, end, focusedDay, state.sectionList);
               },
               // 범위가 선택되었을 때 호출되는 콜백 함수
@@ -233,7 +241,23 @@ class _ReservationCalendarTabScreenState
               },
               // 현재 페이지가 변경될 때 현재 포커스 날짜 업데이트
               onPageChanged: (focusedDay) {
-                _focusedDay = focusedDay;
+                setState(() {
+                  _focusedDay = focusedDay;
+                  _reservationCalendarTabBloc.add(
+                    ReservationCalendarTabSectionListEvent(
+                      startTime: DateTime(
+                        focusedDay.year,
+                        focusedDay.month,
+                        1,
+                      ),
+                      endTime: DateTime(
+                        focusedDay.year,
+                        focusedDay.month + 1,
+                        1,
+                      ),
+                    ),
+                  );
+                });
               },
               holidayPredicate: (day) {
                 // 매주 화요일 쉬는 날

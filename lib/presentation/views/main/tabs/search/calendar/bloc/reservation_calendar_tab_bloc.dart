@@ -43,17 +43,21 @@ class ReservationCalendarTabBloc
   ) {
     final now = DateTime.now();
 
-    // 📌 아래와 같이 넣어야지 현재 달의 첫 날부터 마지막 날까지의 데이터를 가져옴
+    // 달력 데이터를 처음 가져올때만 Loading Dialog 를 보여주기 위해 여기서 Loading 처리
+    emit(state.copyWith(sectionListStatus: SectionListStatus.loading));
+
+    /// 📌 아래와 같이 넣어야지 현재 달의 첫 날부터 마지막 날까지의 데이터를 가져옴
+    /// 📍 그 전달의 데이터와 이번달의 데이터 그리고 다음달의 데이터 총 3달의 데이터를 가져옴
     add(
       ReservationCalendarTabSectionListEvent(
         startTime: DateTime(
-          now.year, // 현재 달의 첫 번째 날
-          now.month, // 다음 달의 첫 번째 날
+          now.year,
+          now.month - 1,
           1,
         ),
         endTime: DateTime(
           now.year,
-          now.month + 1,
+          now.month + 2,
           1,
         ),
       ),
@@ -64,8 +68,6 @@ class ReservationCalendarTabBloc
     ReservationCalendarTabSectionListEvent event,
     Emitter<ReservationCalendarTabState> emit,
   ) async {
-    emit(state.copyWith(sectionListStatus: SectionListStatus.loading));
-
     debugPrint(
       "📅 event.startTime 👉 ${DateTimeUtils.dateTimeToYearDateString(event.startTime)}",
     );
