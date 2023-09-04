@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reservation_app/domain/model/reservation/enum/part_time.dart';
 import 'package:reservation_app/domain/model/reservation/reservation_range_section_model.dart';
 import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/dialog_utils.dart';
@@ -168,6 +169,53 @@ class _ReservationCalendarTabScreenState
 
                 return events;
               },
+              calendarBuilders: CalendarBuilders(
+                markerBuilder:
+                    (context, day, List<ReservationRangeSectionModel> events) {
+                  if (events.isEmpty) return SizedBox();
+
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: events.length,
+                    itemBuilder: (context, index) {
+                      final item = events[index];
+                      final eachColor = item.partTime == PartTime.partA
+                          ? ColorsConstants.partTimeA
+                          : item.partTime == PartTime.partB
+                              ? ColorsConstants.partTimeB
+                              : item.partTime == PartTime.partC
+                                  ? ColorsConstants.partTimeC
+                                  : ColorsConstants.background;
+
+                      return Container(
+                        margin: const EdgeInsets.only(top: 35),
+                        padding: const EdgeInsets.all(1),
+                        child: Container(
+                          height: 14,
+                          // for vertical axis
+                          width: 14,
+                          // for horizontal axis
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: eachColor,
+                          ),
+                          child: Center(
+                            child: Text(
+                              "${events[index].list.length}",
+                              style: TextStyle(
+                                color: ColorsConstants.background,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
               startingDayOfWeek: StartingDayOfWeek.monday,
               // 주의 첫 번째 날을 월요일로 설정
               calendarStyle: CalendarStyle(
@@ -201,7 +249,7 @@ class _ReservationCalendarTabScreenState
                   fontSize: 16.0,
                 ),
                 todayDecoration: const BoxDecoration(
-                  color: ColorsConstants.calendarCurrentColor,
+                  color: ColorsConstants.currentDate,
                   shape: BoxShape.circle,
                 ),
                 selectedTextStyle: const TextStyle(
@@ -209,7 +257,7 @@ class _ReservationCalendarTabScreenState
                   fontSize: 16.0,
                 ),
                 selectedDecoration: const BoxDecoration(
-                  color: ColorsConstants.calendarRangeColor,
+                  color: ColorsConstants.selectedDate,
                   shape: BoxShape.circle,
                 ),
                 holidayTextStyle: const TextStyle(
