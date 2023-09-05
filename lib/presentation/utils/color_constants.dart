@@ -1,6 +1,8 @@
 
 import 'dart:ui';
 
+import 'package:reservation_app/domain/model/reservation/enum/part_time.dart';
+
 class ColorsConstants {
   // App Colors
   static const Color primary = Color(0xffed5463);
@@ -75,4 +77,17 @@ class ColorsConstants {
 
   // Dialog
   static const Color dialogBackground = Color(0x55000000);
+
+  static Color getParTimeColor(PartTime partTime) {
+    switch (partTime) {
+      case PartTime.partA:
+        return ColorsConstants.partTimeA;
+      case PartTime.partB:
+        return ColorsConstants.partTimeB;
+      case PartTime.partC:
+        return ColorsConstants.partTimeC;
+      default:
+        return ColorsConstants.background;
+    }
+  }
 }
