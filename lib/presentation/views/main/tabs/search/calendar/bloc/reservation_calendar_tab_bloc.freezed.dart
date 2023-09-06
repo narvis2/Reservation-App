@@ -20,18 +20,24 @@ mixin _$ReservationCalendarTabEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() initData,
     required TResult Function(DateTime startTime, DateTime endTime) sectionList,
+    required TResult Function(DateTime targetDate) targetList,
+    required TResult Function() resetTargetList,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initData,
     TResult? Function(DateTime startTime, DateTime endTime)? sectionList,
+    TResult? Function(DateTime targetDate)? targetList,
+    TResult? Function()? resetTargetList,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initData,
     TResult Function(DateTime startTime, DateTime endTime)? sectionList,
+    TResult Function(DateTime targetDate)? targetList,
+    TResult Function()? resetTargetList,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -41,6 +47,10 @@ mixin _$ReservationCalendarTabEvent {
         initData,
     required TResult Function(ReservationCalendarTabSectionListEvent value)
         sectionList,
+    required TResult Function(ReservationCalendarTabTargetListEvent value)
+        targetList,
+    required TResult Function(ReservationCalendarTabResetTargetListEvent value)
+        resetTargetList,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -48,12 +58,18 @@ mixin _$ReservationCalendarTabEvent {
     TResult? Function(ReservationCalendarTabInitDataEvent value)? initData,
     TResult? Function(ReservationCalendarTabSectionListEvent value)?
         sectionList,
+    TResult? Function(ReservationCalendarTabTargetListEvent value)? targetList,
+    TResult? Function(ReservationCalendarTabResetTargetListEvent value)?
+        resetTargetList,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ReservationCalendarTabInitDataEvent value)? initData,
     TResult Function(ReservationCalendarTabSectionListEvent value)? sectionList,
+    TResult Function(ReservationCalendarTabTargetListEvent value)? targetList,
+    TResult Function(ReservationCalendarTabResetTargetListEvent value)?
+        resetTargetList,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -133,6 +149,8 @@ class _$ReservationCalendarTabInitDataEvent
   TResult when<TResult extends Object?>({
     required TResult Function() initData,
     required TResult Function(DateTime startTime, DateTime endTime) sectionList,
+    required TResult Function(DateTime targetDate) targetList,
+    required TResult Function() resetTargetList,
   }) {
     return initData();
   }
@@ -142,6 +160,8 @@ class _$ReservationCalendarTabInitDataEvent
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initData,
     TResult? Function(DateTime startTime, DateTime endTime)? sectionList,
+    TResult? Function(DateTime targetDate)? targetList,
+    TResult? Function()? resetTargetList,
   }) {
     return initData?.call();
   }
@@ -151,6 +171,8 @@ class _$ReservationCalendarTabInitDataEvent
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initData,
     TResult Function(DateTime startTime, DateTime endTime)? sectionList,
+    TResult Function(DateTime targetDate)? targetList,
+    TResult Function()? resetTargetList,
     required TResult orElse(),
   }) {
     if (initData != null) {
@@ -166,6 +188,10 @@ class _$ReservationCalendarTabInitDataEvent
         initData,
     required TResult Function(ReservationCalendarTabSectionListEvent value)
         sectionList,
+    required TResult Function(ReservationCalendarTabTargetListEvent value)
+        targetList,
+    required TResult Function(ReservationCalendarTabResetTargetListEvent value)
+        resetTargetList,
   }) {
     return initData(this);
   }
@@ -176,6 +202,9 @@ class _$ReservationCalendarTabInitDataEvent
     TResult? Function(ReservationCalendarTabInitDataEvent value)? initData,
     TResult? Function(ReservationCalendarTabSectionListEvent value)?
         sectionList,
+    TResult? Function(ReservationCalendarTabTargetListEvent value)? targetList,
+    TResult? Function(ReservationCalendarTabResetTargetListEvent value)?
+        resetTargetList,
   }) {
     return initData?.call(this);
   }
@@ -185,6 +214,9 @@ class _$ReservationCalendarTabInitDataEvent
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ReservationCalendarTabInitDataEvent value)? initData,
     TResult Function(ReservationCalendarTabSectionListEvent value)? sectionList,
+    TResult Function(ReservationCalendarTabTargetListEvent value)? targetList,
+    TResult Function(ReservationCalendarTabResetTargetListEvent value)?
+        resetTargetList,
     required TResult orElse(),
   }) {
     if (initData != null) {
@@ -293,6 +325,8 @@ class _$ReservationCalendarTabSectionListEvent
   TResult when<TResult extends Object?>({
     required TResult Function() initData,
     required TResult Function(DateTime startTime, DateTime endTime) sectionList,
+    required TResult Function(DateTime targetDate) targetList,
+    required TResult Function() resetTargetList,
   }) {
     return sectionList(startTime, endTime);
   }
@@ -302,6 +336,8 @@ class _$ReservationCalendarTabSectionListEvent
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initData,
     TResult? Function(DateTime startTime, DateTime endTime)? sectionList,
+    TResult? Function(DateTime targetDate)? targetList,
+    TResult? Function()? resetTargetList,
   }) {
     return sectionList?.call(startTime, endTime);
   }
@@ -311,6 +347,8 @@ class _$ReservationCalendarTabSectionListEvent
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initData,
     TResult Function(DateTime startTime, DateTime endTime)? sectionList,
+    TResult Function(DateTime targetDate)? targetList,
+    TResult Function()? resetTargetList,
     required TResult orElse(),
   }) {
     if (sectionList != null) {
@@ -326,6 +364,10 @@ class _$ReservationCalendarTabSectionListEvent
         initData,
     required TResult Function(ReservationCalendarTabSectionListEvent value)
         sectionList,
+    required TResult Function(ReservationCalendarTabTargetListEvent value)
+        targetList,
+    required TResult Function(ReservationCalendarTabResetTargetListEvent value)
+        resetTargetList,
   }) {
     return sectionList(this);
   }
@@ -336,6 +378,9 @@ class _$ReservationCalendarTabSectionListEvent
     TResult? Function(ReservationCalendarTabInitDataEvent value)? initData,
     TResult? Function(ReservationCalendarTabSectionListEvent value)?
         sectionList,
+    TResult? Function(ReservationCalendarTabTargetListEvent value)? targetList,
+    TResult? Function(ReservationCalendarTabResetTargetListEvent value)?
+        resetTargetList,
   }) {
     return sectionList?.call(this);
   }
@@ -345,6 +390,9 @@ class _$ReservationCalendarTabSectionListEvent
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ReservationCalendarTabInitDataEvent value)? initData,
     TResult Function(ReservationCalendarTabSectionListEvent value)? sectionList,
+    TResult Function(ReservationCalendarTabTargetListEvent value)? targetList,
+    TResult Function(ReservationCalendarTabResetTargetListEvent value)?
+        resetTargetList,
     required TResult orElse(),
   }) {
     if (sectionList != null) {
@@ -370,11 +418,324 @@ abstract class ReservationCalendarTabSectionListEvent
 }
 
 /// @nodoc
+abstract class _$$ReservationCalendarTabTargetListEventCopyWith<$Res> {
+  factory _$$ReservationCalendarTabTargetListEventCopyWith(
+          _$ReservationCalendarTabTargetListEvent value,
+          $Res Function(_$ReservationCalendarTabTargetListEvent) then) =
+      __$$ReservationCalendarTabTargetListEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({DateTime targetDate});
+}
+
+/// @nodoc
+class __$$ReservationCalendarTabTargetListEventCopyWithImpl<$Res>
+    extends _$ReservationCalendarTabEventCopyWithImpl<$Res,
+        _$ReservationCalendarTabTargetListEvent>
+    implements _$$ReservationCalendarTabTargetListEventCopyWith<$Res> {
+  __$$ReservationCalendarTabTargetListEventCopyWithImpl(
+      _$ReservationCalendarTabTargetListEvent _value,
+      $Res Function(_$ReservationCalendarTabTargetListEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? targetDate = null,
+  }) {
+    return _then(_$ReservationCalendarTabTargetListEvent(
+      targetDate: null == targetDate
+          ? _value.targetDate
+          : targetDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ReservationCalendarTabTargetListEvent
+    with DiagnosticableTreeMixin
+    implements ReservationCalendarTabTargetListEvent {
+  const _$ReservationCalendarTabTargetListEvent({required this.targetDate});
+
+  @override
+  final DateTime targetDate;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ReservationCalendarTabEvent.targetList(targetDate: $targetDate)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(
+          DiagnosticsProperty('type', 'ReservationCalendarTabEvent.targetList'))
+      ..add(DiagnosticsProperty('targetDate', targetDate));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ReservationCalendarTabTargetListEvent &&
+            (identical(other.targetDate, targetDate) ||
+                other.targetDate == targetDate));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, targetDate);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ReservationCalendarTabTargetListEventCopyWith<
+          _$ReservationCalendarTabTargetListEvent>
+      get copyWith => __$$ReservationCalendarTabTargetListEventCopyWithImpl<
+          _$ReservationCalendarTabTargetListEvent>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initData,
+    required TResult Function(DateTime startTime, DateTime endTime) sectionList,
+    required TResult Function(DateTime targetDate) targetList,
+    required TResult Function() resetTargetList,
+  }) {
+    return targetList(targetDate);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initData,
+    TResult? Function(DateTime startTime, DateTime endTime)? sectionList,
+    TResult? Function(DateTime targetDate)? targetList,
+    TResult? Function()? resetTargetList,
+  }) {
+    return targetList?.call(targetDate);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initData,
+    TResult Function(DateTime startTime, DateTime endTime)? sectionList,
+    TResult Function(DateTime targetDate)? targetList,
+    TResult Function()? resetTargetList,
+    required TResult orElse(),
+  }) {
+    if (targetList != null) {
+      return targetList(targetDate);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ReservationCalendarTabInitDataEvent value)
+        initData,
+    required TResult Function(ReservationCalendarTabSectionListEvent value)
+        sectionList,
+    required TResult Function(ReservationCalendarTabTargetListEvent value)
+        targetList,
+    required TResult Function(ReservationCalendarTabResetTargetListEvent value)
+        resetTargetList,
+  }) {
+    return targetList(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ReservationCalendarTabInitDataEvent value)? initData,
+    TResult? Function(ReservationCalendarTabSectionListEvent value)?
+        sectionList,
+    TResult? Function(ReservationCalendarTabTargetListEvent value)? targetList,
+    TResult? Function(ReservationCalendarTabResetTargetListEvent value)?
+        resetTargetList,
+  }) {
+    return targetList?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ReservationCalendarTabInitDataEvent value)? initData,
+    TResult Function(ReservationCalendarTabSectionListEvent value)? sectionList,
+    TResult Function(ReservationCalendarTabTargetListEvent value)? targetList,
+    TResult Function(ReservationCalendarTabResetTargetListEvent value)?
+        resetTargetList,
+    required TResult orElse(),
+  }) {
+    if (targetList != null) {
+      return targetList(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ReservationCalendarTabTargetListEvent
+    implements ReservationCalendarTabEvent {
+  const factory ReservationCalendarTabTargetListEvent(
+          {required final DateTime targetDate}) =
+      _$ReservationCalendarTabTargetListEvent;
+
+  DateTime get targetDate;
+  @JsonKey(ignore: true)
+  _$$ReservationCalendarTabTargetListEventCopyWith<
+          _$ReservationCalendarTabTargetListEvent>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ReservationCalendarTabResetTargetListEventCopyWith<$Res> {
+  factory _$$ReservationCalendarTabResetTargetListEventCopyWith(
+          _$ReservationCalendarTabResetTargetListEvent value,
+          $Res Function(_$ReservationCalendarTabResetTargetListEvent) then) =
+      __$$ReservationCalendarTabResetTargetListEventCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ReservationCalendarTabResetTargetListEventCopyWithImpl<$Res>
+    extends _$ReservationCalendarTabEventCopyWithImpl<$Res,
+        _$ReservationCalendarTabResetTargetListEvent>
+    implements _$$ReservationCalendarTabResetTargetListEventCopyWith<$Res> {
+  __$$ReservationCalendarTabResetTargetListEventCopyWithImpl(
+      _$ReservationCalendarTabResetTargetListEvent _value,
+      $Res Function(_$ReservationCalendarTabResetTargetListEvent) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$ReservationCalendarTabResetTargetListEvent
+    with DiagnosticableTreeMixin
+    implements ReservationCalendarTabResetTargetListEvent {
+  const _$ReservationCalendarTabResetTargetListEvent();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ReservationCalendarTabEvent.resetTargetList()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty(
+        'type', 'ReservationCalendarTabEvent.resetTargetList'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ReservationCalendarTabResetTargetListEvent);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initData,
+    required TResult Function(DateTime startTime, DateTime endTime) sectionList,
+    required TResult Function(DateTime targetDate) targetList,
+    required TResult Function() resetTargetList,
+  }) {
+    return resetTargetList();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initData,
+    TResult? Function(DateTime startTime, DateTime endTime)? sectionList,
+    TResult? Function(DateTime targetDate)? targetList,
+    TResult? Function()? resetTargetList,
+  }) {
+    return resetTargetList?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initData,
+    TResult Function(DateTime startTime, DateTime endTime)? sectionList,
+    TResult Function(DateTime targetDate)? targetList,
+    TResult Function()? resetTargetList,
+    required TResult orElse(),
+  }) {
+    if (resetTargetList != null) {
+      return resetTargetList();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ReservationCalendarTabInitDataEvent value)
+        initData,
+    required TResult Function(ReservationCalendarTabSectionListEvent value)
+        sectionList,
+    required TResult Function(ReservationCalendarTabTargetListEvent value)
+        targetList,
+    required TResult Function(ReservationCalendarTabResetTargetListEvent value)
+        resetTargetList,
+  }) {
+    return resetTargetList(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ReservationCalendarTabInitDataEvent value)? initData,
+    TResult? Function(ReservationCalendarTabSectionListEvent value)?
+        sectionList,
+    TResult? Function(ReservationCalendarTabTargetListEvent value)? targetList,
+    TResult? Function(ReservationCalendarTabResetTargetListEvent value)?
+        resetTargetList,
+  }) {
+    return resetTargetList?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ReservationCalendarTabInitDataEvent value)? initData,
+    TResult Function(ReservationCalendarTabSectionListEvent value)? sectionList,
+    TResult Function(ReservationCalendarTabTargetListEvent value)? targetList,
+    TResult Function(ReservationCalendarTabResetTargetListEvent value)?
+        resetTargetList,
+    required TResult orElse(),
+  }) {
+    if (resetTargetList != null) {
+      return resetTargetList(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ReservationCalendarTabResetTargetListEvent
+    implements ReservationCalendarTabEvent {
+  const factory ReservationCalendarTabResetTargetListEvent() =
+      _$ReservationCalendarTabResetTargetListEvent;
+}
+
+/// @nodoc
 mixin _$ReservationCalendarTabState {
   SectionListStatus get sectionListStatus => throw _privateConstructorUsedError;
+  TargetListStatus get targetListStatus => throw _privateConstructorUsedError;
   List<ReservationRangeSectionModel> get sectionList =>
       throw _privateConstructorUsedError;
+  List<ReservationTargetDateModel> get targetList =>
+      throw _privateConstructorUsedError;
   String? get sectionListErrorMsg => throw _privateConstructorUsedError;
+  String? get targetListErrorMsg => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ReservationCalendarTabStateCopyWith<ReservationCalendarTabState>
@@ -391,8 +752,11 @@ abstract class $ReservationCalendarTabStateCopyWith<$Res> {
   @useResult
   $Res call(
       {SectionListStatus sectionListStatus,
+      TargetListStatus targetListStatus,
       List<ReservationRangeSectionModel> sectionList,
-      String? sectionListErrorMsg});
+      List<ReservationTargetDateModel> targetList,
+      String? sectionListErrorMsg,
+      String? targetListErrorMsg});
 }
 
 /// @nodoc
@@ -410,21 +774,36 @@ class _$ReservationCalendarTabStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? sectionListStatus = null,
+    Object? targetListStatus = null,
     Object? sectionList = null,
+    Object? targetList = null,
     Object? sectionListErrorMsg = freezed,
+    Object? targetListErrorMsg = freezed,
   }) {
     return _then(_value.copyWith(
       sectionListStatus: null == sectionListStatus
           ? _value.sectionListStatus
           : sectionListStatus // ignore: cast_nullable_to_non_nullable
               as SectionListStatus,
+      targetListStatus: null == targetListStatus
+          ? _value.targetListStatus
+          : targetListStatus // ignore: cast_nullable_to_non_nullable
+              as TargetListStatus,
       sectionList: null == sectionList
           ? _value.sectionList
           : sectionList // ignore: cast_nullable_to_non_nullable
               as List<ReservationRangeSectionModel>,
+      targetList: null == targetList
+          ? _value.targetList
+          : targetList // ignore: cast_nullable_to_non_nullable
+              as List<ReservationTargetDateModel>,
       sectionListErrorMsg: freezed == sectionListErrorMsg
           ? _value.sectionListErrorMsg
           : sectionListErrorMsg // ignore: cast_nullable_to_non_nullable
+              as String?,
+      targetListErrorMsg: freezed == targetListErrorMsg
+          ? _value.targetListErrorMsg
+          : targetListErrorMsg // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -439,8 +818,11 @@ abstract class _$$InitialCopyWith<$Res>
   @useResult
   $Res call(
       {SectionListStatus sectionListStatus,
+      TargetListStatus targetListStatus,
       List<ReservationRangeSectionModel> sectionList,
-      String? sectionListErrorMsg});
+      List<ReservationTargetDateModel> targetList,
+      String? sectionListErrorMsg,
+      String? targetListErrorMsg});
 }
 
 /// @nodoc
@@ -454,21 +836,36 @@ class __$$InitialCopyWithImpl<$Res>
   @override
   $Res call({
     Object? sectionListStatus = null,
+    Object? targetListStatus = null,
     Object? sectionList = null,
+    Object? targetList = null,
     Object? sectionListErrorMsg = freezed,
+    Object? targetListErrorMsg = freezed,
   }) {
     return _then(_$Initial(
       sectionListStatus: null == sectionListStatus
           ? _value.sectionListStatus
           : sectionListStatus // ignore: cast_nullable_to_non_nullable
               as SectionListStatus,
+      targetListStatus: null == targetListStatus
+          ? _value.targetListStatus
+          : targetListStatus // ignore: cast_nullable_to_non_nullable
+              as TargetListStatus,
       sectionList: null == sectionList
           ? _value._sectionList
           : sectionList // ignore: cast_nullable_to_non_nullable
               as List<ReservationRangeSectionModel>,
+      targetList: null == targetList
+          ? _value._targetList
+          : targetList // ignore: cast_nullable_to_non_nullable
+              as List<ReservationTargetDateModel>,
       sectionListErrorMsg: freezed == sectionListErrorMsg
           ? _value.sectionListErrorMsg
           : sectionListErrorMsg // ignore: cast_nullable_to_non_nullable
+              as String?,
+      targetListErrorMsg: freezed == targetListErrorMsg
+          ? _value.targetListErrorMsg
+          : targetListErrorMsg // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -479,13 +876,20 @@ class __$$InitialCopyWithImpl<$Res>
 class _$Initial with DiagnosticableTreeMixin implements Initial {
   const _$Initial(
       {this.sectionListStatus = SectionListStatus.initial,
+      this.targetListStatus = TargetListStatus.initial,
       final List<ReservationRangeSectionModel> sectionList = const [],
-      this.sectionListErrorMsg = null})
-      : _sectionList = sectionList;
+      final List<ReservationTargetDateModel> targetList = const [],
+      this.sectionListErrorMsg = null,
+      this.targetListErrorMsg = null})
+      : _sectionList = sectionList,
+        _targetList = targetList;
 
   @override
   @JsonKey()
   final SectionListStatus sectionListStatus;
+  @override
+  @JsonKey()
+  final TargetListStatus targetListStatus;
   final List<ReservationRangeSectionModel> _sectionList;
   @override
   @JsonKey()
@@ -495,13 +899,25 @@ class _$Initial with DiagnosticableTreeMixin implements Initial {
     return EqualUnmodifiableListView(_sectionList);
   }
 
+  final List<ReservationTargetDateModel> _targetList;
+  @override
+  @JsonKey()
+  List<ReservationTargetDateModel> get targetList {
+    if (_targetList is EqualUnmodifiableListView) return _targetList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_targetList);
+  }
+
   @override
   @JsonKey()
   final String? sectionListErrorMsg;
+  @override
+  @JsonKey()
+  final String? targetListErrorMsg;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ReservationCalendarTabState(sectionListStatus: $sectionListStatus, sectionList: $sectionList, sectionListErrorMsg: $sectionListErrorMsg)';
+    return 'ReservationCalendarTabState(sectionListStatus: $sectionListStatus, targetListStatus: $targetListStatus, sectionList: $sectionList, targetList: $targetList, sectionListErrorMsg: $sectionListErrorMsg, targetListErrorMsg: $targetListErrorMsg)';
   }
 
   @override
@@ -510,8 +926,11 @@ class _$Initial with DiagnosticableTreeMixin implements Initial {
     properties
       ..add(DiagnosticsProperty('type', 'ReservationCalendarTabState'))
       ..add(DiagnosticsProperty('sectionListStatus', sectionListStatus))
+      ..add(DiagnosticsProperty('targetListStatus', targetListStatus))
       ..add(DiagnosticsProperty('sectionList', sectionList))
-      ..add(DiagnosticsProperty('sectionListErrorMsg', sectionListErrorMsg));
+      ..add(DiagnosticsProperty('targetList', targetList))
+      ..add(DiagnosticsProperty('sectionListErrorMsg', sectionListErrorMsg))
+      ..add(DiagnosticsProperty('targetListErrorMsg', targetListErrorMsg));
   }
 
   @override
@@ -521,15 +940,27 @@ class _$Initial with DiagnosticableTreeMixin implements Initial {
             other is _$Initial &&
             (identical(other.sectionListStatus, sectionListStatus) ||
                 other.sectionListStatus == sectionListStatus) &&
+            (identical(other.targetListStatus, targetListStatus) ||
+                other.targetListStatus == targetListStatus) &&
             const DeepCollectionEquality()
                 .equals(other._sectionList, _sectionList) &&
+            const DeepCollectionEquality()
+                .equals(other._targetList, _targetList) &&
             (identical(other.sectionListErrorMsg, sectionListErrorMsg) ||
-                other.sectionListErrorMsg == sectionListErrorMsg));
+                other.sectionListErrorMsg == sectionListErrorMsg) &&
+            (identical(other.targetListErrorMsg, targetListErrorMsg) ||
+                other.targetListErrorMsg == targetListErrorMsg));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, sectionListStatus,
-      const DeepCollectionEquality().hash(_sectionList), sectionListErrorMsg);
+  int get hashCode => Object.hash(
+      runtimeType,
+      sectionListStatus,
+      targetListStatus,
+      const DeepCollectionEquality().hash(_sectionList),
+      const DeepCollectionEquality().hash(_targetList),
+      sectionListErrorMsg,
+      targetListErrorMsg);
 
   @JsonKey(ignore: true)
   @override
@@ -541,15 +972,24 @@ class _$Initial with DiagnosticableTreeMixin implements Initial {
 abstract class Initial implements ReservationCalendarTabState {
   const factory Initial(
       {final SectionListStatus sectionListStatus,
+      final TargetListStatus targetListStatus,
       final List<ReservationRangeSectionModel> sectionList,
-      final String? sectionListErrorMsg}) = _$Initial;
+      final List<ReservationTargetDateModel> targetList,
+      final String? sectionListErrorMsg,
+      final String? targetListErrorMsg}) = _$Initial;
 
   @override
   SectionListStatus get sectionListStatus;
   @override
+  TargetListStatus get targetListStatus;
+  @override
   List<ReservationRangeSectionModel> get sectionList;
   @override
+  List<ReservationTargetDateModel> get targetList;
+  @override
   String? get sectionListErrorMsg;
+  @override
+  String? get targetListErrorMsg;
   @override
   @JsonKey(ignore: true)
   _$$InitialCopyWith<_$Initial> get copyWith =>

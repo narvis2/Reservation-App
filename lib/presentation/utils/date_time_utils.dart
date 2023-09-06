@@ -86,6 +86,11 @@ class DateTimeUtils {
     return '$period $formattedTime';
   }
 
+  static String dateTimeToAllDateString(DateTime dateTime) {
+    const isoFormat = "yyyy-MM-dd'T'HH:mm:ss";
+    return DateFormat(isoFormat).format(dateTime);
+  }
+
   static String dateTimeToYearDateString(DateTime dateTime) {
     return DateFormat('yyyy-MM-dd').format(dateTime);
   }

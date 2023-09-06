@@ -272,7 +272,7 @@ class _ReservationFourthProcessViewState
                         onChanged: (value) {
                           setState(() {
                             _isNameValidate = value.isNotEmpty &&
-                                value.length > 2 &&
+                                value.length >= 2 &&
                                 TextUtils.isNameValid(value);
 
                             if (_isNameValidate) {

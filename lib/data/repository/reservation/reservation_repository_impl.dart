@@ -350,8 +350,8 @@ class ReservationRepositoryImpl implements ReservationRepository {
   ) async {
     try {
       final response = await _remoteDataSource.requestReservationRangeList(
-        DateTimeUtils.dateTimeToYearDateString(request.searchStartDate),
-        DateTimeUtils.dateTimeToYearDateString(request.searchEndDate),
+        DateTimeUtils.dateTimeToAllDateString(request.searchStartDate),
+        DateTimeUtils.dateTimeToAllDateString(request.searchEndDate),
       );
 
       final List<ReservationRangeSectionResponse>? resultData = response.data;

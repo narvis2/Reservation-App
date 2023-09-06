@@ -8,10 +8,12 @@ import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/date_time_utils.dart';
 import 'package:reservation_app/presentation/utils/dialog_utils.dart';
 import 'package:reservation_app/presentation/utils/snack_bar_utils.dart';
-import 'package:reservation_app/presentation/views/common/empty_widget.dart';
 import 'package:reservation_app/presentation/views/common/network_loading_widget.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/calendar/bloc/reservation_calendar_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/calendar/utils/calendar_utils.dart';
+import 'package:reservation_app/presentation/views/main/tabs/search/calendar/widget/calendar_detail_item_widget.dart';
+import 'package:reservation_app/presentation/views/main/tabs/search/calendar/widget/calendar_empty_widget.dart';
+import 'package:reservation_app/presentation/views/main/tabs/search/calendar/widget/calendar_summary_list_widget.dart';
 import 'package:reservation_app/presentation/views/reservation/utils/reservation_utils.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -102,6 +104,24 @@ class _ReservationCalendarTabScreenState
       });
 
       _selectedEvents.value = _getEventsForDay(selectedDay, sectionList);
+
+      final selectedDateList = _selectedEvents.value.where(
+        (element) =>
+            element.sectionTitle ==
+            DateTimeUtils.dateTimeToYearDateString(selectedDay),
+      );
+
+      if (selectedDateList.isNotEmpty) {
+        _reservationCalendarTabBloc.add(
+          ReservationCalendarTabTargetListEvent(
+            targetDate: selectedDay,
+          ),
+        );
+      } else {
+        _reservationCalendarTabBloc.add(
+          ReservationCalendarTabResetTargetListEvent(),
+        );
+      }
     }
   }
 
@@ -117,6 +137,7 @@ class _ReservationCalendarTabScreenState
       _rangeStart = start;
       _rangeEnd = end;
       _rangeSelectionMode = RangeSelectionMode.toggledOn;
+      _isDetailShow = true;
     });
 
     // `start` or `end` could be null
@@ -127,6 +148,10 @@ class _ReservationCalendarTabScreenState
     } else if (end != null) {
       _selectedEvents.value = _getEventsForDay(end, sectionList);
     }
+
+    _reservationCalendarTabBloc.add(
+      ReservationCalendarTabResetTargetListEvent(),
+    );
   }
 
   void _popBackStack() {
@@ -163,7 +188,8 @@ class _ReservationCalendarTabScreenState
       bloc: _reservationCalendarTabBloc,
       listenWhen: (previous, current) {
         return previous != current &&
-            previous.sectionListStatus != current.sectionListStatus;
+            (previous.sectionListStatus != current.sectionListStatus ||
+                previous.targetListStatus != current.targetListStatus);
       },
       listener: (context, state) {
         if (state.sectionListStatus == SectionListStatus.loading) {
@@ -187,6 +213,7 @@ class _ReservationCalendarTabScreenState
         return Scaffold(
           body: SmartRefresher(
             controller: _refreshController,
+            physics: ClampingScrollPhysics(),
             onRefresh: _onRefresh,
             enablePullDown: true,
             enablePullUp: false,
@@ -217,7 +244,10 @@ class _ReservationCalendarTabScreenState
                     final events = <ReservationRangeSectionModel>[];
 
                     for (final section in state.sectionList) {
-                      if (isSameDay(DateTime.parse(section.sectionTitle), date)) {
+                      if (isSameDay(
+                        DateTime.parse(section.sectionTitle),
+                        date,
+                      )) {
                         events.add(section);
                       }
                     }
@@ -241,9 +271,7 @@ class _ReservationCalendarTabScreenState
                             padding: const EdgeInsets.all(1),
                             child: Container(
                               height: 14,
-                              // for vertical axis
                               width: 14,
-                              // for horizontal axis
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: ColorsConstants.getParTimeColor(
@@ -319,7 +347,10 @@ class _ReservationCalendarTabScreenState
                   ),
                   onDaySelected: (selectedDay, focusedDay) {
                     if (selectedDay.weekday == 2) {
-                      SnackBarUtils.showCustomSnackBar(context, "매주 화요일은 휴무입니다.");
+                      SnackBarUtils.showCustomSnackBar(
+                        context,
+                        "매주 화요일은 휴무입니다.",
+                      );
                       return;
                     }
 
@@ -327,9 +358,12 @@ class _ReservationCalendarTabScreenState
                   },
                   onRangeSelected: (start, end, focusedDay) {
                     // 범위 날짜가 선택되었을 때 호출되는 콜백 함수
+                    debugPrint("⭐️ onRangeSelected start 👉 $start");
+                    debugPrint("⭐️ onRangeSelected end 👉 $end");
+                    debugPrint("⭐️ onRangeSelected focusedDay 👉 $focusedDay");
                     _onRangeSelected(start, end, focusedDay, state.sectionList);
                   },
-                  // 범위가 선택되었을 때 호출되는 콜백 함수
+                  // 달력 형식 변경 시 호출되는 콜백 함수
                   onFormatChanged: (format) {
                     if (_calendarFormat != format) {
                       setState(() {
@@ -383,113 +417,119 @@ class _ReservationCalendarTabScreenState
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(
-                    top: 10,
-                    bottom: 10,
-                  ),
+                  margin: EdgeInsets.only(top: 10),
                   height: 10.0,
                   color: ColorsConstants.settingDivider,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        if (_isDetailShow) {
-                          _toggleIsShowDetail();
-                        }
-                      },
-                      child: Text(
-                        "요약 보기",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: !_isDetailShow
-                              ? ColorsConstants.boldColor
-                              : ColorsConstants.textHint,
-                          fontWeight: !_isDetailShow
-                              ? FontWeight.bold
-                              : FontWeight.normal,
-                        ),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: ColorsConstants.thinDivider,
+                        width: 1.0,
                       ),
                     ),
-                    Text(
-                      "|",
-                      style: TextStyle(color: ColorsConstants.divider),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        if (!_isDetailShow) {
-                          _toggleIsShowDetail();
-                        }
-                      },
-                      child: Text(
-                        "상세 보기",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: _isDetailShow
-                              ? ColorsConstants.boldColor
-                              : ColorsConstants.textHint,
-                          fontWeight:
-                              _isDetailShow ? FontWeight.bold : FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child:
-                      ValueListenableBuilder<List<ReservationRangeSectionModel>>(
-                    valueListenable: _selectedEvents,
-                    builder: (context, value, _) {
-                      if (value.isEmpty) {
-                        return EmptyWidget(
-                          message: "예약이 없어요..",
-                        );
-                      }
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          if (_isDetailShow) {
+                            if (_rangeSelectionMode ==
+                                RangeSelectionMode.toggledOn) {
+                              SnackBarUtils.showCustomSnackBar(
+                                context,
+                                "범위 선택중에는 요약보기를 사용할 수 없습니다.",
+                              );
+                              return;
+                            }
 
-                      return GroupedListView<ReservationRangeSectionModel,
-                          String>(
-                        elements: value,
-                        groupBy: (element) =>
-                            "${DateTimeUtils.dateTimeToString(pattern: "yy-MM-dd", date: DateTime.parse(element.sectionTitle))} ${ReservationUtils.partTimeToString(partTime: element.partTime.index)}",
-                        groupSeparatorBuilder: (groupByValue) => Container(
-                          margin: EdgeInsets.only(
-                            left: 15,
-                            right: 15,
-                            top: 10,
-                            bottom: 5,
-                          ),
-                          child: Text(
-                            groupByValue,
-                            style: TextStyle(
-                              color: ColorsConstants.strokeColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            _toggleIsShowDetail();
+                          }
+                        },
+                        child: Text(
+                          "요약 보기",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: !_isDetailShow
+                                ? ColorsConstants.boldColor
+                                : ColorsConstants.textHint,
+                            fontWeight: !_isDetailShow
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                           ),
                         ),
-                        indexedItemBuilder: (context, element, index) {
-                          return Container(
-                            margin: EdgeInsets.only(
-                              left: 10,
-                              right: 10,
-                              top: index == 0 ? 10 : 5,
-                              bottom: index == value.length - 1 ? 10 : 5,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(),
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            child: ListTile(
-                              onTap: () => print('${value[index]}'),
-                              title: Text('${value[index]}'),
-                            ),
-                          );
+                      ),
+                      Text(
+                        "|",
+                        style: TextStyle(color: ColorsConstants.divider),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          if (!_isDetailShow) {
+                            _toggleIsShowDetail();
+                          }
                         },
-                      );
-                    },
+                        child: Text(
+                          "상세 보기",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: _isDetailShow
+                                ? ColorsConstants.boldColor
+                                : ColorsConstants.textHint,
+                            fontWeight: _isDetailShow
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+                Expanded(
+                    child: _isDetailShow
+                        ? ValueListenableBuilder<
+                            List<ReservationRangeSectionModel>>(
+                            valueListenable: _selectedEvents,
+                            builder: (context, value, _) {
+                              if (value.isEmpty) {
+                                return CalendarEmptyWidget(
+                                    message: "예약이 없습니다.");
+                              }
+
+                              return GroupedListView<
+                                  ReservationRangeSectionModel, String>(
+                                elements: value,
+                                groupBy: (element) =>
+                                    "${DateTimeUtils.dateTimeToString(pattern: "yy-MM-dd", date: DateTime.parse(element.sectionTitle))} ${ReservationUtils.partTimeToString(partTime: element.partTime.index)}",
+                                groupSeparatorBuilder: (groupByValue) =>
+                                    Container(
+                                  margin: EdgeInsets.only(
+                                    left: 15,
+                                    right: 15,
+                                    top: 10,
+                                  ),
+                                  child: Text(
+                                    groupByValue,
+                                    style: TextStyle(
+                                      color: ColorsConstants.strokeColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                indexedItemBuilder: (context, element, index) {
+                                  return CalendarDetailItemWidget(
+                                    item: element,
+                                  );
+                                },
+                              );
+                            },
+                          )
+                        : CalendarSummaryListWidget(
+                            selectedDate: _selectedDay ?? DateTime.now(),
+                          )),
               ],
             ),
           ),

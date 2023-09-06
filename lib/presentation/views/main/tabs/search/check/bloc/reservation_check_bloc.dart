@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:reservation_app/domain/model/base/data_state.dart';
@@ -104,7 +105,7 @@ class ReservationCheckBloc
 
     final response = await _getReservationFilterPageListUseCase.invoke(
       event.page,
-      5,
+      10,
       event.filterType,
     );
 
@@ -114,6 +115,8 @@ class ReservationCheckBloc
       if (result != null) {
         final list = List<ReservationFilterModel>.from(state.reservationList);
         list.addAll(result.reservationList);
+
+        debugPrint("result 👉 $result");
 
         emit(
           state.copyWith(

@@ -9,4 +9,10 @@ class ReservationCalendarTabEvent with _$ReservationCalendarTabEvent {
     required DateTime startTime,
     required DateTime endTime,
   }) = ReservationCalendarTabSectionListEvent;
+
+  const factory ReservationCalendarTabEvent.targetList({
+    required DateTime targetDate,
+  }) = ReservationCalendarTabTargetListEvent;
+
+  const factory ReservationCalendarTabEvent.resetTargetList() = ReservationCalendarTabResetTargetListEvent;
 }

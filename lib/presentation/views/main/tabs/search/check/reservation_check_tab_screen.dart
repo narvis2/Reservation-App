@@ -202,6 +202,7 @@ class _ReservationCheckTabScreenState extends State<ReservationCheckTabScreen> {
       if (state.reservationList.isNotEmpty) {
         return SlidableAutoCloseBehavior(
           child: ListView.builder(
+            shrinkWrap: true,
             controller: _scrollController,
             itemCount: state.reservationList.length,
             itemBuilder: (context, index) {

@@ -273,6 +273,7 @@ Future<void> initializeDependencies() async {
   locator.registerFactory(
     () => ReservationCalendarTabBloc(
       locator<GetReservationRangeSectionListUseCase>(),
+      locator<GetTargetDateReservationUseCase>(),
     ),
   );
 }
