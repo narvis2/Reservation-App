@@ -13,11 +13,13 @@ import 'package:reservation_app/data/model/reservation/reservation_approval_chec
 import 'package:reservation_app/data/model/reservation/reservation_create_request.dart';
 import 'package:reservation_app/data/model/reservation/reservation_detail_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_non_auth_response.dart';
+import 'package:reservation_app/data/model/reservation/reservation_range_section_response.dart';
 import 'package:reservation_app/data/model/reservation/reservation_target_date_response.dart';
 import 'package:reservation_app/data/model/sign/phone_auth_check_request.dart';
 import 'package:reservation_app/data/model/sign/phone_auth_request.dart';
 import 'package:reservation_app/data/model/sign/sign_in_request.dart';
 import 'package:reservation_app/data/model/sign/sign_in_response.dart';
+import 'package:reservation_app/data/model/sign/sign_out_request.dart';
 import 'package:reservation_app/domain/model/banner/banner_image_model.dart';
 import 'package:reservation_app/domain/model/notice/notice_model.dart';
 import 'package:reservation_app/domain/model/reservation/enum/part_time.dart';
@@ -133,6 +135,18 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   }
 
   @override
+  Future<BaseListResponse<ReservationRangeSectionResponse>>
+      requestReservationRangeList(
+    String startDate,
+    String endDate,
+  ) {
+    return _reservationApiService.requestReservationRangeList(
+      startDate,
+      endDate,
+    );
+  }
+
+  @override
   Future<BaseResponse<SignInResponse>> requestSignIn(
     SignInRequest request,
   ) {
@@ -140,8 +154,8 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   }
 
   @override
-  Future<BaseResponse> requestSignOut() {
-    return _signApiService.requestSignOut();
+  Future<BaseResponse> requestSignOut(SignOutRequest request) {
+    return _signApiService.requestSignOut(request);
   }
 
   @override

@@ -27,6 +27,7 @@ import 'package:reservation_app/domain/usecase/member/request_update_fcm_token_u
 import 'package:reservation_app/domain/usecase/notice/get_all_notice_list_use_case.dart';
 import 'package:reservation_app/domain/usecase/reservation/get_reservation_filter_page_list_use_case.dart';
 import 'package:reservation_app/domain/usecase/reservation/get_reservation_non_auth_list_use_case.dart';
+import 'package:reservation_app/domain/usecase/reservation/get_reservation_range_section_list_use_case.dart';
 import 'package:reservation_app/domain/usecase/reservation/get_reservation_target_part_time_use_case.dart';
 import 'package:reservation_app/domain/usecase/reservation/get_tartget_date_reservation_use_case.dart';
 import 'package:reservation_app/domain/usecase/reservation/request_approval_check_reservation_use_case.dart';
@@ -44,6 +45,7 @@ import 'package:reservation_app/presentation/views/main/tabs/home/bloc/home_tab_
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/home/bloc/content_home_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/location/bloc/content_location_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/home/tabs/notice/bloc/content_notice_tab_bloc.dart';
+import 'package:reservation_app/presentation/views/main/tabs/search/calendar/bloc/reservation_calendar_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/bloc/reservation_check_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/details/bloc/reservation_check_detail_bloc.dart';
 import 'package:reservation_app/presentation/views/network/bloc/network_bloc.dart';
@@ -196,6 +198,11 @@ Future<void> initializeDependencies() async {
       locator<ReservationRepository>(),
     ),
   );
+  locator.registerLazySingleton<GetReservationRangeSectionListUseCase>(
+    () => GetReservationRangeSectionListUseCase(
+      locator<ReservationRepository>(),
+    ),
+  );
 
   // 📌 Bloc
   locator.registerFactory(() => MainBloc());
@@ -261,6 +268,12 @@ Future<void> initializeDependencies() async {
       locator<RequestReservationDetailUseCase>(),
       locator<RequestReservationDetailByUserUseCase>(),
       locator<RequestApprovalCheckReservationUseCase>(),
+    ),
+  );
+  locator.registerFactory(
+    () => ReservationCalendarTabBloc(
+      locator<GetReservationRangeSectionListUseCase>(),
+      locator<GetTargetDateReservationUseCase>(),
     ),
   );
 }

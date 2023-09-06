@@ -20,5 +20,5 @@ class SignInResponse extends Equatable {
   Map<String, dynamic> toJson() => _$SignInResponseToJson(this);
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [token, refreshToken];
 }

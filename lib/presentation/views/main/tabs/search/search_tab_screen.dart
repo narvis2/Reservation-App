@@ -6,6 +6,7 @@ import 'package:reservation_app/presentation/utils/color_constants.dart';
 import 'package:reservation_app/presentation/utils/constants.dart';
 import 'package:reservation_app/presentation/utils/list_extensions.dart';
 import 'package:reservation_app/presentation/utils/snack_bar_utils.dart';
+import 'package:reservation_app/presentation/views/main/tabs/search/calendar/bloc/reservation_calendar_tab_bloc.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/calendar/reservation_calendar_tab_screen.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/chart/reservation_chart_tab_screen.dart';
 import 'package:reservation_app/presentation/views/main/tabs/search/check/bloc/reservation_check_bloc.dart';
@@ -49,6 +50,9 @@ class _SearchTabScreenState extends State<SearchTabScreen>
     return MultiBlocProvider(
       providers: [
         BlocProvider(
+          create: (context) => locator.get<ReservationCalendarTabBloc>(),
+        ),
+        BlocProvider(
           create: (context) => locator.get<ReservationCheckBloc>(),
         ),
       ],
@@ -56,6 +60,7 @@ class _SearchTabScreenState extends State<SearchTabScreen>
         length: Constants.searchTabCategoryList.length,
         initialIndex: 0,
         child: BlocSelector<UserInfoBloc, UserInfoState, MemberModel?>(
+          bloc: _userInfoBloc,
           selector: (state) {
             return state.memberModel;
           },
@@ -66,7 +71,9 @@ class _SearchTabScreenState extends State<SearchTabScreen>
                 bottom: TabBar(
                   onTap: (index) {
                     if (index > 0 && state == null) {
-                      SnackBarUtils.showCustomSnackBar(context, "관리자만 사용가능합니다.");
+                      SnackBarUtils.showCustomSnackBar(
+                          context, "관리자만 사용가능합니다.",
+                      );
                       return;
                     }
                   },

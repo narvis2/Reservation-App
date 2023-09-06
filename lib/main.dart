@@ -13,6 +13,7 @@ import 'package:reservation_app/presentation/views/main/bloc/main_bloc.dart';
 import 'package:reservation_app/presentation/views/network/bloc/network_bloc.dart';
 import 'package:reservation_app/presentation/views/sign/bloc/sign_bloc.dart';
 import 'package:reservation_app/presentation/views/user/bloc/user_info_bloc.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'di/dependency_injection_graph.dart';
 import 'firebase_options.dart';
@@ -33,6 +34,8 @@ void main() async {
       onAuthFailed: (error) {
         debugPrint('💛 Naver ClientId Auth failed 👉 $error');
       });
+
+  await initializeDateFormatting();
 
   runApp(const MyApp());
 }

@@ -1,6 +1,8 @@
 
 import 'dart:ui';
 
+import 'package:reservation_app/domain/model/reservation/enum/part_time.dart';
+
 class ColorsConstants {
   // App Colors
   static const Color primary = Color(0xffed5463);
@@ -23,6 +25,15 @@ class ColorsConstants {
   static const Color tabBarSelectedIcon = Color(0xFFed5463);
   static const Color tabBarUnselectedIcon = Color(0xFFed5463);
 
+  static const Color test = Color(0xffffd7a6);
+  static const Color test1 = Color(0xffffdecb);
+  static const Color test2 = Color(0xffffc8c3);
+
+  // partTime
+  static const Color partTimeA = Color(0xfff0be58);
+  static const Color partTimeB = Color(0xffe8ba86);
+  static const Color partTimeC = Color(0xffce8477);
+
   // Texts
   static const Color text = Color(0xFFFFFFFF);
   static const Color textDark = Color(0xFFFFFFFF);
@@ -38,6 +49,8 @@ class ColorsConstants {
   static const Color strokeGray = Color(0xFFD7D7D7);
   static const Color rightActionButton = Color(0xFFA5A5A5);
   static const Color clown = Color(0xFFFFF3B4);
+  static const Color currentDate = Color(0xFFB5DCF9);
+  static const Color selectedDate = Color(0xFFBCCEF4);
 
   // Others Widgets
   static const Color card = Color(0x20FFFFFF);
@@ -60,7 +73,21 @@ class ColorsConstants {
   static const Color calendarPickerColor = Color(0xFF6A92B4);
   static const Color calendarSideColor = Color(0xFF7C9BB4);
   static const Color calendarCurrentColor = Color(0xFFE8CCB4);
+  static const Color calendarRangeColor = Color(0xFFE8CCC4);
 
   // Dialog
   static const Color dialogBackground = Color(0x55000000);
+
+  static Color getParTimeColor(PartTime partTime) {
+    switch (partTime) {
+      case PartTime.partA:
+        return ColorsConstants.partTimeA;
+      case PartTime.partB:
+        return ColorsConstants.partTimeB;
+      case PartTime.partC:
+        return ColorsConstants.partTimeC;
+      default:
+        return ColorsConstants.background;
+    }
+  }
 }

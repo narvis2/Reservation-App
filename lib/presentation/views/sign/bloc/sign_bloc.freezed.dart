@@ -23,7 +23,7 @@ mixin _$SignEvent {
     required TResult Function() setIsEnablePush,
     required TResult Function() setIsSavedId,
     required TResult Function(String id, String password) onSignClick,
-    required TResult Function() onSignOutClick,
+    required TResult Function(int memberId) onSignOutClick,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -33,7 +33,7 @@ mixin _$SignEvent {
     TResult? Function()? setIsEnablePush,
     TResult? Function()? setIsSavedId,
     TResult? Function(String id, String password)? onSignClick,
-    TResult? Function()? onSignOutClick,
+    TResult? Function(int memberId)? onSignOutClick,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,7 +43,7 @@ mixin _$SignEvent {
     TResult Function()? setIsEnablePush,
     TResult Function()? setIsSavedId,
     TResult Function(String id, String password)? onSignClick,
-    TResult Function()? onSignOutClick,
+    TResult Function(int memberId)? onSignOutClick,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -146,7 +146,7 @@ class _$SignInitEvent with DiagnosticableTreeMixin implements SignInitEvent {
     required TResult Function() setIsEnablePush,
     required TResult Function() setIsSavedId,
     required TResult Function(String id, String password) onSignClick,
-    required TResult Function() onSignOutClick,
+    required TResult Function(int memberId) onSignOutClick,
   }) {
     return init();
   }
@@ -159,7 +159,7 @@ class _$SignInitEvent with DiagnosticableTreeMixin implements SignInitEvent {
     TResult? Function()? setIsEnablePush,
     TResult? Function()? setIsSavedId,
     TResult? Function(String id, String password)? onSignClick,
-    TResult? Function()? onSignOutClick,
+    TResult? Function(int memberId)? onSignOutClick,
   }) {
     return init?.call();
   }
@@ -172,7 +172,7 @@ class _$SignInitEvent with DiagnosticableTreeMixin implements SignInitEvent {
     TResult Function()? setIsEnablePush,
     TResult Function()? setIsSavedId,
     TResult Function(String id, String password)? onSignClick,
-    TResult Function()? onSignOutClick,
+    TResult Function(int memberId)? onSignOutClick,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -280,7 +280,7 @@ class _$SignIsAutoLoginEvent
     required TResult Function() setIsEnablePush,
     required TResult Function() setIsSavedId,
     required TResult Function(String id, String password) onSignClick,
-    required TResult Function() onSignOutClick,
+    required TResult Function(int memberId) onSignOutClick,
   }) {
     return setIsAutoLogin();
   }
@@ -293,7 +293,7 @@ class _$SignIsAutoLoginEvent
     TResult? Function()? setIsEnablePush,
     TResult? Function()? setIsSavedId,
     TResult? Function(String id, String password)? onSignClick,
-    TResult? Function()? onSignOutClick,
+    TResult? Function(int memberId)? onSignOutClick,
   }) {
     return setIsAutoLogin?.call();
   }
@@ -306,7 +306,7 @@ class _$SignIsAutoLoginEvent
     TResult Function()? setIsEnablePush,
     TResult Function()? setIsSavedId,
     TResult Function(String id, String password)? onSignClick,
-    TResult Function()? onSignOutClick,
+    TResult Function(int memberId)? onSignOutClick,
     required TResult orElse(),
   }) {
     if (setIsAutoLogin != null) {
@@ -414,7 +414,7 @@ class _$SignIsEnablePushEvent
     required TResult Function() setIsEnablePush,
     required TResult Function() setIsSavedId,
     required TResult Function(String id, String password) onSignClick,
-    required TResult Function() onSignOutClick,
+    required TResult Function(int memberId) onSignOutClick,
   }) {
     return setIsEnablePush();
   }
@@ -427,7 +427,7 @@ class _$SignIsEnablePushEvent
     TResult? Function()? setIsEnablePush,
     TResult? Function()? setIsSavedId,
     TResult? Function(String id, String password)? onSignClick,
-    TResult? Function()? onSignOutClick,
+    TResult? Function(int memberId)? onSignOutClick,
   }) {
     return setIsEnablePush?.call();
   }
@@ -440,7 +440,7 @@ class _$SignIsEnablePushEvent
     TResult Function()? setIsEnablePush,
     TResult Function()? setIsSavedId,
     TResult Function(String id, String password)? onSignClick,
-    TResult Function()? onSignOutClick,
+    TResult Function(int memberId)? onSignOutClick,
     required TResult orElse(),
   }) {
     if (setIsEnablePush != null) {
@@ -548,7 +548,7 @@ class _$SignIsSavedIdEvent
     required TResult Function() setIsEnablePush,
     required TResult Function() setIsSavedId,
     required TResult Function(String id, String password) onSignClick,
-    required TResult Function() onSignOutClick,
+    required TResult Function(int memberId) onSignOutClick,
   }) {
     return setIsSavedId();
   }
@@ -561,7 +561,7 @@ class _$SignIsSavedIdEvent
     TResult? Function()? setIsEnablePush,
     TResult? Function()? setIsSavedId,
     TResult? Function(String id, String password)? onSignClick,
-    TResult? Function()? onSignOutClick,
+    TResult? Function(int memberId)? onSignOutClick,
   }) {
     return setIsSavedId?.call();
   }
@@ -574,7 +574,7 @@ class _$SignIsSavedIdEvent
     TResult Function()? setIsEnablePush,
     TResult Function()? setIsSavedId,
     TResult Function(String id, String password)? onSignClick,
-    TResult Function()? onSignOutClick,
+    TResult Function(int memberId)? onSignOutClick,
     required TResult orElse(),
   }) {
     if (setIsSavedId != null) {
@@ -721,7 +721,7 @@ class _$SignOnSignInClickEvent
     required TResult Function() setIsEnablePush,
     required TResult Function() setIsSavedId,
     required TResult Function(String id, String password) onSignClick,
-    required TResult Function() onSignOutClick,
+    required TResult Function(int memberId) onSignOutClick,
   }) {
     return onSignClick(id, password);
   }
@@ -734,7 +734,7 @@ class _$SignOnSignInClickEvent
     TResult? Function()? setIsEnablePush,
     TResult? Function()? setIsSavedId,
     TResult? Function(String id, String password)? onSignClick,
-    TResult? Function()? onSignOutClick,
+    TResult? Function(int memberId)? onSignOutClick,
   }) {
     return onSignClick?.call(id, password);
   }
@@ -747,7 +747,7 @@ class _$SignOnSignInClickEvent
     TResult Function()? setIsEnablePush,
     TResult Function()? setIsSavedId,
     TResult Function(String id, String password)? onSignClick,
-    TResult Function()? onSignOutClick,
+    TResult Function(int memberId)? onSignOutClick,
     required TResult orElse(),
   }) {
     if (onSignClick != null) {
@@ -817,6 +817,8 @@ abstract class _$$SignOnSignOutClickEventCopyWith<$Res> {
   factory _$$SignOnSignOutClickEventCopyWith(_$SignOnSignOutClickEvent value,
           $Res Function(_$SignOnSignOutClickEvent) then) =
       __$$SignOnSignOutClickEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int memberId});
 }
 
 /// @nodoc
@@ -826,6 +828,19 @@ class __$$SignOnSignOutClickEventCopyWithImpl<$Res>
   __$$SignOnSignOutClickEventCopyWithImpl(_$SignOnSignOutClickEvent _value,
       $Res Function(_$SignOnSignOutClickEvent) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? memberId = null,
+  }) {
+    return _then(_$SignOnSignOutClickEvent(
+      memberId: null == memberId
+          ? _value.memberId
+          : memberId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
 }
 
 /// @nodoc
@@ -833,28 +848,42 @@ class __$$SignOnSignOutClickEventCopyWithImpl<$Res>
 class _$SignOnSignOutClickEvent
     with DiagnosticableTreeMixin
     implements SignOnSignOutClickEvent {
-  const _$SignOnSignOutClickEvent();
+  const _$SignOnSignOutClickEvent({required this.memberId});
+
+  @override
+  final int memberId;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SignEvent.onSignOutClick()';
+    return 'SignEvent.onSignOutClick(memberId: $memberId)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'SignEvent.onSignOutClick'));
+    properties
+      ..add(DiagnosticsProperty('type', 'SignEvent.onSignOutClick'))
+      ..add(DiagnosticsProperty('memberId', memberId));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SignOnSignOutClickEvent);
+            other is _$SignOnSignOutClickEvent &&
+            (identical(other.memberId, memberId) ||
+                other.memberId == memberId));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, memberId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SignOnSignOutClickEventCopyWith<_$SignOnSignOutClickEvent> get copyWith =>
+      __$$SignOnSignOutClickEventCopyWithImpl<_$SignOnSignOutClickEvent>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -864,9 +893,9 @@ class _$SignOnSignOutClickEvent
     required TResult Function() setIsEnablePush,
     required TResult Function() setIsSavedId,
     required TResult Function(String id, String password) onSignClick,
-    required TResult Function() onSignOutClick,
+    required TResult Function(int memberId) onSignOutClick,
   }) {
-    return onSignOutClick();
+    return onSignOutClick(memberId);
   }
 
   @override
@@ -877,9 +906,9 @@ class _$SignOnSignOutClickEvent
     TResult? Function()? setIsEnablePush,
     TResult? Function()? setIsSavedId,
     TResult? Function(String id, String password)? onSignClick,
-    TResult? Function()? onSignOutClick,
+    TResult? Function(int memberId)? onSignOutClick,
   }) {
-    return onSignOutClick?.call();
+    return onSignOutClick?.call(memberId);
   }
 
   @override
@@ -890,11 +919,11 @@ class _$SignOnSignOutClickEvent
     TResult Function()? setIsEnablePush,
     TResult Function()? setIsSavedId,
     TResult Function(String id, String password)? onSignClick,
-    TResult Function()? onSignOutClick,
+    TResult Function(int memberId)? onSignOutClick,
     required TResult orElse(),
   }) {
     if (onSignOutClick != null) {
-      return onSignOutClick();
+      return onSignOutClick(memberId);
     }
     return orElse();
   }
@@ -944,7 +973,13 @@ class _$SignOnSignOutClickEvent
 }
 
 abstract class SignOnSignOutClickEvent implements SignEvent {
-  const factory SignOnSignOutClickEvent() = _$SignOnSignOutClickEvent;
+  const factory SignOnSignOutClickEvent({required final int memberId}) =
+      _$SignOnSignOutClickEvent;
+
+  int get memberId;
+  @JsonKey(ignore: true)
+  _$$SignOnSignOutClickEventCopyWith<_$SignOnSignOutClickEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
