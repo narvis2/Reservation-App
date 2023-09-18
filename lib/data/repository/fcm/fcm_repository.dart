@@ -168,8 +168,9 @@ class FcmRepository {
 
     final iosDetails = DarwinNotificationDetails(
       presentAlert: true,
-      presentBadge: true,
+      presentBadge: false,
       presentSound: true,
+      badgeNumber: 0,
     );
 
     final NotificationDetails platformDetails = NotificationDetails(
