@@ -75,6 +75,10 @@ class ColorsConstants {
   static const Color calendarCurrentColor = Color(0xFFE8CCB4);
   static const Color calendarRangeColor = Color(0xFFE8CCC4);
 
+  static const Color chartTitle = Color(0xff68737d);
+  static const Color chartBorder = Color(0xff37434d);
+  static const Color chartBackground = Color(0xff232d37);
+
   // Dialog
   static const Color dialogBackground = Color(0x55000000);
 
